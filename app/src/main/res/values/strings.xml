@@ -1,0 +1,347 @@
+<resources>
+    <string name="app_name">iC</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="cancelar">CANCELAR</string>
+    <string name="guardar">GUARDAR</string>
+    <string name="kg">Kg</string>
+    <string name="aceptar">ACEPTAR</string>
+    <string name="msj_peso_incorrecto">El peso ingresado es incorrecto. Por favor intente nuevamente.</string>
+    <string name="alert_dialog_ok">OK</string>
+    <string name="alert_dialog_cancel">Cancelar</string>
+    <string name="alert_dialog_peso_incorrecto">El peso ingresado es INCORRECTO. Por favor intente nuevamente. Muchas gracias.</string>
+    <string name="alert_dialog_peso_correcto">El peso ingresado se ha guardado correctamente. Muchas gracias.</string>
+    <string name="ingrese_fc">Por favor utilice el medidor automático de presión para conocer su Presión Arterial y Frecuencia Cardíaca. Luego, complete los siguientes datos:</string>
+    <string name="fc_cargada">Ud ya cargó la medición de su Presión Arterial y Frecuencia Cardíaca del día de hoy. \n
+        Muchas gracias.</string>
+    <string name="alert_dialog_datos_correctos">Sus mediciones se han guardado correctamente. \n
+        Muchas gracias.</string>
+    <string name="sintomas_cargados">Ud ya contestó las preguntas sobre sus síntomas del día de hoy. \n
+        Muchas gracias</string>
+    <string name="ingrese_sintomas">Por favor conteste la siguiente pregunta sobre sus síntomas.</string>
+    <string name="tab_peso">PESO</string>
+    <string name="tab_fc">PRESION ARTERIAL Y FRECUENCIA CARDIACA</string>
+    <string name="tab_sintomas">SINTOMAS</string>
+
+    <string name="step_counter">
+         android.hardware.sensor.stepcounter
+   </string>
+
+
+    <string name="step_detector">
+         android.hardware.sensor.stepdetector
+   </string>
+    <string name="title_activity_sos_location">Map</string>
+    <string name="btn_buscar">Buscar</string>
+    <string name="direccion">Dirección</string>
+    <string name="btn_seleccionar">Seleccionar</string>
+    <string name="btn_llamar">LLAMAR</string>
+    <string name="msj_gps_cancelado">Ud. canceló el permiso para acceder a su ubicación actual. Se enviará el pedido de auxilio pero SIN su ubicación actual.</string>
+    <string name="cargando">Cargando...</string>
+    <string name="sos_llamar">¿Desea llamar una ambulancia?</string>
+    <string name="si">SI</string>
+    <string name="no">NO</string>
+    <string name="msj_gps_cancelado_llamar">Al cancelar el permiso de usar el GPS se envió un pedido de auxilio SIN su ubicación actual.\n
+        Por favor llame a su ambulancia, cuidador o médico indicando dónde se encuentra para que puedan asistirlo o presione nuevamente el botón de SOS y permita que el dispositivo
+        acceda a su ubicación actual.</string>
+    <string name="ubicacion">La ubicación que se enviará a sus contactos es: \n </string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">Completar</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="pref_horarios_mediciones">HORARIOS/MEDICIONES</string>
+    <string name="pref_summary_auto_delete">Delete</string>
+    <string name="pref_title_auto_delete">Delete title</string>
+    <string name="pref_summary_delete_limit">delete limit</string>
+    <string name="pref_title_sms_delete">title sms delete</string>
+    <string name="pref_title_mms_delete">title mms delete</string>
+    <string name="pref_sms_storage_title">sms storage title</string>
+    <string name="pref_informacion_importante">INFORMACION</string>
+    <string name="pref_header_peso">Peso</string>
+    <string name="pref_header_fc">Presión Arterial y Frecuencia Cardíaca</string>
+    <string name="pref_header_sintomas">Síntomas</string>
+    <string name="pref_header_medicación">Medicación</string>
+    <string name="pref_header_turno_medico">Turno Médico</string>
+    <string name="pref_header_horarios_recordatorios">Horarios/Recordatorios</string>
+    <string name="pref_header_datos_personales">Datos Personales</string>
+    <string name="pref_header_personal_salud">Datos Personal de Salud</string>
+    <string name="pref_header_contacto_sos">Contacto Cuidador/Ambulancia</string>
+    <string name="horario_defecto">08:00</string>
+    <string name="pref_nombre">Nombre</string>
+    <string name="pref_apellido">Apellido</string>
+    <string name="pref_mail_usuario">Correo Electrónico</string>
+    <string name="pref_celular">Número de Celular</string>
+    <string name="configuracion">Configuración</string>
+    <string name="alarma">ALARMA</string>
+    <string name="tab_pregfrec">Preguntas Frecuentes</string>
+    <string name="tab_wikiCardio">WikiCardio</string>
+    <string name="recordatorio_accion">Recuerde monitorearse</string>
+    <string name="recordatorio_saludable">Consejo Saludable</string>
+    <string name="sin_recordatorios">No tiene ningún recordatorio</string>
+    <string name="alert_dialog_problemasBD">Hubo un problema con el guardado de su medición. Por favor intente nuevamente.</string>
+    <string name="errorBD">Hubo un error al guardar los datos. Por favor intente nuevamente</string>
+    <string name="sintomas_continuar">Su respuesta se guardó correctamente. \n
+        Aún quedan algunas preguntas más sobre sus síntomas. \n
+        Por favor continue contestando.</string>
+    <string name="sintomas_respuesta_mucho">Mucho</string>
+    <string name="sintomas_respuesta_muchisimo">Muchísimo</string>
+    <string name="sintomas_respuesta_si">Si</string>
+    <string name="sintomas_respuesta_poco">Poco</string>
+    <string name="sintomas_respuesta_muy_poco">Muy Poco</string>
+    <string name="sintomas_respuesta_no">No</string>
+    <string name="title_activity_view_consejo_saludable">ActivityViewConsejoSaludable</string>
+    <string name="large_text">
+        "Material is the metaphor.\n\n"
+
+        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
+        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
+        "technologically advanced and open to imagination and magic.\n"
+        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
+        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
+        "flexibility of the material creates new affordances that supercede those in the physical "
+        "world, without breaking the rules of physics.\n"
+        "The fundamentals of light, surface, and movement are key to conveying how objects move, "
+        "interact, and exist in space and in relation to each other. Realistic lighting shows "
+        "seams, divides space, and indicates moving parts.\n\n"
+
+        "Bold, graphic, intentional.\n\n"
+
+        "The foundational elements of print based design typography, grids, space, scale, color, "
+        "and use of imagery guide visual treatments. These elements do far more than please the "
+        "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
+        "imagery, large scale typography, and intentional white space create a bold and graphic "
+        "interface that immerse the user in the experience.\n"
+        "An emphasis on user actions makes core functionality immediately apparent and provides "
+        "waypoints for the user.\n\n"
+
+        "Motion provides meaning.\n\n"
+
+        "Motion respects and reinforces the user as the prime mover. Primary user actions are "
+        "inflection points that initiate motion, transforming the whole design.\n"
+        "All action takes place in a single environment. Objects are presented to the user without "
+        "breaking the continuity of experience even as they transform and reorganize.\n"
+        "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
+        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
+
+        "3D world.\n\n"
+
+        "The material environment is a 3D space, which means all objects have x, y, and z "
+        "dimensions. The z-axis is perpendicularly aligned to the plane of the display, with the "
+        "positive z-axis extending towards the viewer. Every sheet of material occupies a single "
+        "position along the z-axis and has a standard 1dp thickness.\n"
+        "On the web, the z-axis is used for layering and not for perspective. The 3D world is "
+        "emulated by manipulating the y-axis.\n\n"
+
+        "Light and shadow.\n\n"
+
+        "Within the material environment, virtual lights illuminate the scene. Key lights create "
+        "directional shadows, while ambient light creates soft shadows from all angles.\n"
+        "Shadows in the material environment are cast by these two light sources. In Android "
+        "development, shadows occur when light sources are blocked by sheets of material at "
+        "various positions along the z-axis. On the web, shadows are depicted by manipulating the "
+        "y-axis only. The following example shows the card with a height of 6dp.\n\n"
+
+        "Resting elevation.\n\n"
+
+        "All material objects, regardless of size, have a resting elevation, or default elevation "
+        "that does not change. If an object changes elevation, it should return to its resting "
+        "elevation as soon as possible.\n\n"
+
+        "Component elevations.\n\n"
+
+        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
+        "does not vary from 6dp in one app to 16dp in another app).\n"
+        "Components may have different resting elevations across platforms, depending on the depth "
+        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
+
+        "Responsive elevation and dynamic elevation offsets.\n\n"
+
+        "Some component types have responsive elevation, meaning they change elevation in response "
+        "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
+        "changes are consistently implemented using dynamic elevation offsets.\n"
+        "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
+        "to the component’s resting state. They ensure that elevation changes are consistent "
+        "across actions and component types. For example, all components that lift on press have "
+        "the same elevation change relative to their resting elevation.\n"
+        "Once the input event is completed or cancelled, the component will return to its resting "
+        "elevation.\n\n"
+
+        "Avoiding elevation interference.\n\n"
+
+        "Components with responsive elevations may encounter other components as they move between "
+        "their resting elevations and dynamic elevation offsets. Because material cannot pass "
+        "through other material, components avoid interfering with one another any number of ways, "
+        "whether on a per component basis or using the entire app layout.\n"
+        "On a component level, components can move or be removed before they cause interference. "
+        "For example, a floating action button (FAB) can disappear or move off screen before a "
+        "user picks up a card, or it can move if a snackbar appears.\n"
+        "On the layout level, design your app layout to minimize opportunities for interference. "
+        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
+        "when a user tries to pick up one of cards.\n\n"
+    </string>
+    <string name="leido">Leído</string>
+    <string name="pref_header_consejo_saludable">Consejos Saludables</string>
+    <string name="horario_defecto_consejos_saludables">10:00</string>
+    <string name="pref_informacion">INFORMACIÓN PERSONAL</string>
+    <string name="pref_header_birthday">Fecha de Nacimiento</string>
+    <string name="birthday_default_value">01-01-2017</string>
+    <string name="title_activity_json">JSON</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">
+        "Contacts permissions are needed for providing email completions."
+    </string>
+    <string name="pref_mail_personal_salud">Email Personal de Salud</string>
+    <string name="pref_celular_personal_salud">Celular Personal de Salud</string>
+    <string name="pref_celular_contacto_ambulancia">Celular Contacto/Ambulancia</string>
+    <string name="msj_peso_cargado">Ud ya ingresó la medición de su peso. Muchas gracias! Lo esperamos mañana nuevamente.</string>
+    <string name="msj_peso_cargar">Por favor ingrese la medición de su peso del día de hoy.</string>
+    <string name="consejo_saludable">Consejo Saludable</string>
+    <string name="consulta_medicamento">¿Dejó de tomar algún medicamento últimamente?</string>
+    <string name="indique_medicamento">Describa qué medicamento dejó de tomar últimamente:</string>
+    <string name="alerta_medicamento">El paciente indicó que últimamente dejó de tomar el siguiente medicamento:  </string>
+    <string name="medicamento">Medicamentos</string>
+    <string name="message_error_conection_server">Error al conectar con el servidor. Por favor intente más tarde</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="email">Email</string>
+    <string name="repetir_contrasena">Repetir Contraseña</string>
+    <string name="crear_una_cuenta">Crear una cuenta</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="fecha_de_nacimiento">Fecha de Nacimiento</string>
+    <string name="celular_personal_de_salud">Celular Personal de Salud</string>
+    <string name="email_personal_de_salud">Email Personal de Salud</string>
+    <string name="login_incorrecto">Login incorrecto. Por favor verifique que todos los datos sean correctos y tenga conexión a internet. Es posible que el Email que intenta utilizar para crear su cuenta ya se encuentre en uso, pruebe con otro email.</string>
+    <string name="pref_vinculaciones">VINCULACIONES CON PERSONAL DE SALUD</string>
+    <string name="pref_personal_salud">Personal de Salud</string>
+    <string name="pref_header_practitioner">Select Practitioner</string>
+    <string name="pref_personal_salud_vinculado">Personal de Salud Vinculado</string>
+    <string name="pref_solicitudes_pendientes">Solicitudes Pendientes de Vinculación</string>
+    <string name="pref_nueva_solicitud">Nueva Solicitud de Vinculación</string>
+    <string name="celular">Celular</string>
+    <string name="pref_contactos">CONTACTOS</string>
+    <string name="pref_new_contact">Nuevo Contacto</string>
+    <string name="pref_contactos_existentes">Contactos Existentes</string>
+    <string name="crear">CREAR</string>
+    <string name="ingrese_contacto">Ingrese los datos de su nuevo contacto para que reciba su solicitud de auxilio en caso de necesitarla al seleccionar la opción de SOS:</string>
+    <string name="siguiente">SIGUIENTE</string>
+    <string name="salir">SALIR</string>
+    <string name="puntaje">Puntaje</string>
+    <string name="cero">0</string>
+    <string name="consentimiento_informado">Esta App ha sido creada para estudiar los potenciales beneficios del monitoreo a distancia de pacientes con Insuficiencia Cardíaca (IC). Al instalar la App en su Smartphone Ud comprende y da su autorización a los desarrolladores y al equipo de investigación para que utilice su información médica personal con fines estadísticos para contribuir al conocimiento científico.</string>
+    <string name="de_acuerdo">SI ESTOY DE ACUERDO</string>
+    <string name="en_desacuerdo">NO ESTOY DE ACUERDO</string>
+    <string name="alert_login_incorrecto">loginIncorrecto</string>
+    <string name="alert_consentimiento_informado">consentimientoInformado</string>
+    <string name="encuesta">Encuestas</string>
+    <string name="encuesta1">Encuesta: Calidad de Vida</string>
+    <string name="encuesta2">Encuesta: Conocimientos sobre Insuficiencia Cardíaca</string>
+    <string name="encuesta3">Encuesta: Adherencia al tratamiento</string>
+    <string name="encuesta4">Encuesta: Autocuidado</string>
+    <string name="url_encuesta1">https://docs.google.com/forms/d/e/1FAIpQLSdhYSiT8BBMsU4SGwWU4POLiFl3hE8u4WJuihNJ2U_1EPjm0g/viewform?usp=sf_link</string>
+    <string name="url_encuesta2">https://docs.google.com/forms/d/e/1FAIpQLSfcwd51hHUkI0gsw5OuLCMEk3belc3yviV4UE6gTD1wC8aOFw/viewform?usp=sf_link</string>
+    <string name="url_encuesta3">https://docs.google.com/forms/d/e/1FAIpQLSfHNkytrja4vJbW8OU-BksojMgqL3fRcF_8mrYKsTTBzUR-pg/viewform?usp=sf_link</string>
+    <string name="url_encuesta4">https://goo.gl/forms/BWDXXGYMPZw50NMy2</string>
+    <string name="asuntoMailEncuesta">Encuesta Contestada</string>
+    <string name="encuestas_contestadas">ENCUESTAS CONTESTADAS</string>
+    <string name="encuestas_textPrincipal">Por favor seleccione cada una de las encuestas para poder contestarlas. \n
+        Cuando termine de responder TODAS las encuestas presione el botón \"ENCUESTAS CONTESTADAS\" para eliminar este recordatorio. \n
+        Muchas gracias</string>
+    <string name="permlab_access_fine_location">acceso a ubicación actual</string>
+    <string name="permdesc_access_fine_location">permite acceder a su ubicación actual para enviar un pedido de SOS</string>
+    <string name="permlab_call_phone">acceso a llamadas telefónicas</string>
+    <string name="permdesc_call_phone">permite realizar una llamada telefónica para pedir auxilio en caso de necesitarlo</string>
+    <string name="permlab_send_sms">acceso a envío de sms</string>
+    <string name="permdesc_send_sms">permite enviar un pedido de SOS por sms a los contactos que Ud estableció</string>
+    <string name="permlab_phone_state">acceso al estado del teléfono</string>
+    <string name="permdesc_phone_state">permite conocer si el teléfono se encuentra disponible para realizar una llamada para pedir auxilio</string>
+    <string name="permlab_read_contacts">acceso a los contactos guardados</string>
+    <string name="permdesc_read_contacts">permite acceder a los contactos del teléfono para pedir auxilio</string>
+    <string name="permlab_get_accounts">acceso a los contactos guardados</string>
+    <string name="permdesc_get_accounts">permite acceder a los contactos del teléfono para pedir auxilio</string>
+    <string name="sos_auxilio">PEDIR AUXILIO</string>
+    <string name="sos_msj">¿Desea pedir auxilio a sus contactos?</string>
+    <string name="llamar_contacto">LLAMAR CONTACTO</string>
+    <string name="llamar_ambulancia">LLAMAR AMBULANCIA</string>
+</resources>

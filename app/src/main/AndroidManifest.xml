@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.luciayanicelli.icsalud">
+
+    <!--
+        The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+        Google Maps Android API v2, but you must specify either coarse or fine
+        location permissions for the 'MyLocation' functionality.
+        RIESGOSO
+    -->
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION"
+        android:description="@string/permdesc_access_fine_location"
+        android:label="@string/permlab_access_fine_location"
+        android:permissionGroup="android.permission-group.LOCATION"
+        android:protectionLevel="dangerous" />
+    <uses-permission
+        android:name="android.permission.ACCESS_COARSE_LOCATION"
+        android:description="@string/permdesc_access_fine_location"
+        android:label="@string/permlab_access_fine_location"
+        android:permissionGroup="android.permission-group.LOCATION"
+        android:protectionLevel="dangerous" />
+
+    <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
+    <uses-feature android:name="android.hardware.location.gps" />
+
+    <!-- PERMISO PARA ENVIAR SMS - RIESGOSO -->
+    <uses-permission
+        android:name="android.permission.CALL_PHONE"
+        android:description="@string/permdesc_call_phone"
+        android:label="@string/permlab_call_phone"
+        android:permissionGroup="android.permission-group.PHONE"
+        android:protectionLevel="dangerous" />
+
+    <uses-permission
+        android:name="android.permission.SEND_SMS"
+        android:description="@string/permdesc_send_sms"
+        android:label="@string/permlab_send_sms"
+        android:permissionGroup="android.permission-group.SMS"
+        android:protectionLevel="dangerous" />
+
+    <!-- Permisos para llamar por teléfono - RIESGOSO -->
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE"
+        android:description="@string/permdesc_phone_state"
+        android:label="@string/permlab_phone_state"
+        android:permissionGroup="android.permission-group.PHONE"
+        android:protectionLevel="dangerous" />
+
+    <!-- Inicio Permisos requeridos email -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Final  Permisos requeridos email -->
+
+
+    <!-- Permisos para las notificaciones -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Permiso para detectar cuando el dispositivo se apaga -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS"
+        android:description="@string/permdesc_get_accounts"
+        android:label="@string/permlab_get_accounts"
+        android:permissionGroup="android.permission-group.CONTACTS"
+        android:protectionLevel="dangerous" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+
+    <!-- RIESGOSO -->
+    <!--
+  <uses-permission android:name="android.permission.READ_CONTACTS"
+          android:label="@string/permlab_read_contacts"
+          android:description="@string/permdesc_read_contacts"
+          android:protectionLevel="dangerous"
+          android:permissionGroup="android.permission-group.CONTACTS"/>
+    -->
+    <application
+        android:name="android.support.multidex.MultiDexApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_logo_sin_fondo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.Base">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"></activity>
+
+        <activity android:name=".Activity_Autodiagnostico.Activity_Menu_Autodiagnostico" />
+        <activity android:name=".Activity_Juego.Activity_juego" />
+        <activity android:name=".Activity_profesionales.Activity_profesionales" />
+        <activity
+            android:name=".Activity_Configuracion.Activity_configuracion"
+            android:label="@string/configuracion"
+            android:parentActivityName=".MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".Activity_Educacion.Activity_educacion" />
+        <activity
+            android:name=".utils.Activity_Encuestas"
+            android:label="@string/encuesta"
+            android:parentActivityName=".MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".Activity_ViewConsejoSaludable"
+            android:label="@string/consejo_saludable"
+            android:parentActivityName=".MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".Activity_SOS" />
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <!--
+     ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <!-- Service y receiver para notificaciones -->
+
+        <service
+            android:name=".Notifications.MyAlarmService"
+            android:enabled="true" />
+
+        <receiver android:name=".Notifications.MyReceiver" />
+        <receiver android:name=".Notifications.MyReceiverPA" />
+        <receiver android:name=".Notifications.MyReceiverSINTOMAS" />
+        <receiver android:name=".Notifications.MyReceiverCONSEJO_SALUDABLE" />
+        <receiver android:name=".Notifications.MyReceiverAlertaVerde" />
+        <receiver android:name=".Notifications.MyReceiverMEDICAMENTOS" />
+        <receiver android:name=".Notifications.MyReceiverENCUESTAS" />
+
+        <!-- Services -->
+        <!-- Puedes garantizar que tu servicio esté disponible solo para tu app incluyendo el atributo android:exported y fijándolo en "false". Esto impide que otras aplicaciones inicien tu servicio, incluso cuando se utiliza una intent explícita.! -->
+
+        <service
+            android:name=".Services.ServiceGenerarEmail"
+            android:exported="false" />
+        <service
+            android:name=".Services.ServiceEnviarDatosServidor"
+            android:exported="false" />
+        <service
+            android:name=".Services.EnviarDatosServidorJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".Services.AlertaVerdeJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".Services.GetContactsJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".Services.GenerarEmailJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <!-- Add the receiver to your app's manifest file with an intent filter that filters on the ACTION_BOOT_COMPLETED action: -->
+        <receiver
+            android:name=".Services.SampleBootReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Login  LOGINACTIVITY ACTIVIDAD INICIAL CUANDO FUNCIONE EL SERVIDOR -->
+        <activity
+            android:name=".Login.LoginActivity"
+            android:theme="@style/AppTheme">
+
+            <!-- VERSION 1 ! -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Login.SignupActivity"
+            android:theme="@style/AppTheme"></activity>
+
+        <activity
+            android:name=".Activity_ViewConsultaMedicamentos"
+            android:label="@string/medicamento"
+            android:parentActivityName=".MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+    </application>
+
+</manifest>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- default value is a boolean -->
+    <CheckBoxPreference
+        android:defaultValue="true"
+     />
+
+    <!-- default value is a string -->
+    <ListPreference
+        android:defaultValue="@string/pref_default_display_name"
+    />
+
+    <com.luciayanicelli.icsalud.Activity_Configuracion.DialogPreferenceSelectTime
+               android:defaultValue="@string/horario_defecto"
+       />
+
+</PreferenceScreen>

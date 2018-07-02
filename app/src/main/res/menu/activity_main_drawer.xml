@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_autodiagnostico"
+            android:icon="@drawable/ic_menu_auto_diagnostico"
+            android:title="AUTO-DIAGNÓSTICO" />
+        <item
+            android:id="@+id/nav_recordatorios"
+            android:icon="@android:drawable/ic_menu_today"
+            android:title="RECORDATORIOS" />
+        <item
+            android:id="@+id/nav_educacion"
+            android:icon="@android:drawable/ic_input_get"
+            android:title="EDUCACION" />
+        <item
+            android:id="@+id/nav_juego"
+            android:icon="@android:drawable/ic_media_play"
+            android:title="JUEGO" />
+        <item
+            android:id="@+id/nav_profesionales"
+            android:icon="@drawable/ic_personal_salud"
+            android:title="PROFESIONALES" />
+        <item
+            android:id="@+id/nav_configuracion"
+            android:icon="@drawable/ic_menu_configuracion"
+            android:title="CONFIGURACION" />
+
+    </group>
+
+    <item android:title="Ayuda">
+        <menu>
+            <item
+                android:id="@+id/nav_sos"
+                android:icon="@android:drawable/ic_dialog_alert"
+                android:title="S.O.S." />
+        </menu>
+    </item>
+
+</menu>

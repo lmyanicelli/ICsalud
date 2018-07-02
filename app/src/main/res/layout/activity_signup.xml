@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="56dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:src="@mipmap/ic_logo_gral" />
+
+        <!--  Name Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                android:hint="Nombre" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!--  Surname Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_surname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                android:hint="Apellido" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!--  Surname Label -->
+
+        <!--  SEXO Label -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7">
+                <TextView
+                    android:id="@+id/input_sex"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Sexo"
+                    android:gravity="center_vertical"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <RadioGroup android:id="@+id/input_radioGroupSex"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <RadioButton
+                    android:id="@+id/radioButtonF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="F" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="M" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <!--  SEXO Label -->
+
+        <!--  Birthday Label -->
+        <!---https://programacionymas.com/blog/como-pedir-fecha-android-usando-date-picker/ -->
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_birthdayText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fecha de Nacimiento"
+                android:focusable="true"
+                android:clickable="true"
+                android:editable="false"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+        <!--  Birthday Label -->
+
+        <!--  EDUCATION LEVEL Label -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+       <!--     <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3">
+                <TextView
+                    android:id="@+id/input_education_level"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Nivel Educativo"
+                    android:gravity="center_vertical"/>
+            </android.support.design.widget.TextInputLayout>
+          -->
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_education_level"
+                >
+
+            </Spinner>
+
+        </LinearLayout>
+
+        <!--  EDUCATION LEVEL Label -->
+
+        <!--  OCCUPATION Label -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+       <!--     <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3">
+                <TextView
+                    android:id="@+id/input_occupation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Ocupación"
+                    android:gravity="center_vertical"/>
+            </android.support.design.widget.TextInputLayout>
+          -->
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_occupation">
+
+            </Spinner>
+
+        </LinearLayout>
+
+        <!--  OCCUPATION Label -->
+
+
+        <!--  OBRA SOCIAL Label -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5">
+                <TextView
+                    android:id="@+id/input_healthInsurance"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Obra Social"
+                    android:gravity="center_vertical"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <RadioGroup android:id="@+id/input_radioGroupOS"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <RadioButton
+                    android:id="@+id/radioButtonNinguna"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Ninguna" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonPAMI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="PAMI" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonOtra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Otra" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <!--  OBRA SOCIAL Label -->
+
+        <!--  COEXISTENCE Label -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5">
+                <TextView
+                    android:id="@+id/input_coexistence"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Convivencia"
+                    android:gravity="center_vertical"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <RadioGroup android:id="@+id/input_radioGroupCoexistence"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <RadioButton
+                    android:id="@+id/radioButtonSOLO"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Vivo solo/a" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonFAMILIA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Con familia" />
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <!--  OBRA SOCIAL Label -->
+
+        <!--  DATE DIAGNOSIS Label -->
+        <!---https://programacionymas.com/blog/como-pedir-fecha-android-usando-date-picker/ -->
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_dateDiagnosis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="¿Desde cuándo padece IC? (fecha aproximada)"
+                android:focusable="true"
+                android:clickable="true"
+                android:editable="false"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+        <!--  DATE DIAGNOSIS Label -->
+
+
+        <!--  LAST HOSPITALIZATION Label -->
+        <!---https://programacionymas.com/blog/como-pedir-fecha-android-usando-date-picker/ -->
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_lastHospitalization"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fecha de última internación por IC"
+                android:focusable="true"
+                android:clickable="true"
+                android:editable="false"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+        <!--  LAST HOSPITALIZATION Label -->
+
+
+
+
+        <!-- Email Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Email" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!--  Celular Contacto Ambulancia Label -->
+        <!--    <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <EditText android:id="@+id/input_celContactoAmbulanciaText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:hint="Celular Contacto/Ambulancia"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+    -->
+
+        <!-- Password Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:passwordToggleEnabled="true"
+            >
+            <EditText android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Contraseña"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Repeat Password Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:passwordToggleEnabled="true">
+            <EditText android:id="@+id/input_password_repeat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Repetir Contraseña"/>
+        </android.support.design.widget.TextInputLayout>
+
+
+        <!--  Email Remitente Label -->
+   <!--     <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_emailRemitenteText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Email Personal de Salud"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+-->
+        <!--  Celular Remitente Label -->
+    <!--    <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_celRemitenteText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:hint="Celular Personal de Salud"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+-->
+        <!-- Signup Button -->
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_signup"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:text="Crear una cuenta"/>
+
+        <TextView android:id="@+id/link_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="¿Ya eres miembro? Inicia sesión"
+            android:gravity="center"
+            android:textSize="16dip"/>
+
+    </LinearLayout>
+</ScrollView>

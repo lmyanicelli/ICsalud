@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/pref_horarios_mediciones"
+        android:key="pref_key_horarios_mediciones">
+        <!--
+        android:fragment="com.luciayanicelli.ic_layout.Activity_Configuracion.SettingsActivity$HorariosRecordatoriosPreferenceFragment"
+        >-->
+        <com.luciayanicelli.icsalud.Activity_Configuracion.DialogPreferenceSelectTime
+            android:name="@string/pref_header_peso"
+            android:key="horario_peso"
+            android:defaultValue="@string/horario_defecto"
+            android:summary="@string/horario_defecto"
+            android:title="@string/pref_header_peso" />
+
+        <com.luciayanicelli.icsalud.Activity_Configuracion.DialogPreferenceSelectTime
+            android:name="pafc"
+            android:key="horario_pafc"
+            android:defaultValue="@string/horario_defecto"
+            android:summary="@string/horario_defecto"
+            android:title="@string/pref_header_fc" />
+
+        <com.luciayanicelli.icsalud.Activity_Configuracion.DialogPreferenceSelectTime
+            android:name="@string/pref_header_sintomas"
+            android:key="horario_sintomas"
+            android:defaultValue="@string/horario_defecto"
+            android:summary="@string/horario_defecto"
+            android:title="@string/pref_header_sintomas" />
+
+        <com.luciayanicelli.icsalud.Activity_Configuracion.DialogPreferenceSelectTime
+            android:name="@string/pref_header_consejo_saludable"
+            android:key="horario_consejo_saludable"
+            android:defaultValue="@string/horario_defecto_consejos_saludables"
+            android:summary="@string/horario_defecto_consejos_saludables"
+            android:title="@string/pref_header_consejo_saludable" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
