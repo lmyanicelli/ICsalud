@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         emailRemitentes = new String[]{config.getUserEmailRemitente()};
 
         //ActionBar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //Botones flotantes
@@ -136,9 +136,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+            this.finish();
         } else {
             super.onBackPressed();
         }
@@ -206,7 +207,7 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -239,9 +240,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog, String name) {
-        if(name.equalsIgnoreCase(Constants.SOS)){
-
-        }
 
     }
 
@@ -313,6 +311,7 @@ public class MainActivity extends AppCompatActivity
               db.close();
           }
         }
+        busqueda.close();
 
     }
 

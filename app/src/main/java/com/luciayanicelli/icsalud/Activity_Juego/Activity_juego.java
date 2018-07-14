@@ -41,16 +41,16 @@ public class Activity_juego extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         fragmentListOpciones = new JuegoFragmentListOpciones();
@@ -59,17 +59,6 @@ public class Activity_juego extends AppCompatActivity
                 .add(R.id.fragment_container_juego_opciones, fragmentListOpciones).commit();
 
     }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -123,7 +112,7 @@ public class Activity_juego extends AppCompatActivity
             crearAlertDialogSOS();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -135,9 +124,10 @@ public class Activity_juego extends AppCompatActivity
         SetearAlarma setearAlarma = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_EMAIL_JUGADAS);
         setearAlarma.execute();
 
-        Intent mIntent = new Intent();
+       /* Intent mIntent = new Intent();
         mIntent.setClass(getApplicationContext(), MainActivity.class);
         startActivity(mIntent);
+        */
 
         this.finish();
 
@@ -170,10 +160,20 @@ public class Activity_juego extends AppCompatActivity
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog, String name) {
-        if(name.equalsIgnoreCase(Constants.SOS)){
 
-        }
 
     }
 
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        super.onBackPressed();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        this.finish();
+    }
 }

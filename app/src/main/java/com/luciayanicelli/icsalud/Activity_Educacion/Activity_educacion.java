@@ -87,15 +87,7 @@ public class Activity_educacion extends AppCompatActivity
 
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -189,9 +181,19 @@ public class Activity_educacion extends AppCompatActivity
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog, String name) {
-        if(name.equalsIgnoreCase(Constants.SOS)){
 
-        }
+    }
 
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        super.onBackPressed();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        this.finish();
     }
 }

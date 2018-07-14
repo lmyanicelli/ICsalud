@@ -109,7 +109,7 @@ public class Activity_SOS extends FragmentActivity implements GoogleApiClient.Co
     private Configuraciones configuraciones;
     private static final int REQUEST_CODE_ASK_PERMISSIONS = 93;
     private static final int REQUEST_CODE_ASK_PERMISSIONS_CALL = 94;
-
+    private boolean mPedirAuxilio = false;
 
 
     @Override
@@ -119,7 +119,7 @@ public class Activity_SOS extends FragmentActivity implements GoogleApiClient.Co
 
 
         edittext = findViewById(R.id.edittext);
-        edittext.setText("Procesando solicitud");
+        edittext.setText(getResources().getString(R.string.procesando_solicitud));
         progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(0); //inicializo en 0 el progreso
         progressBar.setVisibility(View.VISIBLE); //Hago visible la barra de progreso circular
@@ -149,6 +149,7 @@ public class Activity_SOS extends FragmentActivity implements GoogleApiClient.Co
         telefono_ambulancia = configuraciones.getUserTelefonoAmbulancia();
 
 
+        mPedirAuxilio = false;
         //Solicitar permisos en línea
         //checkPermission();
 
@@ -536,6 +537,8 @@ public class Activity_SOS extends FragmentActivity implements GoogleApiClient.Co
         SetearAlarma setearAlarma = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_EMAIL_ALERTAS);
         setearAlarma.execute();
 
+        mPedirAuxilio = true;
+
     }
 
     private void checkPermissionSMS() {
@@ -621,7 +624,7 @@ public class Activity_SOS extends FragmentActivity implements GoogleApiClient.Co
                     }
 
                     //En base a la respuesta, cargo el valor en el textView para mostrar por pantalla al usuario
-                    if (direccion == "Ubicación no disponible"){
+                    if (direccion.equalsIgnoreCase("Ubicación no disponible")){
                         edittext.setText(direccion);
                         progressBar.setVisibility(View.INVISIBLE);
                     }else{
@@ -691,7 +694,7 @@ public class Activity_SOS extends FragmentActivity implements GoogleApiClient.Co
             }
 
             //En base a la respuesta, cargo el valor en el textView para mostrar por pantalla al usuario
-            if (direccion == "Ubicación no disponible") {
+            if (direccion.equalsIgnoreCase("Ubicación no disponible")) {
                 edittext.setText(direccion);
                 progressBar.setVisibility(View.INVISIBLE);
             } else {
@@ -713,7 +716,10 @@ public class Activity_SOS extends FragmentActivity implements GoogleApiClient.Co
 
     private void crearAlertDialog() {
 
+        mPedirAuxilio = true;
+
         AlertDialogs alertDialogs = new AlertDialogs();
+
         String msj;
         if(configuraciones.getUserCelContacts()==null){
             msj = "No tiene ningún contacto agendado. Llame al *107 para solicitar una ambulancia.";
@@ -748,10 +754,14 @@ public class Activity_SOS extends FragmentActivity implements GoogleApiClient.Co
     protected void onStop() {
         mGoogleApiClient.disconnect();
         super.onStop();
+        if(mPedirAuxilio){
+            this.finish();
+        }
     }
 
     protected void onResume() {
         super.onResume();
+
     }
 
     protected void onDestroy() {
@@ -801,6 +811,7 @@ public class Activity_SOS extends FragmentActivity implements GoogleApiClient.Co
                 mIntent.putExtra("pos", 4);
                 mIntent.setClass(getApplicationContext(), Activity_profesionales.class);
                 this.startActivity(mIntent);
+                this.finish();
 
                 break;
 
@@ -872,6 +883,15 @@ public class Activity_SOS extends FragmentActivity implements GoogleApiClient.Co
                     this.finish();
                     break;
         }
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        this.finish();
+        super.onBackPressed();
 
     }
 }

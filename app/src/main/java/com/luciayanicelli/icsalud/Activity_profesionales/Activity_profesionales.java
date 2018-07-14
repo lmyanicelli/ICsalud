@@ -83,16 +83,16 @@ public class Activity_profesionales extends AppCompatActivity
         setContentView(R.layout.activity_profesionales);
 
         //ActionBar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //Menú de la izquierda
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -101,7 +101,7 @@ public class Activity_profesionales extends AppCompatActivity
         spinner = findViewById(R.id.spinner);
 
         String[] seleccion_profesionales = Constants.ARRAY_SELECTION_VINCULACIONES_PROFESIONALES;
-        spinner.setAdapter(new ArrayAdapter<String>(this, R.layout.spinner_items, seleccion_profesionales));
+        spinner.setAdapter(new ArrayAdapter<>(this, R.layout.spinner_items, seleccion_profesionales));
 
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
@@ -129,12 +129,9 @@ public class Activity_profesionales extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        this.finish();
+        super.onBackPressed();
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -191,7 +188,7 @@ public class Activity_profesionales extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -631,7 +628,7 @@ public class Activity_profesionales extends AppCompatActivity
         String[]opciones;
         opciones = new String[]{"LLAMAR", "ELIMINAR"};
         crearAlertDialog(nameContacto, profesional, datos, opciones);
-
-
     }
+
+
 }

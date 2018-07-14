@@ -38,7 +38,7 @@ public class Activity_ViewConsultaMedicamentos extends AppCompatActivity impleme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_consulta_medicamentos);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
@@ -118,5 +118,11 @@ public class Activity_ViewConsultaMedicamentos extends AppCompatActivity impleme
 
     }
 
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        super.onBackPressed();
+
+    }
 
 }

@@ -344,4 +344,5 @@
     <string name="sos_msj">¿Desea pedir auxilio a sus contactos?</string>
     <string name="llamar_contacto">LLAMAR CONTACTO</string>
     <string name="llamar_ambulancia">LLAMAR AMBULANCIA</string>
+    <string name="procesando_solicitud">Procesando solicitud</string>
 </resources>

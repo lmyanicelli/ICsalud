@@ -35,7 +35,7 @@ public class Activity_ViewConsejoSaludable extends AppCompatActivity implements 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_consejosaludable);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //23/03 intentando back press button in action bar - en Manifest
@@ -121,6 +121,13 @@ public class Activity_ViewConsejoSaludable extends AppCompatActivity implements 
         String[] whereArgs = new String[] {fecha};
 
         dbAuto.update(AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_CONSEJO_SALUDABLE, values, whereClauseAuto, whereArgs);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        super.onBackPressed();
 
     }
 
