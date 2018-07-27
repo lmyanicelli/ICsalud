@@ -40,6 +40,8 @@ public class Configuraciones {
     //DATOS PERSONAL DE SALUD
     private final String KEY_PREF_MAIL_PERSONAL_SALUD = "pref_mail_personal_salud";
     private static final String KEY_PREF_CELULAR_PERSONAL_SALUD = "pref_celular_personal_salud";
+    private static final String KEY_PREF_NAME_PERSONAL_SALUD = "pref_name_personal_salud";
+    private static final String KEY_PREF_ID_PERSONAL_SALUD = "pref_id_personal_salud";
 
     //KEYS DATOS PERSONALES
     public static final String KEY_PREF_NAME = "pref_name";
@@ -481,7 +483,8 @@ public class Configuraciones {
 
     public void setUserEmailContacts(String emailContacts){
         SharedPreferences.Editor editor = getSettings().edit();
-        editor.putString(KEY_PREF_MAIL_CONTACTS, DEFAULT_USER_EMAIL_ADMINISTRATOR + "," + emailContacts);
+       // editor.putString(KEY_PREF_MAIL_CONTACTS, DEFAULT_USER_EMAIL_ADMINISTRATOR + "," + emailContacts);
+        editor.putString(KEY_PREF_MAIL_CONTACTS, emailContacts);
         editor.commit();
     }
 
@@ -493,6 +496,29 @@ public class Configuraciones {
     public void setUserCelContacts(String celRemitentes){
         SharedPreferences.Editor editor = getSettings().edit();
         editor.putString(KEY_PREF_CELULAR_PERSONAL_SALUD, celRemitentes);
+        editor.commit();
+
+    }
+
+    //last name, first name
+    public String getUserNameContacts(){
+        return getSettings().getString(KEY_PREF_NAME_PERSONAL_SALUD, null);
+    }
+
+    public void setUserNameContacts(String nameContacts){
+        SharedPreferences.Editor editor = getSettings().edit();
+        editor.putString(KEY_PREF_NAME_PERSONAL_SALUD, nameContacts);
+        editor.commit();
+
+    }
+
+    public String getUserIdContacts(){
+        return getSettings().getString(KEY_PREF_ID_PERSONAL_SALUD, null);
+    }
+
+    public void setUserIdContacts(String idContacts){
+        SharedPreferences.Editor editor = getSettings().edit();
+        editor.putString(KEY_PREF_ID_PERSONAL_SALUD, idContacts);
         editor.commit();
 
     }

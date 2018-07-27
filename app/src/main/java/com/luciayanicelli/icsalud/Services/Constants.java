@@ -17,7 +17,7 @@ public class Constants {
 
 
     /**
-     * Constantes para {@link com.luciayanicelli.ic_layout.Activity_Autodiagnostico.Activity_Menu_Autodiagnostico}
+     * Constantes para {@link com.luciayanicelli.icsalud.Activity_Autodiagnostico.Activity_Menu_Autodiagnostico}
      */
     public static final String PARAMETRO = "PARAMETRO";
     public static final String PARAMETRO_PESO = "PESO";
@@ -28,21 +28,19 @@ public class Constants {
 
 
     /**
-     * Constantes para {@link com.luciayanicelli.ic_layout.Activity_ViewConsejoSaludable}
+     * Constantes para {@link com.luciayanicelli.icsalud.Activity_ViewConsejoSaludable}
      */
     public static final String CONSEJO_SALUDABLE = "CONSEJO SALUDABLE";
     public static final String FECHA_CONSEJO_SALUDABLE = "fecha_consejo_saludable";
 
 
     /**
-     * Constantes para {@link com.luciayanicelli.ic_layout.Activity_ViewConsultaMedicamentos}
+     * Constantes para {@link com.luciayanicelli.icsalud.Activity_ViewConsultaMedicamentos}
      */
     public static final String MEDICAMENTOS = "MEDICAMENTOS";
 
 
-    /**
-     * Constantes para {@link com.luciayanicelli.ic_layout}
-     */
+
 
     public static final String KEY_PREF_HORARIO_PESO = "horario_peso";
     public static final String KEY_PREF_HORARIO_PA_FC = "horario_pafc";
@@ -67,6 +65,7 @@ public class Constants {
     public static final String PARAMETRO_GENERAR_EMAIL_ALERTAS = "parametro_generar_email_alertas";
     public static final String PARAMETRO_GENERAR_EMAIL_JUGADAS = "parametro_generar_email_jugadas";
     public static final String PARAMETRO_ENVIAR_DATOS_SERVIDOR = "parametro_enviar_datos_servidor";
+    public static final String PARAMETRO_GENERAR_EMAIL_TABLA_DATOS = "parametro_generar_email_tabla_datos";
 
     public static final String DEFAULT_HOUR_GENERAR_EMAIL_MEDICIONES = "02:15";
     public static final String DEFAULT_HOUR_GENERAR_EMAIL_ALERTAS = "03:30";

@@ -69,8 +69,48 @@ public class FragmentListadoContactos extends ListFragment{
 
         if(!conexionInternet.execute().get()) {
             //No hay conexión a internet
+            /*
             String mensaje = "Corrobore su conexión a internet e intente nuevamente";
             datos.add(new Lista_entrada_profesionales("-1", mensaje, mensaje));
+*/
+
+            //mostrar contactos guardados
+            Configuraciones configuraciones = new Configuraciones(getContext());
+
+            String idContacts = configuraciones.getUserIdContacts();
+            String nombreContacts = configuraciones.getUserNameContacts();
+            String emailsContacts = configuraciones.getUserEmailContacts();
+            String telefonosContacts = configuraciones.getUserCelContacts();
+
+
+            String[] id_contact = idContacts.split(";");
+            String[] nombres = nombreContacts.split(";");
+            String[] emails = emailsContacts.split(",");
+            String[] telefonos = telefonosContacts.split(";");
+            String[] contactos = new String[nombres.length];
+
+
+            //Recupera los datos en un HashMap para luego poder ordenarlos alfabéticamente
+            HashMap<String, Lista_entrada_profesionales> listado = new HashMap<>();
+
+            for (int i = 0; i < nombres.length; i++) {
+
+                //  listado.put(nombres[i], new Lista_entrada_profesionales(id_contact[i], nombres[i], "Email: " + emails[i] + "\n" + "Cel: " + telefonos[i]));
+                Lista_entrada_profesionales lista_entrada_profesionales = new Lista_entrada_profesionales(id_contact[i], nombres[i], "Email: " + emails[i] + "\n" + "Cel: " + telefonos[i]);
+                lista_entrada_profesionales.setCel(telefonos[i]);
+                lista_entrada_profesionales.setEmail(emails[i]);
+                listado.put(nombres[i], lista_entrada_profesionales);
+            }
+
+            //  ArrayList<String> list = new ArrayList<>((Collection<? extends String>) Arrays.asList(nombres));
+            ArrayList<String> list = new ArrayList<>(Arrays.asList(nombres));
+            Collections.sort(list); //ordena alfabéticamente
+
+            for (int j = 0; j < list.size(); j++) {
+                datos.add(listado.get(list.get(j)));
+            }
+
+            clickable = Boolean.TRUE;
 
         }else {
             //Hay conexión a internet
@@ -90,6 +130,8 @@ public class FragmentListadoContactos extends ListFragment{
                 Configuraciones configuraciones = new Configuraciones(getContext());
                 configuraciones.setUserEmailContacts(null);
                 configuraciones.setUserCelContacts(null);
+                configuraciones.setUserNameContacts(null);
+                configuraciones.setUserIdContacts(null);
 
                 clickable = Boolean.FALSE;
 
@@ -104,6 +146,8 @@ public class FragmentListadoContactos extends ListFragment{
                 Configuraciones configuraciones = new Configuraciones(getContext());
                 configuraciones.setUserEmailContacts(emailsContacts);
                 configuraciones.setUserCelContacts(telefonosContacts);
+                configuraciones.setUserNameContacts(nombreContacts);
+                configuraciones.setUserIdContacts(idContacts);
 
                 String[] id_contact = idContacts.split(";");
                 String[] nombres = nombreContacts.split(";");

@@ -12,6 +12,9 @@ import com.luciayanicelli.icsalud.Api_Json.JSON_CONSTANTS;
 import com.luciayanicelli.icsalud.DataBase.AlertasContract;
 import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
 import com.luciayanicelli.icsalud.DataBase.Autodiagnostico_DBHelper;
+import com.luciayanicelli.icsalud.utils.PAFC;
+import com.luciayanicelli.icsalud.utils.Peso;
+import com.luciayanicelli.icsalud.utils.Sintomas;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -52,7 +55,7 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
 
     public AlertaVerde(@NonNull String fechaHora, String nombreDateTabla, String nombreTabla, int cantidadDatos, Context context) {
 
-        this.fechaHs = fechaHora;
+        this.fechaHs = fechaHora; //corresponde a la fecha de ayer en la que se quiere ver si cargó los datos
         String[] fechaArray = fechaHora.split(" ");
         this.fecha_sin_hora = fechaArray[0];
         this.nombreDateTabla = nombreDateTabla;
@@ -69,23 +72,52 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... strings) {
-        //TAREA PRINCIPAL
-        try {
 
+        Peso mPeso = new Peso(context);
+        mPeso.alertaVerde(fechaHs);
+
+        PAFC mPAFC = new PAFC(context);
+        mPAFC.alertaVerde(fechaHs);
+
+        Sintomas mSintomas = new Sintomas(context);
+        mSintomas.alertaVerde(fechaHs);
+
+        return null;
+
+
+        //TAREA PRINCIPAL
+    /*   iniciarAlertaVerde(fecha_sin_hora, nombreDateTabla, nombreTabla, cantidadDatos);
+
+       iniciarAlertaVerde(fecha_sin_hora,
+               AutodiagnosticoContract.AutodiagnosticoEntry.PA_DATE,
+               AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PA,
+               1);
+       iniciarAlertaVerde(fecha_sin_hora,
+              AutodiagnosticoContract.AutodiagnosticoEntry.SINTOMAS_DATE,
+                       AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_SINTOMAS,
+                       3);
+
+        return null;
+        */
+    }
+
+    private boolean iniciarAlertaVerde(String fecha_sin_hora, String nameDateTabla, String nameTabla, int countDatos) {
+
+        try {
             //CORROBORAR QUE NO EXISTAN ALERTAS YA GENERADAS CON ESA FECHA Y TABLA
             Alertas_DBHelper mDBHelper = new Alertas_DBHelper(context);
             SQLiteDatabase dbAlertas = mDBHelper.getWritableDatabase();
 
             String[] camposDBAV = new String[]{AlertasContract.AlertasEntry.DESCRIPCION};
             String selectionAV = AlertasContract.AlertasEntry.TIPO + "= ? "
-                  //  + "and " + AlertasContract.AlertasEntry.FECHA +"= ? "
+                    //  + "and " + AlertasContract.AlertasEntry.FECHA +"= ? "
                     + "and " + AlertasContract.AlertasEntry.FECHA + ">= ?"+ " and " +  AlertasContract.AlertasEntry.FECHA + "<= ?"
                     + "and " + AlertasContract.AlertasEntry.PARAMETRO +"= ? ";
 
             String[] argsAV = new String[] {AlertasContract.AlertasEntry.ALERTA_TIPO_VERDE,
-                 //   String.valueOf(fecha),
+                    //   String.valueOf(fecha),
                     String.valueOf(fecha_sin_hora + " 00:00:00"), String.valueOf(fecha_sin_hora + " 23:59:59"),
-                    nombreTabla};
+                    nameTabla};
 
             Cursor busquedaAV = dbAlertas.query(true, AlertasContract.AlertasEntry.TABLE_NAME,
                     camposDBAV, selectionAV, argsAV,null,null,null,null);
@@ -93,7 +125,7 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
             //Si existen alertas del tipo verde con ese parámetro y fecha sale, en caso contrario ingresa a buscar alertas
             if (busquedaAV != null & busquedaAV.moveToFirst()) {
                 //existen alertas verdes con esa fecha y parámetro
-               busquedaAV.getCount();
+                busquedaAV.getCount();
 
             }else {
 
@@ -105,28 +137,28 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
 
 
-                String[] camposDB2 = new String[]{nombreDateTabla, BaseColumns._ID};
-                String selection = nombreDateTabla + ">= ?"+
-                        " and " +  nombreDateTabla + "<= ?";
+                String[] camposDB2 = new String[]{nameDateTabla, BaseColumns._ID};
+                String selection = nameDateTabla + ">= ?"+
+                        " and " +  nameDateTabla + "<= ?";
 
                 String[] args = new String[] {String.valueOf(fecha_sin_hora + " 00:00:00"), String.valueOf(fecha_sin_hora + " 23:59:59")}; //busco en el dia completo
 
-                Cursor busqueda = db.query(true, nombreTabla,
+                Cursor busqueda = db.query(true, nameTabla,
                         camposDB2, selection, args, null, null, null, null);
 
                 //Si existen datos guardados con la fecha indicada devuelve true
                 if (busqueda != null & busqueda.moveToFirst()) {
 
                     //Analiza si existe la cantidad de registros establecida en cantidadDatos con la fecha actual
-                    if (busqueda.getCount() < cantidadDatos) {
+                    if (busqueda.getCount() < countDatos) {
                         //No existe la cantidad de datos indicados guardados con la fecha
-                        crearAlertaVerde();
+                        crearAlertaVerde(nameTabla);
                     } //en caso contrario si estarían guardados los datos y no se debería generar ninguna alerta
 
 
                 } else {
                     //No existen datos guardados con la fecha indicada
-                    crearAlertaVerde();
+                    crearAlertaVerde(nameTabla);
                 }
                 busqueda.close();
 
@@ -140,20 +172,21 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
 
         }
 
-        return null;
+    return true;
+
     }
 
 
-    private void crearAlertaVerde() {
+    private void crearAlertaVerde(String nameTabla) {
 
-        boolean amarilla = comprobarAlertaAmarilla();
+        boolean amarilla = comprobarAlertaAmarilla(nameTabla);
 
         if(amarilla){
             //SE DEBE GENERAR UNA ALERTA AMARILLA PORQUE YA PASARON MÁS DE 3 DÍAS SIN CARGAR DATOS
-            crearAlertaAmarilla();
+            crearAlertaAmarilla(nameTabla);
         }else{
             //CREAR ALERTA VERDE
-            descripcion = "El día " + fecha_sin_hora + " no cargó todos los datos correspondientes del parámetro: " + nombreTabla;
+            descripcion = "El día " + fecha_sin_hora + " no cargó todos los datos correspondientes del parámetro: " + nameTabla;
             //Guardar el registro de alerta en la BD Alertas
             Alertas_DBHelper mDBHelper = new Alertas_DBHelper(context);
             SQLiteDatabase db = mDBHelper.getWritableDatabase();
@@ -162,7 +195,7 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
 
             values.put(AlertasContract.AlertasEntry.FECHA, fechaHs);
             values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_VERDE);
-            values.put(AlertasContract.AlertasEntry.PARAMETRO, nombreTabla);
+            values.put(AlertasContract.AlertasEntry.PARAMETRO, nameTabla);
             values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
             values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
 
@@ -172,7 +205,7 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
 
     }
 
-    private boolean comprobarAlertaAmarilla() {
+    private boolean comprobarAlertaAmarilla(String nameTabla) {
 
         Alertas_DBHelper mDBHelper = new Alertas_DBHelper(context);
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
@@ -191,7 +224,7 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
             fecha2diasAntes = simpleDateFormat.format(calendar3dias.getTime()).split(" ")[0];
 
 
-            String[] args = new String[]{nombreTabla, fecha2diasAntes};
+            String[] args = new String[]{nameTabla, fecha2diasAntes};
             Cursor cursorBusqueda = db.query(true,  AlertasContract.AlertasEntry.TABLE_NAME,
                     campos, selection, args, null, null, null, null);
 
@@ -205,7 +238,7 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
                 String fecha3diasAntes = simpleDateFormat.format(calendar2AntesAyer.getTime()).split(" ")[0];
 
 
-                String[] args2 = new String[]{nombreTabla, fecha3diasAntes};
+                String[] args2 = new String[]{nameTabla, fecha3diasAntes};
                 Cursor cursorBusqueda2 = db.query(true,  AlertasContract.AlertasEntry.TABLE_NAME,
                         campos, selection, args2, null, null, null, null);
 
@@ -224,8 +257,8 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
     }
 
 
-    private void crearAlertaAmarilla() {
-        descripcion = "No se han cargado todos los datos correspondientes del parámetro: " + nombreTabla + " en al menos los últimos 3 días. Quizás podría averiguar que sucede con su paciente.";
+    private void crearAlertaAmarilla(String nameTabla) {
+        descripcion = "No se han cargado todos los datos correspondientes del parámetro: " + nameTabla + " en al menos los últimos 3 días. Quizás podría averiguar que sucede con su paciente.";
         //Guardar el registro de alerta en la BD Alertas
         Alertas_DBHelper mDBHelper = new Alertas_DBHelper(context);
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
@@ -234,7 +267,7 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
 
         values.put(AlertasContract.AlertasEntry.FECHA, fechaHs);
         values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA);
-        values.put(AlertasContract.AlertasEntry.PARAMETRO, nombreTabla);
+        values.put(AlertasContract.AlertasEntry.PARAMETRO, nameTabla);
         values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
         values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
 

@@ -123,12 +123,15 @@ public class ServiceGetContacts extends IntentService {
 
         String emailsContacts = data.get(JSON_CONSTANTS.EMAIL);
         String telefonosContacts = data.get(JSON_CONSTANTS.CONTACTS_MOBILE_NUMBER);
-
+        String nombreContacts = data.get(JSON_CONSTANTS.CONTACTS);
+        String idContacts = data.get(JSON_CONSTANTS.ID);
         //Guardar en configuraciones
         Configuraciones configuraciones = new Configuraciones(getApplicationContext());
         configuraciones.setUserEmailContacts(emailsContacts);
 
         configuraciones.setUserCelContacts(telefonosContacts);
+        configuraciones.setUserNameContacts(nombreContacts);
+        configuraciones.setUserIdContacts(idContacts);
 
     }
 

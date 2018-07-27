@@ -602,6 +602,7 @@ public class Activity_profesionales extends AppCompatActivity
                     Configuraciones configuraciones = new Configuraciones(getApplicationContext());
                     configuraciones.setUserEmailContacts(email);
                     configuraciones.setUserCelContacts(mobileNumber);
+                    configuraciones.setUserNameContacts(lastName + ", " + firstName);
 
                     Toast.makeText(getApplicationContext(),msjExito, Toast.LENGTH_LONG).show();
                     mSelection = mSelection -1;
@@ -609,6 +610,9 @@ public class Activity_profesionales extends AppCompatActivity
                 }else {
                     Toast.makeText(getApplicationContext(),msjError, Toast.LENGTH_LONG).show();
                 }
+            }else{
+                String mensaje = "Corrobore su conexión a internet e intente nuevamente";
+                Toast.makeText(getApplicationContext(), mensaje, Toast.LENGTH_LONG).show();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

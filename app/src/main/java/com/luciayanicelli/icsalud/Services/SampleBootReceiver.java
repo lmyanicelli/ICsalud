@@ -21,7 +21,8 @@ public class SampleBootReceiver extends BroadcastReceiver {
 
     private SetearAlarma saPeso, saPA, saSintomas, saConsejoSaludable, saMedicamentos,
             setearAlarmaEnviarMailAlertas, setearAlarmaEnviarMailMediciones, setearAlertaVerde,
-            saEnviarDatosServidor, saGetContacts, setearAlarmaEnviarMailJugada, setearAlarmaEncuestas;
+            saEnviarDatosServidor, saGetContacts, setearAlarmaEnviarMailJugada, setearAlarmaEncuestas,
+    setearAlarmaEnviarTablaDatos;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -59,6 +60,9 @@ public class SampleBootReceiver extends BroadcastReceiver {
 
             setearAlarmaEnviarMailJugada = new SetearAlarma(context, Constants.PARAMETRO_GENERAR_EMAIL_JUGADAS);
             setearAlarmaEnviarMailJugada.execute();
+
+            setearAlarmaEnviarTablaDatos = new SetearAlarma(context, Constants.PARAMETRO_GENERAR_EMAIL_TABLA_DATOS);
+            setearAlarmaEnviarTablaDatos.execute();
 
             setearAlarmaEncuestas = new SetearAlarma(context, Constants.PARAMETRO_ENCUESTAS);
             setearAlarmaEncuestas.execute();

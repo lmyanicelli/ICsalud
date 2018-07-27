@@ -41,7 +41,14 @@ public class AlertaVerdeJobService extends JobService {
                 //30/05/18
                 fecha = simpleDateFormat.format(calendarAyer.getTime());
 
-                AlertaVerde2 alertaVerde1 = new AlertaVerde2(fecha,
+                AlertaVerde alertaVerde = new AlertaVerde(fecha,
+                        AutodiagnosticoContract.AutodiagnosticoEntry.PESO_DATE,
+                        AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PESO,
+                        1,
+                        getApplicationContext());
+                alertaVerde.execute();
+
+         /*       AlertaVerde2 alertaVerde1 = new AlertaVerde2(fecha,
                         AutodiagnosticoContract.AutodiagnosticoEntry.PESO_DATE,
                         AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PESO,
                         1,
@@ -53,7 +60,7 @@ public class AlertaVerdeJobService extends JobService {
                     }
                 };
                 alertaVerde1.execute();
-
+*/
 
 
 

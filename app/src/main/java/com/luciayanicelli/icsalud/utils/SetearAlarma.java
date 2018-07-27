@@ -415,17 +415,6 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
                         AlarmManager alarmManagerEJugadas = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
-        /*
-        void setRepeating (int type,
-                long triggerAtMillis,
-                long intervalMillis,
-                PendingIntent operation)
-        Parameters
-        type	int: type of alarm. Value is RTC_WAKEUP, RTC, ELAPSED_REALTIME_WAKEUP or ELAPSED_REALTIME.
-        triggerAtMillis	long: time in milliseconds that the alarm should first go off, using the appropriate clock (depending on the alarm type).
-        intervalMillis	long: interval in milliseconds between subsequent repeats of the alarm.
-        operation	PendingIntent: Action to perform when the alarm goes off; typically comes from IntentSender.getBroadcast().
-         */
                         alarmManagerEJugadas.setRepeating(AlarmManager.RTC_WAKEUP, calendarEJugadas.getTimeInMillis(), 30 * AlarmManager.INTERVAL_DAY, pendingIntentEJugadas);
 
                     }else{
@@ -434,6 +423,7 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
                     }
 
                     break;
+
 
             case Constants.PARAMETRO_ALERTA_VERDE:
 

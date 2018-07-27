@@ -69,7 +69,7 @@ public class MyReceiverAlertaVerde extends BroadcastReceiver {
                      context);
             alertaVerde1.execute();
 
-            AlertaVerde alertaVerde2 = new AlertaVerde(fecha,
+       /*     AlertaVerde alertaVerde2 = new AlertaVerde(fecha,
                     AutodiagnosticoContract.AutodiagnosticoEntry.PA_DATE,
                     AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PA,
                     1,
@@ -82,7 +82,7 @@ public class MyReceiverAlertaVerde extends BroadcastReceiver {
                     3,
                     context);
             alertaVerde3.execute();
-
+*/
         }catch(Exception e){
             e.printStackTrace();
         }

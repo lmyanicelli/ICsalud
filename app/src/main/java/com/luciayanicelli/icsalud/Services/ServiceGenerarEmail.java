@@ -18,6 +18,9 @@ import com.luciayanicelli.icsalud.DataBase.JuegoContract;
 import com.luciayanicelli.icsalud.DataBase.Jugada_DBHelper;
 import com.luciayanicelli.icsalud.Notifications.MyReceiverGenerarEmail;
 import com.luciayanicelli.icsalud.utils.EnviarMailSegundoPlano;
+import com.luciayanicelli.icsalud.utils.PAFC;
+import com.luciayanicelli.icsalud.utils.Peso;
+import com.luciayanicelli.icsalud.utils.Sintomas;
 
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
@@ -94,7 +97,7 @@ public class ServiceGenerarEmail extends IntentService {
                       if(conexionInternet.execute().get()){
 
                           if (Constants.SERVICE_GENERAR_EMAIL_ACTION_RUN_SERVICE.equals(action)) {
-                              handleActionRun();
+                              handleAlertas();
                           }else if (Constants.SERVICE_GENERAR_EMAIL_ACTION_RUN_SERVICE_MEDICIONES.equals(action)){
                               try {
                                   handleActionMediciones();
@@ -162,7 +165,7 @@ public class ServiceGenerarEmail extends IntentService {
      * Maneja la acción de ejecución del servicio
      */
     //ENVIA LAS ALERTAS PENDIENTES
-    private void handleActionRun() {
+    private void handleAlertas() {
         try {
 
             //ANALIZA ALERTAS
@@ -575,6 +578,60 @@ Query the given URL, returning a Cursor over the result set.*/
                                 contactoAdministrador);
                 Boolean mailSegundoPlanoCS = enviarMailSegundoPlanoCS.execute().get();
 
+                enviarTablaDatosPeso();
+
+
+    }
+
+    private void enviarTablaDatosPeso() throws ExecutionException, InterruptedException {
+
+       Peso mPeso = new Peso(getApplicationContext());
+       textoEnviar = mPeso.getMedicionesCSV();
+
+       asunto = AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PESO;
+
+        EnviarMailSegundoPlano enviarMailSegundoPlanoPeso =
+                new EnviarMailSegundoPlano(getApplicationContext(),
+                        asunto,
+                        textoEnviar,
+                        contactoAdministrador);
+        enviarMailSegundoPlanoPeso.execute().get();
+
+       enviarDataTablaPA();
+
+
+    }
+
+    private void enviarDataTablaPA() throws ExecutionException, InterruptedException {
+
+        PAFC mPAFC = new PAFC(getApplicationContext());
+        textoEnviar = mPAFC.getMedicionesCSV();
+
+        asunto = AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PA;
+
+        EnviarMailSegundoPlano enviarMailSegundoPlanoPA =
+                new EnviarMailSegundoPlano(getApplicationContext(),
+                        asunto,
+                        textoEnviar,
+                        contactoAdministrador);
+        enviarMailSegundoPlanoPA.execute().get();
+
+        enviarDataTablaSintomas();
+    }
+
+    private void enviarDataTablaSintomas() throws ExecutionException, InterruptedException {
+
+        Sintomas mSintomas = new Sintomas(getApplicationContext());
+        textoEnviar = mSintomas.getMedicionesCSV();
+
+        asunto = AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_SINTOMAS;
+
+        EnviarMailSegundoPlano enviarMailSegundoPlanoSintomas =
+                new EnviarMailSegundoPlano(getApplicationContext(),
+                        asunto,
+                        textoEnviar,
+                        contactoAdministrador);
+        enviarMailSegundoPlanoSintomas.execute().get();
 
     }
 

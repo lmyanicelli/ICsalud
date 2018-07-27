@@ -476,6 +476,9 @@ public class LoginActivity extends AppCompatActivity {
         SetearAlarma setearAlarmaEnviarMailJugada = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_EMAIL_JUGADAS);
         setearAlarmaEnviarMailJugada.execute();
 
+        SetearAlarma setearAlarmaEnviarMailTablaDatos = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_EMAIL_TABLA_DATOS);
+        setearAlarmaEnviarMailTablaDatos.execute();
+
     }
 
 

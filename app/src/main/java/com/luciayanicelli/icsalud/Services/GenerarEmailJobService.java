@@ -20,6 +20,9 @@ import com.luciayanicelli.icsalud.DataBase.Autodiagnostico_DBHelper;
 import com.luciayanicelli.icsalud.DataBase.JuegoContract;
 import com.luciayanicelli.icsalud.DataBase.Jugada_DBHelper;
 import com.luciayanicelli.icsalud.utils.EnviarMailSegundoPlano;
+import com.luciayanicelli.icsalud.utils.PAFC;
+import com.luciayanicelli.icsalud.utils.Peso;
+import com.luciayanicelli.icsalud.utils.Sintomas;
 
 import java.util.concurrent.ExecutionException;
 
@@ -495,7 +498,48 @@ Query the given URL, returning a Cursor over the result set.*/
                         "Consejos Saludables - Preguntas Frecuentes",
                         textoMail,
                         contactoAdministrador);
-        Boolean mailSegundoPlanoCS = enviarMailSegundoPlanoCS.execute().get();
+        enviarMailSegundoPlanoCS.execute().get();
+
+        //Enviar mediciones formato separado por comas
+
+        Peso mPeso = new Peso(getApplicationContext());
+        textoEnviar = mPeso.getMedicionesCSV();
+
+        asunto = AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PESO;
+
+        EnviarMailSegundoPlano enviarMailSegundoPlanoPeso =
+                new EnviarMailSegundoPlano(getApplicationContext(),
+                        asunto,
+                        textoEnviar,
+                        contactoAdministrador);
+        enviarMailSegundoPlanoPeso.execute().get();
+
+
+        PAFC mPAFC = new PAFC(getApplicationContext());
+        textoEnviar = mPAFC.getMedicionesCSV();
+
+        asunto = AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PA;
+
+        EnviarMailSegundoPlano enviarMailSegundoPlanoPA =
+                new EnviarMailSegundoPlano(getApplicationContext(),
+                        asunto,
+                        textoEnviar,
+                        contactoAdministrador);
+        enviarMailSegundoPlanoPA.execute().get();
+
+
+        Sintomas mSintomas = new Sintomas(getApplicationContext());
+        textoEnviar = mSintomas.getMedicionesCSV();
+
+        asunto = AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_SINTOMAS;
+
+        EnviarMailSegundoPlano enviarMailSegundoPlanoSintomas =
+                new EnviarMailSegundoPlano(getApplicationContext(),
+                        asunto,
+                        textoEnviar,
+                        contactoAdministrador);
+        enviarMailSegundoPlanoSintomas.execute().get();
+
 
         isWorking = false;
         jobFinished(jobParameters, false);
