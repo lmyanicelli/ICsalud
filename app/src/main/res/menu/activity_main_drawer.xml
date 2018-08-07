@@ -30,7 +30,7 @@
 
     </group>
 
-    <item android:title="Ayuda">
+  <!-- version 2 <item android:title="Ayuda">
         <menu>
             <item
                 android:id="@+id/nav_sos"
@@ -38,5 +38,6 @@
                 android:title="S.O.S." />
         </menu>
     </item>
+    -->
 
 </menu>

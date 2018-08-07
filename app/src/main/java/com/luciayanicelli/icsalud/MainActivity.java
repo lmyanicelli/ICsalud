@@ -5,17 +5,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.luciayanicelli.icsalud.Activity_Autodiagnostico.Activity_Menu_Autodiagnostico;
 import com.luciayanicelli.icsalud.Activity_Configuracion.Activity_configuracion;
@@ -27,7 +23,6 @@ import com.luciayanicelli.icsalud.DataBase.RecordatoriosContract;
 import com.luciayanicelli.icsalud.DataBase.RecordatoriosDBHelper;
 import com.luciayanicelli.icsalud.Services.Constants;
 import com.luciayanicelli.icsalud.utils.Activity_Encuestas;
-import com.luciayanicelli.icsalud.utils.AlertDialogs;
 import com.luciayanicelli.icsalud.utils.FragmentList;
 
 
@@ -37,8 +32,9 @@ import com.luciayanicelli.icsalud.utils.FragmentList;
 *
 */
 
+//version 2 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AlertDialogs.NoticeDialogListener, FragmentList.onRecordatorioSelectedListener {
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AlertDialogs.NoticeDialogListener, FragmentList.onRecordatorioSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, FragmentList.onRecordatorioSelectedListener {
 
     private static final int REQUEST_SEND_MAIL = 1 ;
 
@@ -66,11 +62,13 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         //Botones flotantes
-        FloatingActionButton fab_mail = findViewById(R.id.fab);
+    //version2
+       /* FloatingActionButton fab_mail = findViewById(R.id.fab);
         fab_mail.setOnClickListener(this);
 
         FloatingActionButton fab_sos =  findViewById(R.id.fab_sos);
         fab_sos.setOnClickListener(this);
+        */
 
         //Menú de la izquierda
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -89,7 +87,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    @Override
+/*version 2    @Override
     public void onClick(View view) {
 
         switch (view.getId()){
@@ -133,13 +131,13 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(getApplicationContext(), "No hay ningun cliente de correo instalado.", Toast.LENGTH_SHORT).show();
         }
     }
+    */
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-            this.finish();
         } else {
             super.onBackPressed();
         }
@@ -198,14 +196,14 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
 
 
-        }  else if (id == R.id.nav_sos) {
+        } /*version 2 else if (id == R.id.nav_sos) {
 
             //Muestra un alertDialog consultando al paciente si desea solicitar auxilio a su médico, ambulancia y cuidadores
             //En caso afirmativo obtiene ubicación y la envía por msj de texto y mail
             //Luego consulta al usuario si desea llamar a su ambulancia
             crearAlertDialogSOS();
 
-        }
+        }*/
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -213,7 +211,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    private void crearAlertDialogSOS() {
+ /*version 2   private void crearAlertDialogSOS() {
 
             AlertDialogs alertDialogs = new AlertDialogs();
             alertDialogs.setMsj(getResources().getString(R.string.sos_msj));
@@ -242,7 +240,7 @@ public class MainActivity extends AppCompatActivity
     public void onDialogNegativeClick(DialogFragment dialog, String name) {
 
     }
-
+*/
 
     // Función para recibir la interacción del usuario al seleccionar un recordatorio del listado
     @Override

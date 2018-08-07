@@ -34,5 +34,19 @@
             android:summary="@string/horario_defecto_consejos_saludables"
             android:title="@string/pref_header_consejo_saludable" />
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_frecuencia_notificaciones"
+        android:key="pref_key_frecuencia_notificaciones">
+        <EditTextPreference
+            android:key="frecuencia_consejo_saludable"
+            android:title="@string/consejo_saludable"
+            android:persistent="true"
+            android:dialogTitle="@string/consejo_saludable"
+            android:dialogMessage="Cada cuántos días recibirá un Consejo Saludable"
+            android:defaultValue="3"
+            android:inputType="number"
+            android:maxLength="1"
+            />
+    </PreferenceCategory>
 
 </PreferenceScreen>

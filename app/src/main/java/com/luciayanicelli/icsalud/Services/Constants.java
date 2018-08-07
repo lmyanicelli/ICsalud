@@ -47,6 +47,9 @@ public class Constants {
     public static final String KEY_PREF_HORARIO_SINTOMAS = "horario_sintomas";
     public static final String KEY_PREF_HORARIO_CONSEJO_SALUDABLE = "horario_consejo_saludable";
 
+    public static final String KEY_PREF_FRECUENCIA_CONSEJO_SALUDABLE = "frecuencia_consejo_saludable";
+    public static final String DEFAULT_FRECUENCIA_CONSEJO_SALUDABLE = "3";
+
 
     public static final String DEFAULT_HOUR_MEDICIONES = "8:00";
     public static final String DEFAULT_HOUR_CONSEJO_SALUDABLE = "10:00";
@@ -84,13 +87,20 @@ public class Constants {
 
 
     //PROFESIONALES
-    public static final String[] ARRAY_SELECTION_VINCULACIONES_PROFESIONALES = new String[]{
+ /*version 2   public static final String[] ARRAY_SELECTION_VINCULACIONES_PROFESIONALES = new String[]{
             "Profesionales Vinculados",
             "Solicitudes Recibidas",
             "Solicitudes Enviadas",
             "Enviar Nueva Solicitud",
             "Contactos Existentes",
             "Nuevo Contacto"};
+*/
+    public static final String[] ARRAY_SELECTION_VINCULACIONES_PROFESIONALES = new String[]{
+            "Profesionales Vinculados",
+            "Solicitudes Recibidas",
+            "Solicitudes Enviadas",
+            "Enviar Nueva Solicitud"};
 
 
 }
+

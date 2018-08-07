@@ -70,6 +70,8 @@ public class SettingsFragment extends PreferenceFragment  implements SharedPrefe
         bindPreferenceSummaryToValue(findPreference(Constants.KEY_PREF_HORARIO_SINTOMAS));
         bindPreferenceSummaryToValue(findPreference(Constants.KEY_PREF_HORARIO_CONSEJO_SALUDABLE));
 
+        bindPreferenceSummaryToValue(findPreference(Constants.KEY_PREF_FRECUENCIA_CONSEJO_SALUDABLE));
+
         this.context = getActivity().getApplicationContext();
 
     }
@@ -194,6 +196,15 @@ public class SettingsFragment extends PreferenceFragment  implements SharedPrefe
             //04/06/18
             SetearAlarma setearAlarma = new SetearAlarma(context, parametro);
             setearAlarma.execute();
+
+        }else if(key.equalsIgnoreCase(Constants.KEY_PREF_FRECUENCIA_CONSEJO_SALUDABLE)){
+            Preference pref = findPreference(key);
+            // Set summary to be the user-description for the selected value
+            pref.setSummary(sharedPreferences.getString(key, ""));
+
+            SetearAlarma setearAlarma = new SetearAlarma(context, Constants.CONSEJO_SALUDABLE);
+            setearAlarma.execute();
+
         }
     }
 

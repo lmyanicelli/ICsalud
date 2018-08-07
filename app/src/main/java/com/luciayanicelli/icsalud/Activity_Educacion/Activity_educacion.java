@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -16,12 +15,10 @@ import android.view.MenuItem;
 import com.luciayanicelli.icsalud.Activity_Autodiagnostico.Activity_Menu_Autodiagnostico;
 import com.luciayanicelli.icsalud.Activity_Configuracion.Activity_configuracion;
 import com.luciayanicelli.icsalud.Activity_Juego.Activity_juego;
-import com.luciayanicelli.icsalud.Activity_SOS;
 import com.luciayanicelli.icsalud.Activity_profesionales.Activity_profesionales;
 import com.luciayanicelli.icsalud.MainActivity;
 import com.luciayanicelli.icsalud.R;
 import com.luciayanicelli.icsalud.Services.Constants;
-import com.luciayanicelli.icsalud.utils.AlertDialogs;
 
 
 
@@ -29,9 +26,9 @@ import com.luciayanicelli.icsalud.utils.AlertDialogs;
 *
 */
 
+//version 2 public class Activity_educacion extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AlertDialogs.NoticeDialogListener{
 public class Activity_educacion extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        AlertDialogs.NoticeDialogListener{
+        implements NavigationView.OnNavigationItemSelectedListener{
 
 
     @Override
@@ -139,7 +136,7 @@ public class Activity_educacion extends AppCompatActivity
             startActivity(intent);
 
 
-        } else if (id == R.id.nav_sos) {
+        } /*version 2 else if (id == R.id.nav_sos) {
 
             //Muestra un alertDialog consultando al paciente si desea solicitar auxilio a su médico, ambulancia y cuidadores
             //En caso afirmativo obtiene ubicación y la envía por msj de texto y mail
@@ -147,13 +144,14 @@ public class Activity_educacion extends AppCompatActivity
             crearAlertDialogSOS();
 
         }
+        */
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-
+/*version 2
     private void crearAlertDialogSOS() {
 
         AlertDialogs alertDialogs = new AlertDialogs();
@@ -183,6 +181,7 @@ public class Activity_educacion extends AppCompatActivity
     public void onDialogNegativeClick(DialogFragment dialog, String name) {
 
     }
+*/
 
     @Override
     public void onBackPressed() {

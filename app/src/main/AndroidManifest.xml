@@ -8,7 +8,7 @@
         location permissions for the 'MyLocation' functionality.
         RIESGOSO
     -->
-    <uses-permission
+  <!--version 2  <uses-permission
         android:name="android.permission.ACCESS_FINE_LOCATION"
         android:description="@string/permdesc_access_fine_location"
         android:label="@string/permlab_access_fine_location"
@@ -20,12 +20,13 @@
         android:label="@string/permlab_access_fine_location"
         android:permissionGroup="android.permission-group.LOCATION"
         android:protectionLevel="dangerous" />
+        -->
 
     <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
-    <uses-feature android:name="android.hardware.location.gps" />
+  <!-- version 2 <uses-feature android:name="android.hardware.location.gps" /> -->
 
     <!-- PERMISO PARA ENVIAR SMS - RIESGOSO -->
-    <uses-permission
+  <!-- version 2  <uses-permission
         android:name="android.permission.CALL_PHONE"
         android:description="@string/permdesc_call_phone"
         android:label="@string/permlab_call_phone"
@@ -38,15 +39,15 @@
         android:label="@string/permlab_send_sms"
         android:permissionGroup="android.permission-group.SMS"
         android:protectionLevel="dangerous" />
-
+-->
     <!-- Permisos para llamar por teléfono - RIESGOSO -->
-    <uses-permission
+ <!--version 2   <uses-permission
         android:name="android.permission.READ_PHONE_STATE"
         android:description="@string/permdesc_phone_state"
         android:label="@string/permlab_phone_state"
         android:permissionGroup="android.permission-group.PHONE"
         android:protectionLevel="dangerous" />
-
+-->
     <!-- Inicio Permisos requeridos email -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -123,7 +124,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".Activity_SOS" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

@@ -11,10 +11,8 @@ import android.support.annotation.NonNull;
 import com.luciayanicelli.icsalud.Api_Json.JSON_CONSTANTS;
 import com.luciayanicelli.icsalud.DataBase.AlertasContract;
 import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
+import com.luciayanicelli.icsalud.DataBase.AutodiagnosticoContract;
 import com.luciayanicelli.icsalud.DataBase.Autodiagnostico_DBHelper;
-import com.luciayanicelli.icsalud.utils.PAFC;
-import com.luciayanicelli.icsalud.utils.Peso;
-import com.luciayanicelli.icsalud.utils.Sintomas;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -73,32 +71,82 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... strings) {
 
-        Peso mPeso = new Peso(context);
-        mPeso.alertaVerde(fechaHs);
 
-        PAFC mPAFC = new PAFC(context);
-        mPAFC.alertaVerde(fechaHs);
+        //PRUEBA CON FOR
+        boolean isFinish = false;
+        for(int i=0; i<3; i++){
+            switch (i){
 
-        Sintomas mSintomas = new Sintomas(context);
-        mSintomas.alertaVerde(fechaHs);
+                case 0:
+                    if(iniciarAlertaVerde(fecha_sin_hora,
+                            AutodiagnosticoContract.AutodiagnosticoEntry.PESO_DATE,
+                            AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PESO,
+                            1)){
+                        break;
+                    }
+                    break;
 
-        return null;
+                case 1:
+                    if(iniciarAlertaVerde(fecha_sin_hora,
+                            AutodiagnosticoContract.AutodiagnosticoEntry.PA_DATE,
+                            AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PA,
+                            1)){
+                        break;
+                    }
+                    break;
+
+                case 2:
+                    if(iniciarAlertaVerde(fecha_sin_hora,
+                            AutodiagnosticoContract.AutodiagnosticoEntry.SINTOMAS_DATE,
+                            AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_SINTOMAS,
+                            3)){
+                        break;
+                    }
+                    break;
+
+                default:
+                        break;
+
+            }
+
+        }
+
+
 
 
         //TAREA PRINCIPAL
-    /*   iniciarAlertaVerde(fecha_sin_hora, nombreDateTabla, nombreTabla, cantidadDatos);
+   /*    iniciarAlertaVerde(fecha_sin_hora, nombreDateTabla, nombreTabla, cantidadDatos);
 
-       iniciarAlertaVerde(fecha_sin_hora,
-               AutodiagnosticoContract.AutodiagnosticoEntry.PA_DATE,
-               AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PA,
-               1);
-       iniciarAlertaVerde(fecha_sin_hora,
-              AutodiagnosticoContract.AutodiagnosticoEntry.SINTOMAS_DATE,
-                       AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_SINTOMAS,
-                       3);
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        // On complete call either onSignupSuccess or onSignupFailed
+                        // depending on success
+                        iniciarAlertaVerde(fecha_sin_hora,
+                                AutodiagnosticoContract.AutodiagnosticoEntry.PA_DATE,
+                                AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PA,
+                                1);
+                    }
+                }, 3000);
+
+
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        // On complete call either onSignupSuccess or onSignupFailed
+                        // depending on success
+                        iniciarAlertaVerde(fecha_sin_hora,
+                                AutodiagnosticoContract.AutodiagnosticoEntry.SINTOMAS_DATE,
+                                AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_SINTOMAS,
+                                3);
+                    }
+                }, 5000);
+
+
+*/
 
         return null;
-        */
+
     }
 
     private boolean iniciarAlertaVerde(String fecha_sin_hora, String nameDateTabla, String nameTabla, int countDatos) {
@@ -126,6 +174,7 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
             if (busquedaAV != null & busquedaAV.moveToFirst()) {
                 //existen alertas verdes con esa fecha y parámetro
                 busquedaAV.getCount();
+                return true;
 
             }else {
 
@@ -152,38 +201,41 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
                     //Analiza si existe la cantidad de registros establecida en cantidadDatos con la fecha actual
                     if (busqueda.getCount() < countDatos) {
                         //No existe la cantidad de datos indicados guardados con la fecha
-                        crearAlertaVerde(nameTabla);
+                        return crearAlertaVerde(nameTabla);
                     } //en caso contrario si estarían guardados los datos y no se debería generar ninguna alerta
+
 
 
                 } else {
                     //No existen datos guardados con la fecha indicada
-                    crearAlertaVerde(nameTabla);
+                    return crearAlertaVerde(nameTabla);
                 }
                 busqueda.close();
+
 
 
             }
 
             busquedaAV.close();
+            return true;
 
         } catch (Exception e) {
             e.printStackTrace();
+            return true;
 
         }
 
-    return true;
 
     }
 
 
-    private void crearAlertaVerde(String nameTabla) {
+    private boolean crearAlertaVerde(String nameTabla) {
 
         boolean amarilla = comprobarAlertaAmarilla(nameTabla);
 
         if(amarilla){
             //SE DEBE GENERAR UNA ALERTA AMARILLA PORQUE YA PASARON MÁS DE 3 DÍAS SIN CARGAR DATOS
-            crearAlertaAmarilla(nameTabla);
+            return crearAlertaAmarilla(nameTabla);
         }else{
             //CREAR ALERTA VERDE
             descripcion = "El día " + fecha_sin_hora + " no cargó todos los datos correspondientes del parámetro: " + nameTabla;
@@ -200,6 +252,8 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
             values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
 
             db.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values);
+
+            return true;
 
         }
 
@@ -257,7 +311,7 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
     }
 
 
-    private void crearAlertaAmarilla(String nameTabla) {
+    private boolean crearAlertaAmarilla(String nameTabla) {
         descripcion = "No se han cargado todos los datos correspondientes del parámetro: " + nameTabla + " en al menos los últimos 3 días. Quizás podría averiguar que sucede con su paciente.";
         //Guardar el registro de alerta en la BD Alertas
         Alertas_DBHelper mDBHelper = new Alertas_DBHelper(context);
@@ -276,6 +330,7 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
         }catch (Exception e){
             e.printStackTrace();
         }
+        return true;
 
         }
 

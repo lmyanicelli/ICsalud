@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
 import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
+import com.luciayanicelli.icsalud.Api_Json.Get_Practitioner_index;
+import com.luciayanicelli.icsalud.Api_Json.JSON_CONSTANTS;
 import com.luciayanicelli.icsalud.DataBase.AlertasContract;
 import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
 import com.luciayanicelli.icsalud.DataBase.AutodiagnosticoContract;
@@ -23,6 +25,7 @@ import com.luciayanicelli.icsalud.utils.Peso;
 import com.luciayanicelli.icsalud.utils.Sintomas;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -68,7 +71,7 @@ public class ServiceGenerarEmail extends IntentService {
     private PendingIntent pendingIntentSinConexion, pendingIntentSinConexion30;
 
     private int contador = 0;
-    private String contactosMediciones, contactoAdministrador;
+    private String contactosAlertas, contactoAdministrador;
 
     private Configuraciones configuraciones;
 
@@ -87,7 +90,8 @@ public class ServiceGenerarEmail extends IntentService {
 
             configuraciones = new Configuraciones(getApplicationContext());
 
-            contactosMediciones = configuraciones.getUserEmailRemitente();
+            contactosAlertas = configuraciones.getUserEmailRemitente();
+
             contactoAdministrador = configuraciones.getEmailAdministrator();
 
 
@@ -97,6 +101,7 @@ public class ServiceGenerarEmail extends IntentService {
                       if(conexionInternet.execute().get()){
 
                           if (Constants.SERVICE_GENERAR_EMAIL_ACTION_RUN_SERVICE.equals(action)) {
+                              actualizarContactosMediciones();
                               handleAlertas();
                           }else if (Constants.SERVICE_GENERAR_EMAIL_ACTION_RUN_SERVICE_MEDICIONES.equals(action)){
                               try {
@@ -158,6 +163,34 @@ public class ServiceGenerarEmail extends IntentService {
                 */
            // }
         }
+    }
+
+    private void actualizarContactosMediciones() {
+
+            try {
+                Get_Practitioner_index get_practitioner_index = new Get_Practitioner_index(getApplicationContext(), JSON_CONSTANTS.PRACTITIONER_STATUS_FRIEND);
+                HashMap<String, String> data = get_practitioner_index.execute().get();
+                if (data.get(JSON_CONSTANTS.HEADER_AUTHORIZATION).equalsIgnoreCase(String.valueOf(Boolean.TRUE))) {
+                    if (data.get(JSON_CONSTANTS.RESPONSE_TOTAL).equalsIgnoreCase("0")) {
+
+                        configuraciones.setUserEmailRemitentes(Configuraciones.DEFAULT_USER_EMAIL_REMITENTE);
+                        contactosAlertas = configuraciones.getUserEmailRemitente();
+
+                    }else{
+                        String email_professionals = data.get(JSON_CONSTANTS.EMAIL);
+
+                        configuraciones.setUserEmailRemitentes(email_professionals);
+
+                        contactosAlertas =configuraciones.getUserEmailRemitente();
+                    }
+
+                }
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
     }
     //LUEGO INVERTIR.. PRIMERO CONECTADO A INTERNET Y DESPUES VER LA CONSTANTS
 
@@ -251,7 +284,7 @@ Query the given URL, returning a Cursor over the result set.*/
                 }while(cursorPA.moveToNext());
 
                     EnviarMailSegundoPlano enviarMailSegundoPlanoPA =
-                            new EnviarMailSegundoPlano(getApplicationContext(), asunto, textoEnviar, contactosMediciones);
+                            new EnviarMailSegundoPlano(getApplicationContext(), asunto, textoEnviar, contactoAdministrador);
                     Boolean mailEnviadoPA = enviarMailSegundoPlanoPA.execute().get();
 
 //
@@ -337,7 +370,7 @@ Query the given URL, returning a Cursor over the result set.*/
             }while(cursorPESO.moveToNext());
 
             EnviarMailSegundoPlano enviarMailSegundoPlanoPESO =
-                    new EnviarMailSegundoPlano(getApplicationContext(), asunto, textoEnviar, contactosMediciones);
+                    new EnviarMailSegundoPlano(getApplicationContext(), asunto, textoEnviar, contactoAdministrador);
             Boolean mailEnviadoPESO = null;
             try {
                 mailEnviadoPESO = enviarMailSegundoPlanoPESO.execute().get();
@@ -416,7 +449,7 @@ Query the given URL, returning a Cursor over the result set.*/
             }while(cursorSINTOMAS.moveToNext());
 
             EnviarMailSegundoPlano enviarMailSegundoPlanoSINTOMAS =
-                    new EnviarMailSegundoPlano(getApplicationContext(), asunto, textoEnviar, contactosMediciones);
+                    new EnviarMailSegundoPlano(getApplicationContext(), asunto, textoEnviar, contactoAdministrador);
             Boolean mailEnviadoSINTOMAS = null;
             try {
                 mailEnviadoSINTOMAS = enviarMailSegundoPlanoSINTOMAS.execute().get();
@@ -474,7 +507,7 @@ Query the given URL, returning a Cursor over the result set.*/
             //    }while (cursor.moveToNext());
         }while(cursor.moveToPrevious()); //para que muestre primero las últimas alertas generadas
 
-            EnviarMailSegundoPlano enviarMailSegundoPlano2 = new EnviarMailSegundoPlano(getApplicationContext(), asunto, textoEnviar, contactosMediciones);
+            EnviarMailSegundoPlano enviarMailSegundoPlano2 = new EnviarMailSegundoPlano(getApplicationContext(), asunto, textoEnviar, contactosAlertas);
             Boolean mailEnviado2 = enviarMailSegundoPlano2.execute().get();
 
 

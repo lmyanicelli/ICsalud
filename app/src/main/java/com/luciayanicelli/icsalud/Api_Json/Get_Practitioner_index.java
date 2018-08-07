@@ -166,7 +166,7 @@ public class Get_Practitioner_index extends AsyncTask<Integer, Void, HashMap<Str
                         data = obtenerData(jsonArray);
                         professionals = professionals + data.get(JSON_CONSTANTS.PROFESSIONALS) + ";";
                         id_professionals = id_professionals + data.get(JSON_CONSTANTS.ID) + ";";
-                        email_professionals = email_professionals + data.get(JSON_CONSTANTS.EMAIL) + ";";
+                        email_professionals = email_professionals + data.get(JSON_CONSTANTS.EMAIL) + ",";
                     }
 
                     data.put(JSON_CONSTANTS.HEADER_AUTHORIZATION, String.valueOf(Boolean.TRUE));
@@ -286,7 +286,7 @@ public class Get_Practitioner_index extends AsyncTask<Integer, Void, HashMap<Str
 
                 professionals = professionals + row.getString(JSON_CONSTANTS.LAST_NAME) + ", " + row.getString(JSON_CONSTANTS.FIRST_NAME) + ";";
                 id_professionals = id_professionals + String.valueOf(row.get(JSON_CONSTANTS.ID)) + ";";
-                email_professionals = email_professionals + row.getString(JSON_CONSTANTS.EMAIL) + ";";
+                email_professionals = email_professionals + row.getString(JSON_CONSTANTS.EMAIL) + ",";
             }
 
         }

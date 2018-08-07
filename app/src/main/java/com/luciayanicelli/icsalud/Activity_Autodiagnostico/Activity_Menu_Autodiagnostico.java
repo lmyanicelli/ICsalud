@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -17,15 +16,14 @@ import android.view.MenuItem;
 import com.luciayanicelli.icsalud.Activity_Configuracion.Activity_configuracion;
 import com.luciayanicelli.icsalud.Activity_Educacion.Activity_educacion;
 import com.luciayanicelli.icsalud.Activity_Juego.Activity_juego;
-import com.luciayanicelli.icsalud.Activity_SOS;
 import com.luciayanicelli.icsalud.Activity_profesionales.Activity_profesionales;
 import com.luciayanicelli.icsalud.MainActivity;
 import com.luciayanicelli.icsalud.R;
 import com.luciayanicelli.icsalud.Services.Constants;
-import com.luciayanicelli.icsalud.utils.AlertDialogs;
 import com.luciayanicelli.icsalud.utils.SetearAlarma;
 
-public class Activity_Menu_Autodiagnostico extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AlertDialogs.NoticeDialogListener {
+//version 2 public class Activity_Menu_Autodiagnostico extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AlertDialogs.NoticeDialogListener {
+public class Activity_Menu_Autodiagnostico extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     @Override
@@ -181,7 +179,7 @@ public class Activity_Menu_Autodiagnostico extends AppCompatActivity implements 
 
                 break;
 
-            case R.id.nav_sos:
+        /*version 2    case R.id.nav_sos:
 
                 //Muestra un alertDialog consultando al paciente si desea solicitar auxilio a su médico, ambulancia y cuidadores
                 //En caso afirmativo obtiene ubicación y la envía por msj de texto y mail
@@ -189,6 +187,7 @@ public class Activity_Menu_Autodiagnostico extends AppCompatActivity implements 
                 crearAlertDialogSOS();
 
                 break;
+                */
 
             default:
                 break;
@@ -200,7 +199,7 @@ public class Activity_Menu_Autodiagnostico extends AppCompatActivity implements 
         return true;
     }
 
-    private void crearAlertDialogSOS() {
+/*version 2    private void crearAlertDialogSOS() {
 
         AlertDialogs alertDialogs = new AlertDialogs();
         alertDialogs.setMsj(getResources().getString(R.string.sos_msj));
@@ -225,6 +224,7 @@ public class Activity_Menu_Autodiagnostico extends AppCompatActivity implements 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog, String name) {
     }
+    */
 
     @Override
     protected void onStop() {

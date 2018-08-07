@@ -49,7 +49,7 @@ public class EnviarMailSegundoPlano extends AsyncTask<Void, Void, Boolean> {
     private Session session;
 
 
-    private String nombrePaciente;
+    private String nombrePaciente, emailPaciente;
 
     private Boolean msjEnviado = null;
 
@@ -88,6 +88,7 @@ public class EnviarMailSegundoPlano extends AsyncTask<Void, Void, Boolean> {
         //    String[] emailArray = emailRemitentes.split(",");
 
             nombrePaciente = configuraciones.getUserSurname() +  ", " + configuraciones.getUserName();
+            emailPaciente = configuraciones.getUserEmail();
 
             javamail_mail_autorizado = configuraciones.getJAVAMAILmailAutorizado();
 
@@ -129,7 +130,7 @@ public class EnviarMailSegundoPlano extends AsyncTask<Void, Void, Boolean> {
                         Message message = new MimeMessage(session);
                         message.setFrom(new InternetAddress(javamail_mail_autorizado));
                      //   message.setSubject(asunto + " - " + nombrePaciente);
-                        message.setSubject(nombrePaciente + " - " + asunto);
+                        message.setSubject(nombrePaciente + " - " + emailPaciente + " - " + asunto);
                        // message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(emailArray[x]));
                         //
                         message.setRecipients(Message.RecipientType.BCC, InternetAddress.parse(contactos));
@@ -141,7 +142,7 @@ public class EnviarMailSegundoPlano extends AsyncTask<Void, Void, Boolean> {
                         } catch (Exception e) {
                     /* El javamail_mail_autorizado no se envió */
                           //  msjEnviado = false;
-                           msjEnviado = reintentar(session, javamail_mail_autorizado,asunto + " - " + nombrePaciente, contactos, textoEnviar);
+                           msjEnviado = reintentar(session, javamail_mail_autorizado,nombrePaciente + " - " + emailPaciente + " - " + asunto, contactos, textoEnviar);
                         }
                  //   }
 

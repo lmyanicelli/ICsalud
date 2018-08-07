@@ -11,6 +11,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
 import com.luciayanicelli.icsalud.Api_Json.Get_Practitioner_index;
 import com.luciayanicelli.icsalud.Api_Json.JSON_CONSTANTS;
 import com.luciayanicelli.icsalud.R;
@@ -101,7 +102,7 @@ public class FragmentProfesionalesVinculados extends ListFragment {
 
                         String[] profesionales = professionals.split(";");
                         String[] id_profesionales = id_professionals.split(";");
-                        String[] email_profesionales = email_professionals.split(";");
+                        String[] email_profesionales = email_professionals.split(",");
 
                         //Recupera los datos en un HashMap para luego poder ordenarlos alfabéticamente
                         HashMap<String, Lista_entrada_profesionales> listado = new HashMap<>();
@@ -122,6 +123,13 @@ public class FragmentProfesionalesVinculados extends ListFragment {
                         }
 
                         clickable = Boolean.TRUE;
+
+                        //cargo datos en configuraciones
+                        if(arguments == JSON_CONSTANTS.PRACTITIONER_STATUS_FRIEND){
+                            Configuraciones configuraciones = new Configuraciones(getContext());
+                            configuraciones.setUserEmailRemitentes(email_professionals);
+                        }
+
 
 
                     }

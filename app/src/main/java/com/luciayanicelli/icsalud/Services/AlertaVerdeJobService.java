@@ -8,7 +8,9 @@ import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.luciayanicelli.icsalud.Api_Json.JSON_CONSTANTS;
-import com.luciayanicelli.icsalud.DataBase.AutodiagnosticoContract;
+import com.luciayanicelli.icsalud.utils.PAFC;
+import com.luciayanicelli.icsalud.utils.Peso;
+import com.luciayanicelli.icsalud.utils.Sintomas;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -41,12 +43,24 @@ public class AlertaVerdeJobService extends JobService {
                 //30/05/18
                 fecha = simpleDateFormat.format(calendarAyer.getTime());
 
-                AlertaVerde alertaVerde = new AlertaVerde(fecha,
+                Peso mPeso = new Peso(getApplicationContext());
+                mPeso.alertaVerde(fecha);
+
+                PAFC mPAFC = new PAFC(getApplicationContext());
+                mPAFC.alertaVerde(fecha);
+
+                Sintomas mSintomas = new Sintomas(getApplicationContext());
+                mSintomas.alertaVerde(fecha);
+
+
+
+           /*     AlertaVerde alertaVerde = new AlertaVerde(fecha,
                         AutodiagnosticoContract.AutodiagnosticoEntry.PESO_DATE,
                         AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PESO,
                         1,
                         getApplicationContext());
                 alertaVerde.execute();
+                */
 
          /*       AlertaVerde2 alertaVerde1 = new AlertaVerde2(fecha,
                         AutodiagnosticoContract.AutodiagnosticoEntry.PESO_DATE,
@@ -75,6 +89,8 @@ public class AlertaVerdeJobService extends JobService {
         return isWorking;
     }
 
+
+/*
     private void alerta2() {
         AlertaVerde2 alertaVerde2 = new AlertaVerde2(fecha,
                 AutodiagnosticoContract.AutodiagnosticoEntry.PA_DATE,
@@ -105,7 +121,7 @@ public class AlertaVerdeJobService extends JobService {
         };
         alertaVerde3.execute();
     }
-
+    */
 
     @Override
     public boolean onStopJob(JobParameters jobParameters) {

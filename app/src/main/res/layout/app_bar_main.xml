@@ -25,7 +25,7 @@
         android:id="@+id/include2"
         layout="@layout/content_main" />
 
-    <android.support.design.widget.FloatingActionButton
+  <!--version 2  <android.support.design.widget.FloatingActionButton
     android:id="@+id/fab"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -40,5 +40,5 @@
         android:layout_gravity="bottom|start"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_alert" />
-
+-->
 </android.support.design.widget.CoordinatorLayout>

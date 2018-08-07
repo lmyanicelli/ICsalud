@@ -60,7 +60,7 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
     private static int JOB_ID_AV = 741238569;
     private static int JOB_ID_CONTACTS = 98741236;
     private static int JOB_ID_SERVIDOR = 159357;
-
+    private int frecuenciaCONSEJO_SALUDABLE;
 
 
     public SetearAlarma(Context context, String parametro){
@@ -273,9 +273,16 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
         intervalMillis	long: interval in milliseconds between subsequent repeats of the alarm.
         operation	PendingIntent: Action to perform when the alarm goes off; typically comes from IntentSender.getBroadcast().
          */
+
+                frecuenciaCONSEJO_SALUDABLE = Integer.parseInt(sharedPref.getString(Constants.KEY_PREF_FRECUENCIA_CONSEJO_SALUDABLE, Constants.DEFAULT_FRECUENCIA_CONSEJO_SALUDABLE));
+
+                if(frecuenciaCONSEJO_SALUDABLE == 0){
+                   frecuenciaCONSEJO_SALUDABLE = Integer.parseInt(Constants.DEFAULT_FRECUENCIA_CONSEJO_SALUDABLE);
+                }
+
                 alarmManagerCS.setRepeating(AlarmManager.RTC_WAKEUP,
                         calendarCONSEJO_SALUDABLE.getTimeInMillis(),
-                        AlarmManager.INTERVAL_DAY, pendingIntentCS);
+                        frecuenciaCONSEJO_SALUDABLE*AlarmManager.INTERVAL_DAY, pendingIntentCS);
 
 
                 break;

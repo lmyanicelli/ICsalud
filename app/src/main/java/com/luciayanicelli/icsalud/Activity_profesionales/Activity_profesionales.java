@@ -1,14 +1,9 @@
 package com.luciayanicelli.icsalud.Activity_profesionales;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -27,7 +22,6 @@ import com.luciayanicelli.icsalud.Activity_Configuracion.Activity_configuracion;
 import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
 import com.luciayanicelli.icsalud.Activity_Educacion.Activity_educacion;
 import com.luciayanicelli.icsalud.Activity_Juego.Activity_juego;
-import com.luciayanicelli.icsalud.Activity_SOS;
 import com.luciayanicelli.icsalud.Api_Json.Del_Contact;
 import com.luciayanicelli.icsalud.Api_Json.Del_Practitioner;
 import com.luciayanicelli.icsalud.Api_Json.JSON_CONSTANTS;
@@ -179,21 +173,21 @@ public class Activity_profesionales extends AppCompatActivity
             startActivity(intent);
 
 
-        }  else if (id == R.id.nav_sos) {
+        } /*version 2 else if (id == R.id.nav_sos) {
 
             //Muestra un alertDialog consultando al paciente si desea solicitar auxilio a su médico, ambulancia y cuidadores
             //En caso afirmativo obtiene ubicación y la envía por msj de texto y mail
             //Luego consulta al usuario si desea llamar a su ambulancia
             crearAlertDialogSOS();
 
-        }
+        }*/
 
         DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    private void crearAlertDialogSOS() {
+/*    private void crearAlertDialogSOS() {
 
         AlertDialogs alertDialogs = new AlertDialogs();
         alertDialogs.setMsj(getResources().getString(R.string.sos_msj));
@@ -205,7 +199,7 @@ public class Activity_profesionales extends AppCompatActivity
         DialogFragment alertSOS = alertDialogs;
         alertSOS.show(getSupportFragmentManager(), "alertSOS");
     }
-
+*/
 
     private void crearAlertDialog(String name, String title, String datos, String[] opciones) {
 
@@ -240,18 +234,18 @@ public class Activity_profesionales extends AppCompatActivity
 
         }else if(name.equalsIgnoreCase(Constants.SOS)){
             //Llama a la actividad sos
-            Intent intent = new Intent();
+        /* version 2   Intent intent = new Intent();
             intent.setClass(Activity_profesionales.this, Activity_SOS.class);
             startActivity(intent);
+            */
         }else if(name.equalsIgnoreCase(nameContacto)) {
             //LLAMAR
-          //  llamarTelefono(mCelProfesional);
-            checkPermissionCALL();
+          //version 2  checkPermissionCALL();
         }
 
     }
 
-    private void checkPermissionCALL() {
+ /*version 2   private void checkPermissionCALL() {
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
 
@@ -302,8 +296,9 @@ public class Activity_profesionales extends AppCompatActivity
         }
 
     }
+    */
 
-    private void llamarTelefono(String tlf) {
+/*version 2    private void llamarTelefono(String tlf) {
 
         Intent llamada = new Intent(Intent.ACTION_CALL);
         Uri uriTlf = Uri.parse("tel:" + tlf);
@@ -320,6 +315,7 @@ public class Activity_profesionales extends AppCompatActivity
 
 
     }
+    */
 
     //Enviar Solicitud
     private void enviarSolicitud(){
@@ -516,7 +512,7 @@ public class Activity_profesionales extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
 
-        }else if (mSelection==4){ //CONTACTOS EXISTENTES
+        }/* version 2 else if (mSelection==4){ //CONTACTOS EXISTENTES
 
             FragmentListadoContactos fragmentListadoContactos = new FragmentListadoContactos();
 
@@ -534,6 +530,7 @@ public class Activity_profesionales extends AppCompatActivity
                     .addToBackStack(null)
                     .commit();
         }
+        */
 
     }
 
