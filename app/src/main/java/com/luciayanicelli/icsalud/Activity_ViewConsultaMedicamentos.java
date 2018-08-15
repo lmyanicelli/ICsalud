@@ -12,7 +12,6 @@ import com.luciayanicelli.icsalud.DataBase.AlertasContract;
 import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
 import com.luciayanicelli.icsalud.DataBase.RecordatoriosContract;
 import com.luciayanicelli.icsalud.DataBase.RecordatoriosDBHelper;
-import com.luciayanicelli.icsalud.Services.Constants;
 
 
 
@@ -100,8 +99,9 @@ public class Activity_ViewConsultaMedicamentos extends AppCompatActivity impleme
         ContentValues values = new ContentValues();
 
         values.put(AlertasContract.AlertasEntry.FECHA, fecha);
-        values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_VERDE);
-        values.put(AlertasContract.AlertasEntry.PARAMETRO, Constants.MEDICAMENTOS);
+     //14/08/18   values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_VERDE);
+        values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_ROJA);
+        values.put(AlertasContract.AlertasEntry.PARAMETRO, AlertasContract.AlertasEntry.ALERTA_PARAMETRO_SOS);
         values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
         values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
 

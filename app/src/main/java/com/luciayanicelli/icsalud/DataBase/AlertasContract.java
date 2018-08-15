@@ -28,7 +28,7 @@ public class AlertasContract {
         //TIPO
         public static final String ALERTA_TIPO_VERDE = "ALERTA VERDE";
         public static final String ALERTA_TIPO_AMARILLA = "ALERTA AMARILLA";
-        public static final String ALERTA_TIPO_ROJA = "ALERTA SOS";
+        public static final String ALERTA_TIPO_ROJA = "ALERTA ROJA";
 
         //PARAMETRO
         public static final String ALERTA_PARAMETRO_SOS = "sos";

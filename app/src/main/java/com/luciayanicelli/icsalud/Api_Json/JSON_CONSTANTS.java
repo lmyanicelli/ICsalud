@@ -6,8 +6,8 @@ public class JSON_CONSTANTS {
      * Constantes para {@link Patients}
      */
 
-    //public static final String BASE_URL = "http://api.dev.icsalud.com.ar/";
-    public static final String BASE_URL = "http://api.icsalud.com.ar/";
+    public static final String BASE_URL = "http://api.dev.icsalud.com.ar/";
+    //public static final String BASE_URL = "http://api.icsalud.com.ar/";
 
     public static final String OAUTH = "oauth/";
 

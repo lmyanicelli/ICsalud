@@ -43,11 +43,9 @@ public class SampleBootReceiver extends BroadcastReceiver {
             saConsejoSaludable = new SetearAlarma(context, Constants.CONSEJO_SALUDABLE);
             saConsejoSaludable.execute();
 
-            setearAlarmaEnviarMailAlertas = new SetearAlarma(context, Constants.PARAMETRO_GENERAR_EMAIL_ALERTAS);
-            setearAlarmaEnviarMailAlertas.execute();
+      //14/08/18      setearAlarmaEnviarMailAlertas = new SetearAlarma(context, Constants.PARAMETRO_GENERAR_EMAIL_ALERTAS);            setearAlarmaEnviarMailAlertas.execute();
 
-            setearAlarmaEnviarMailMediciones = new SetearAlarma(context, Constants.PARAMETRO_GENERAR_EMAIL_MEDICIONES);
-            setearAlarmaEnviarMailMediciones.execute();
+      //14/08/18      setearAlarmaEnviarMailMediciones = new SetearAlarma(context, Constants.PARAMETRO_GENERAR_EMAIL_MEDICIONES);            setearAlarmaEnviarMailMediciones.execute();
 
             setearAlertaVerde = new SetearAlarma(context, Constants.PARAMETRO_ALERTA_VERDE);
             setearAlertaVerde.execute();
@@ -61,8 +59,7 @@ public class SampleBootReceiver extends BroadcastReceiver {
             setearAlarmaEnviarMailJugada = new SetearAlarma(context, Constants.PARAMETRO_GENERAR_EMAIL_JUGADAS);
             setearAlarmaEnviarMailJugada.execute();
 
-            setearAlarmaEnviarTablaDatos = new SetearAlarma(context, Constants.PARAMETRO_GENERAR_EMAIL_TABLA_DATOS);
-            setearAlarmaEnviarTablaDatos.execute();
+       //14/08/18     setearAlarmaEnviarTablaDatos = new SetearAlarma(context, Constants.PARAMETRO_GENERAR_EMAIL_TABLA_DATOS);            setearAlarmaEnviarTablaDatos.execute();
 
             setearAlarmaEncuestas = new SetearAlarma(context, Constants.PARAMETRO_ENCUESTAS);
             setearAlarmaEncuestas.execute();

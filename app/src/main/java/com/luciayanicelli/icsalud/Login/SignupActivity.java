@@ -4,15 +4,9 @@ package com.luciayanicelli.icsalud.Login;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -39,9 +33,7 @@ import com.luciayanicelli.icsalud.Api_Json.Post_Practitioner;
 import com.luciayanicelli.icsalud.R;
 import com.luciayanicelli.icsalud.Services.ConexionInternet;
 import com.luciayanicelli.icsalud.Services.Constants;
-import com.luciayanicelli.icsalud.Services.GenerarEmailJobService;
 import com.luciayanicelli.icsalud.utils.AlertDialogs;
-import com.luciayanicelli.icsalud.utils.EnviarMailSegundoPlano;
 import com.luciayanicelli.icsalud.utils.SetearAlarma;
 
 import java.util.Calendar;
@@ -304,41 +296,7 @@ public class SignupActivity extends AppCompatActivity implements AlertDialogs.No
     }
 
 
-
-
-    //https://programacionymas.com/blog/como-pedir-fecha-android-usando-date-picker/
-/*    private void showDatePickerDialog() {
-        DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(),
-                        0, 0, 0);
-                birthdayTime = calendar.getTimeInMillis();
-
-                // +1 because january is zero
-                String sMonth = String.valueOf(month+1);
-                if(sMonth.length()<2){
-                    sMonth = "0" + String.valueOf(month+1);
-                }
-
-                String sDay = String.valueOf(day);
-                if(sDay.length()<2){
-                    sDay = "0" + String.valueOf(day);
-                }
-
-               // final String selectedDate = year + "-" + (month+1) + "-" + day; //format YYYY-MM-DD
-                final String selectedDate = year + "-" + (sMonth) + "-" + sDay; //format YYYY-MM-DD
-                SignupActivity.this._birthdayText.setText(selectedDate);
-
-            }
-        });
-        newFragment.show(getSupportFragmentManager(), "datePicker");
-
-    }
-    */
-
+    //CARGAR FECHAS
     private void showDatePickerDialog(final String text) {
 
 
@@ -389,6 +347,9 @@ public class SignupActivity extends AppCompatActivity implements AlertDialogs.No
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
+
+
+//Signup
     public void signup() {
         Log.d(TAG, "Signup");
 
@@ -404,6 +365,50 @@ public class SignupActivity extends AppCompatActivity implements AlertDialogs.No
 
     }
 
+    private void crearAlertDialogConsentimientoInformado() {
+
+        AlertDialogs alertDialogConsentimientoInformado = new AlertDialogs();
+        alertDialogConsentimientoInformado.setMsj(getResources().getString(R.string.consentimiento_informado));
+        alertDialogConsentimientoInformado.setName(getResources().getString(R.string.alert_consentimiento_informado));
+
+        alertDialogConsentimientoInformado.setPositiveButton(getResources().getString(R.string.de_acuerdo));
+        alertDialogConsentimientoInformado.setNegativeButton(getResources().getString(R.string.en_desacuerdo));
+
+        DialogFragment alertConsentimientoInformado = alertDialogConsentimientoInformado;
+        alertConsentimientoInformado.show(getSupportFragmentManager(), "alertConsentimientoInformado");
+    }
+
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog, String name) {
+
+        switch (name){
+
+            case "loginIncorrecto":
+                return;
+
+            case "consentimientoInformado":
+                continuarSignup();
+                // onSignupSuccess();
+                break;
+
+            default:
+                break;
+        }
+
+        return;
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog, String name) {
+        //volver a LoginActivity
+        setResult(RESULT_CANCELED, null);
+        finish();
+
+    }
+
+
+    //CONSENTIMIENTO APROBADO
     private void continuarSignup(){
 
         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
@@ -443,7 +448,11 @@ public class SignupActivity extends AppCompatActivity implements AlertDialogs.No
         config.setCoexistence(coexistence);
         config.setDiagnosedAt(diagnosedAt);
 
-        if(corroborarConexionInternet()){
+        //corrobora la conexión a internet, crea la cuenta en el servidor y devuelve el Id del patient creado
+        boolean loginCorrecto = corroborarConexionInternet();
+
+
+        if(loginCorrecto){
             config.setEstadoLogin(true);
 
             new android.os.Handler().postDelayed(
@@ -464,6 +473,20 @@ public class SignupActivity extends AppCompatActivity implements AlertDialogs.No
 
     }
 
+
+    public void onSignupSuccess() {
+
+        //VER DE PONER ACCESO SIEMPRE
+        SetearAlarma setearAlarmaEncuestas = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_ENCUESTAS);
+        setearAlarmaEncuestas.execute();
+
+       //14/08/18 enviarFormularioMail();
+        _signupButton.setEnabled(true);
+        setResult(RESULT_OK, null);
+        finish();
+        this.finish();
+    }
+
     private void crearAlertDialog() {
 
         AlertDialogs alertDialogLoginIncorrecto = new AlertDialogs();
@@ -477,35 +500,7 @@ public class SignupActivity extends AppCompatActivity implements AlertDialogs.No
         alertLoginIncorrecto.show(getSupportFragmentManager(), "alertLoginIncorrecto");
     }
 
-    private void crearAlertDialogConsentimientoInformado() {
-
-        AlertDialogs alertDialogConsentimientoInformado = new AlertDialogs();
-        alertDialogConsentimientoInformado.setMsj(getResources().getString(R.string.consentimiento_informado));
-        alertDialogConsentimientoInformado.setName(getResources().getString(R.string.alert_consentimiento_informado));
-
-        alertDialogConsentimientoInformado.setPositiveButton(getResources().getString(R.string.de_acuerdo));
-        alertDialogConsentimientoInformado.setNegativeButton(getResources().getString(R.string.en_desacuerdo));
-
-        DialogFragment alertConsentimientoInformado = alertDialogConsentimientoInformado;
-        alertConsentimientoInformado.show(getSupportFragmentManager(), "alertConsentimientoInformado");
-    }
-
-
-
-
-    public void onSignupSuccess() {
-
-        SetearAlarma setearAlarmaEncuestas = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_ENCUESTAS);
-        setearAlarmaEncuestas.execute();
-
-        enviarFormularioMail();
-        _signupButton.setEnabled(true);
-        setResult(RESULT_OK, null);
-        finish();
-        this.finish();
-    }
-
-    private void enviarFormularioMail() {
+  /*  private void enviarFormularioMail() {
 
         String textoEnviar = crearTextoFormulario();
         String contactos = config.getEmailAdministrator();
@@ -571,6 +566,7 @@ public class SignupActivity extends AppCompatActivity implements AlertDialogs.No
 
         return textoEnviar;
     }
+*/
 
     private boolean corroborarConexionInternet() {
 
@@ -888,32 +884,6 @@ public class SignupActivity extends AppCompatActivity implements AlertDialogs.No
         return edad;
     }
 
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog, String name) {
 
-        switch (name){
-
-            case "loginIncorrecto":
-                return;
-
-            case "consentimientoInformado":
-                continuarSignup();
-               // onSignupSuccess();
-                break;
-
-            default:
-                break;
-        }
-
-        return;
-    }
-
-    @Override
-    public void onDialogNegativeClick(DialogFragment dialog, String name) {
-            //volver a LoginActivity
-                setResult(RESULT_CANCELED, null);
-                finish();
-
-    }
 
 }

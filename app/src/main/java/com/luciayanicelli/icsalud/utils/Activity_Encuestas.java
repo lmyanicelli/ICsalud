@@ -1,6 +1,8 @@
 package com.luciayanicelli.icsalud.utils;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
@@ -13,7 +15,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
+import com.luciayanicelli.icsalud.Api_Json.JSON_CONSTANTS;
+import com.luciayanicelli.icsalud.DataBase.AlertasContract;
+import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
 import com.luciayanicelli.icsalud.R;
 import com.luciayanicelli.icsalud.Services.ConexionInternet;
 import com.luciayanicelli.icsalud.Services.Constants;
@@ -57,7 +61,7 @@ public class Activity_Encuestas extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
-                Configuraciones configuraciones = new Configuraciones(getApplicationContext());
+                /*14/08/18 Configuraciones configuraciones = new Configuraciones(getApplicationContext());
                 String contactos = configuraciones.getEmailAdministrator();
                 EnviarMailSegundoPlano enviarMailSegundoPlano = new EnviarMailSegundoPlano(
                         getApplicationContext(),
@@ -66,6 +70,40 @@ public class Activity_Encuestas extends AppCompatActivity implements
                         contactos);
                 enviarMailSegundoPlano.execute();
                 borrarRecordatorio();
+                */
+
+                //Guardar alerta roja level_roja - type_heartRate
+                String descripcion = "Encuestas contestadas";
+
+                //guardar Alarma en BD
+                Alertas_DBHelper mDBHelper = new Alertas_DBHelper(getApplicationContext());
+                SQLiteDatabase dbAlerta = mDBHelper.getWritableDatabase();
+
+                FechaActual fechaActual = new FechaActual();
+                String fecha = null;
+                try {
+                    fecha = fechaActual.execute().get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                ContentValues values = new ContentValues();
+
+                values.put(AlertasContract.AlertasEntry.FECHA, fecha);
+                values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_ROJA);
+                values.put(AlertasContract.AlertasEntry.PARAMETRO, JSON_CONSTANTS.HEART_RATES);
+                values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
+                values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
+
+                try{
+                    long controlInsert = dbAlerta.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values);
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
                 finalizar();
             }
         });

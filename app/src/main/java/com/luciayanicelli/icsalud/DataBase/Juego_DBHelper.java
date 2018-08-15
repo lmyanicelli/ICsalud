@@ -117,19 +117,10 @@ public class Juego_DBHelper extends SQLiteOpenHelper {
 
     private String[] leerArchivo(int id){
         InputStream inputStream = context.getResources().openRawResource(id);
-
-
-
         ///prueba
-
-
         // context.getResources().openRawResource(id);
-
-
      //   BufferedReader in = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-
         //
-
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
@@ -151,7 +142,7 @@ public class Juego_DBHelper extends SQLiteOpenHelper {
 
     }
 
-
+/*
     public void cargarDatosPreguntas(SQLiteDatabase db) {
 
         ContentValues values = new ContentValues();
@@ -261,7 +252,7 @@ public class Juego_DBHelper extends SQLiteOpenHelper {
 
     }
 
-
+*/
 
 
 

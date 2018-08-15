@@ -11,8 +11,10 @@ import android.support.annotation.NonNull;
 import com.luciayanicelli.icsalud.Api_Json.JSON_CONSTANTS;
 import com.luciayanicelli.icsalud.DataBase.AlertasContract;
 import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
-import com.luciayanicelli.icsalud.DataBase.AutodiagnosticoContract;
 import com.luciayanicelli.icsalud.DataBase.Autodiagnostico_DBHelper;
+import com.luciayanicelli.icsalud.utils.PAFC;
+import com.luciayanicelli.icsalud.utils.Peso;
+import com.luciayanicelli.icsalud.utils.Sintomas;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -43,6 +45,7 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
 
 
     private String descripcion;
+    private String fecha;
 
 
     /*
@@ -71,9 +74,25 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... strings) {
 
+        Calendar calendarAyer = Calendar.getInstance();
+        calendarAyer.add(Calendar.DAY_OF_YEAR, -1);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(JSON_CONSTANTS.DATE_TIME_FORMAT);
+        //   fecha = simpleDateFormat.format(calendarAyer.getTime()).split(" ")[0];
+        //30/05/18
+        fecha = simpleDateFormat.format(calendarAyer.getTime());
+
+        Peso mPeso = new Peso(context);
+        mPeso.alertaVerde(fecha);
+
+        PAFC mPAFC = new PAFC(context);
+        mPAFC.alertaVerde(fecha);
+
+        Sintomas mSintomas = new Sintomas(context);
+        mSintomas.alertaVerde(fecha);
 
         //PRUEBA CON FOR
-        boolean isFinish = false;
+   /*     boolean isFinish = false;
         for(int i=0; i<3; i++){
             switch (i){
 
@@ -111,7 +130,7 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
 
         }
 
-
+*/
 
 
         //TAREA PRINCIPAL

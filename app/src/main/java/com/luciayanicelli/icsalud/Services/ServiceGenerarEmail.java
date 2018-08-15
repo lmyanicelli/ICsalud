@@ -20,6 +20,7 @@ import com.luciayanicelli.icsalud.DataBase.JuegoContract;
 import com.luciayanicelli.icsalud.DataBase.Jugada_DBHelper;
 import com.luciayanicelli.icsalud.Notifications.MyReceiverGenerarEmail;
 import com.luciayanicelli.icsalud.utils.EnviarMailSegundoPlano;
+import com.luciayanicelli.icsalud.utils.FechaActual;
 import com.luciayanicelli.icsalud.utils.PAFC;
 import com.luciayanicelli.icsalud.utils.Peso;
 import com.luciayanicelli.icsalud.utils.Sintomas;
@@ -51,16 +52,6 @@ PARA UTILIZAR EL SERVICE QUE CONTROLA LOS ESTADOS PENDIENTES DE LAS ALERTAS Y ME
 
  */
 public class ServiceGenerarEmail extends IntentService {
-    // TODO: Rename actions, choose action names that describe tasks that this
-    // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
-/*    private static final String ACTION_FOO = "com.luciayanicelli.ic_layout.Services.action.FOO";
-    private static final String ACTION_BAZ = "com.luciayanicelli.ic_layout.Services.action.BAZ";
-
-    // TODO: Rename parameters
-    private static final String EXTRA_PARAM1 = "com.luciayanicelli.ic_layout.Services.extra.PARAM1";
-    private static final String EXTRA_PARAM2 = "com.luciayanicelli.ic_layout.Services.extra.PARAM2";
-
-*/
 
     ///VARIABLES
 
@@ -571,9 +562,6 @@ Query the given URL, returning a Cursor over the result set.*/
             if (cursorJugada != null & cursorJugada.moveToFirst()) {
                 int count;
                 count = cursorJugada.getCount();
-
-
-
                 do {
 
                     String textoAuxiliar = "";
@@ -581,37 +569,138 @@ Query the given URL, returning a Cursor over the result set.*/
                         textoAuxiliar = textoAuxiliar + cursorJugada.getInt(i) + ";";
                     }
 
-                    textoEnviar = textoEnviar + "<br/><br/>" + textoAuxiliar;
+                    textoEnviar = textoEnviar + " ," + textoAuxiliar;
 
                 } while (cursorJugada.moveToNext());
 
             }
+        cursorJugada.close();
 
-                EnviarMailSegundoPlano enviarMailSegundoPlanoJugada =
+            //14/08/18 --> cambio enviar mail por generar alerta para subir al servidor --> level_red=90, type_heartRate=30
+            /*    EnviarMailSegundoPlano enviarMailSegundoPlanoJugada =
                         new EnviarMailSegundoPlano(getApplicationContext(),
                                 asunto,
                                 textoCampos + textoEnviar,
                                 contactoAdministrador);
                 Boolean mailEnviadoJugada = enviarMailSegundoPlanoJugada.execute().get();
 
-//
                 if (mailEnviadoJugada.booleanValue()) {
                    //envío correcto
                 }else{
                     //envío incorrecto
                 }
+                */
+
+        //14/08/18 --> cambio enviar mail por generar alerta para subir al servidor --> level_red=90, type_heartRate=30
+
+        //Guardar como alerta en BD xa luego subir al servidor
+        String descripcion = textoCampos + textoEnviar;
+
+        //guardar Alarma en BD
+        FechaActual fechaActual = new FechaActual();
+        String fecha = fechaActual.execute().get();
+
+        Alertas_DBHelper alertasDbHelper = new Alertas_DBHelper(getApplicationContext());
+        SQLiteDatabase dbAlerta = alertasDbHelper.getWritableDatabase();
+
+        if(descripcion.length()<=256) {
+
+            ContentValues values = new ContentValues();
+
+            values.put(AlertasContract.AlertasEntry.FECHA, fecha);
+            values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_ROJA);
+            values.put(AlertasContract.AlertasEntry.PARAMETRO, JSON_CONSTANTS.HEART_RATES);
+            values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
+            values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
+
+            try {
+                long controlInsert = dbAlerta.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }else{
+
+            int caracteres = descripcion.length();
+            int multiplo256 = caracteres/256;
+            if(caracteres%256 != 0){
+                multiplo256 = multiplo256 + 1;
+            }
+
+            for(int j = 0; j < multiplo256; j++){
+
+                String textoAuxiliar= "";
+                int inicio = j*256;
+                int fin = j*256 +256;
+                if(fin>caracteres){
+                    fin = caracteres;
+                }
+
+                textoAuxiliar = descripcion.substring(inicio, fin);
+
+                ContentValues values = new ContentValues();
+
+                values.put(AlertasContract.AlertasEntry.FECHA, fecha);
+                values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_ROJA);
+                values.put(AlertasContract.AlertasEntry.PARAMETRO, JSON_CONSTANTS.HEART_RATES);
+                values.put(AlertasContract.AlertasEntry.DESCRIPCION, textoAuxiliar);
+                values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
+
+                try {
+                    long controlInsert = dbAlerta.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+
+
+        }
+
+
+                ///
 
                 String textoMail;
                 textoMail = "Consejos Saludables leídos: " + configuraciones.getContadorConsejosSaludablesLeidos() +
                         "<br/><br/>"+ "Preguntas Frecuentes leídas: " + configuraciones.getContadorPreguntasFrecuentesLeidas() ;
-                EnviarMailSegundoPlano enviarMailSegundoPlanoCS =
+
+        //14/08/18 --> cambio enviar mail por generar alerta para subir al servidor --> level_red=90, type_heartRate=30
+             /*   EnviarMailSegundoPlano enviarMailSegundoPlanoCS =
                         new EnviarMailSegundoPlano(getApplicationContext(),
                                 "Consejos Saludables - Preguntas Frecuentes",
                                 textoMail,
                                 contactoAdministrador);
                 Boolean mailSegundoPlanoCS = enviarMailSegundoPlanoCS.execute().get();
+                */
 
-                enviarTablaDatosPeso();
+        //Guardar como alerta en BD xa luego subir al servidor
+
+        //guardar Alarma en BD
+
+        ContentValues values2 = new ContentValues();
+
+        values2.put(AlertasContract.AlertasEntry.FECHA, fecha);
+        values2.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_ROJA);
+        values2.put(AlertasContract.AlertasEntry.PARAMETRO, JSON_CONSTANTS.HEART_RATES);
+        values2.put(AlertasContract.AlertasEntry.DESCRIPCION, textoMail);
+        values2.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
+
+        try{
+            long controlInsert = dbAlerta.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values2);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+
+
+
+             //14/08/18 --> GENERAR NUEVA APP DONDE DESCARGAR LOS DATOS EN FORMATO TABLA CUANDO NECESITE HACER LA ESTADÍSTICA
+        // enviarTablaDatosPeso();
 
 
     }

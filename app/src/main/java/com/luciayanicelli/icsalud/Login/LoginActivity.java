@@ -114,12 +114,12 @@ public class LoginActivity extends AppCompatActivity {
 
         }else{
         //Si el usuario ya esta logueado lo dirije a MainActivity
-            controlLogin(config);
+         //14/08/18   controlLogin(config);
 
             //Llamo a la actividad principal de la app
-         /*   Intent mainActivityIntent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent mainActivityIntent = new Intent(LoginActivity.this, MainActivity.class);
             this.startActivity(mainActivityIntent);
-*/
+
     }
 
 
@@ -273,7 +273,7 @@ public class LoginActivity extends AppCompatActivity {
          los valores predeterminados.
          */
 
-        if(config.setJAVAMAILcontraseñaMailAutorizado()){
+     //14/8/18   if(config.setJAVAMAILcontraseñaMailAutorizado()){
 
             PreferenceManager.setDefaultValues(this, R.xml.advanced_preferences, false);
 
@@ -284,9 +284,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent mainActivityIntent = new Intent(LoginActivity.this, MainActivity.class);
             this.startActivity(mainActivityIntent);
 
-        }else{
-            //error contraseña = null
-        }
+   //14/08/18     }else{            //error contraseña = null        }
 
 
 
@@ -446,6 +444,7 @@ public class LoginActivity extends AppCompatActivity {
         SetearAlarma setearAlarmaSERVIDOR = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_ENVIAR_DATOS_SERVIDOR);
         setearAlarmaSERVIDOR.execute();
 
+        //14/08/18 --> cargar en BD ALERTAS como alerta roja para poder subir al servidor los datos: level_red=10, type_sos=90
         SetearAlarma setearAlarmaMEDICAMENTOS = new SetearAlarma(getApplicationContext(), Constants.MEDICAMENTOS);
         setearAlarmaMEDICAMENTOS.execute();
 
@@ -461,23 +460,19 @@ public class LoginActivity extends AppCompatActivity {
         SetearAlarma setearAlarmaSINTOMAS = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_SINTOMAS);
         setearAlarmaSINTOMAS.execute();
 
-        SetearAlarma setearAlarmaEnviarMailAlertas = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_EMAIL_ALERTAS);
-        setearAlarmaEnviarMailAlertas.execute();
-
-        SetearAlarma setearAlarmaEnviarMailMediciones = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_EMAIL_MEDICIONES);
-        setearAlarmaEnviarMailMediciones.execute();
+   //14/08/18     SetearAlarma setearAlarmaEnviarMailAlertas = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_EMAIL_ALERTAS);         setearAlarmaEnviarMailAlertas.execute();
+        // 14/08/18        SetearAlarma setearAlarmaEnviarMailMediciones = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_EMAIL_MEDICIONES);        setearAlarmaEnviarMailMediciones.execute();
 
         SetearAlarma setearAlarmaAlertaVerde = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_ALERTA_VERDE);
         setearAlarmaAlertaVerde.execute();
 
-        SetearAlarma setearAlarmaGetContacts = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GET_CONTACTS);
-        setearAlarmaGetContacts.execute();
+// 14/08/18        SetearAlarma setearAlarmaGetContacts = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GET_CONTACTS);        setearAlarmaGetContacts.execute();
 
+        //14/08/18 --> cargar en BD ALERTAS como alerta roja para poder subir al servidor los datos: level_red=10, type_heartRate=30
         SetearAlarma setearAlarmaEnviarMailJugada = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_EMAIL_JUGADAS);
         setearAlarmaEnviarMailJugada.execute();
 
-        SetearAlarma setearAlarmaEnviarMailTablaDatos = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_EMAIL_TABLA_DATOS);
-        setearAlarmaEnviarMailTablaDatos.execute();
+        // 14/08/18         SetearAlarma setearAlarmaEnviarMailTablaDatos = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_EMAIL_TABLA_DATOS);        setearAlarmaEnviarMailTablaDatos.execute();
 
     }
 

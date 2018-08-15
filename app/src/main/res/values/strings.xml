@@ -280,7 +280,7 @@
     <string name="consejo_saludable">Consejo Saludable</string>
     <string name="consulta_medicamento">¿Dejó de tomar algún medicamento últimamente?</string>
     <string name="indique_medicamento">Describa qué medicamento dejó de tomar últimamente:</string>
-    <string name="alerta_medicamento">El paciente indicó que últimamente dejó de tomar el siguiente medicamento:  </string>
+    <string name="alerta_medicamento">El paciente indicó que últimamente dejó de tomar el siguiente MEDICAMENTO:  </string>
     <string name="medicamento">Medicamentos</string>
     <string name="message_error_conection_server">Error al conectar con el servidor. Por favor intente más tarde</string>
     <string name="contrasena">Contraseña</string>

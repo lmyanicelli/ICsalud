@@ -442,6 +442,11 @@ Query the given URL, returning a Cursor over the result set.*/
                 intType= JSON_CONSTANTS.ALERTA_TYPE_SYMPTOMS;
                 break;
 
+                //14/08/18
+            case JSON_CONSTANTS.HEART_RATES:
+                intType= JSON_CONSTANTS.ALERTA_TYPE_HEART_RATE;
+                break;
+
             default:
                 intType= 0;
                 break;

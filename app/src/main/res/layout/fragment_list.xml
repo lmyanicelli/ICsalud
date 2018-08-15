@@ -5,18 +5,17 @@
     android:orientation="vertical"
  >
 
-            <TextView
-                android:id="@+id/textView_pregunta"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.2"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical|center_horizontal"
-                android:textAlignment="center"
-                android:textSize="@dimen/textSize">
+        <TextView
+            android:id="@+id/textView_pregunta"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical|center_horizontal"
+            android:textAlignment="center"
+            android:textSize="@dimen/textSize">
 
-            </TextView>
-
+        </TextView>
 
     <ListView
         android:id="@id/android:list"

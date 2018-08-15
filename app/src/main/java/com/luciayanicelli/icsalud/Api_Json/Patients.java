@@ -1,8 +1,12 @@
 package com.luciayanicelli.icsalud.Api_Json;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
+import com.luciayanicelli.icsalud.DataBase.LoginContract;
+import com.luciayanicelli.icsalud.DataBase.Login_DBHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -181,6 +185,19 @@ public class Patients {
             configuraciones.setHealthInsurance(patients.getHealthInsurance());
             configuraciones.setCoexistence(patients.getCoexistence());
             configuraciones.setDiagnosedAt(patients.getDiagnosedAt());
+
+            //Guardar datos en DataBase
+            Login_DBHelper loginDbHelper = new Login_DBHelper(context);
+            SQLiteDatabase db = loginDbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(LoginContract.LoginEntry.EMAIL, configuraciones.getUserEmail());
+            values.put(LoginContract.LoginEntry.FIRST_NAME, configuraciones.getUserName());
+            values.put(LoginContract.LoginEntry.LAST_NAME, configuraciones.getUserSurname());
+            values.put(LoginContract.LoginEntry.PASSWORD, configuraciones.getUserPassword());
+            values.put(LoginContract.LoginEntry.ID_USER_WEB_SERVICE, configuraciones.getID());
+
+            long mLong = db.insert(LoginContract.LoginEntry.TABLE_NAME_LOGIN, null, values);
 
 
         } catch (JSONException e) {

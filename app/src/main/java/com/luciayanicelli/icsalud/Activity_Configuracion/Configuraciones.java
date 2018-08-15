@@ -2,7 +2,11 @@ package com.luciayanicelli.icsalud.Activity_Configuracion;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
+import com.luciayanicelli.icsalud.DataBase.LoginContract;
+import com.luciayanicelli.icsalud.DataBase.Login_DBHelper;
 import com.luciayanicelli.icsalud.Login.Encriptador;
 import com.luciayanicelli.icsalud.Services.Constants;
 
@@ -168,7 +172,45 @@ public class Configuraciones {
 
     //ESTADO LOGIN
     public boolean getEstadoLogin(){
-        return getSettings().getBoolean(KEY_ESTADO_LOGIN, false);
+        //return getSettings().getBoolean(KEY_ESTADO_LOGIN, false);
+
+        //14/08/18
+        if(getID()!=null & getUserEmail()!=null & getUserPassword()!=null & getUserName()!=null & getUserSurname()!=null){
+            return true;
+        }else{
+            Login_DBHelper loginDbHelper = new Login_DBHelper(mContext);
+            SQLiteDatabase sqLiteDatabase = loginDbHelper.getReadableDatabase();
+
+            //Buscar datos
+            String[] columnas = new String[]{LoginContract.LoginEntry.ID_USER_WEB_SERVICE,
+                    LoginContract.LoginEntry.EMAIL,
+                    LoginContract.LoginEntry.FIRST_NAME,
+                    LoginContract.LoginEntry.LAST_NAME,
+                    LoginContract.LoginEntry.PASSWORD};
+
+       //     selectionPreguntas = JuegoContract.JuegoEntry.PREGUNTA_ID + "= ?" + " and " + JuegoContract.JuegoEntry.PREGUNTA_ID_NIVEL + "= ?"
+            // selectionArgsPreguntas = new String[]{String.valueOf(i_pregunta), String.valueOf(i_nivel)};
+
+            Cursor cursor = sqLiteDatabase.query(LoginContract.LoginEntry.TABLE_NAME_LOGIN,
+                    columnas, null, null,
+                    null, null, null);
+
+            if(cursor!= null & cursor.moveToFirst()) {
+
+                setID(cursor.getString(0));
+                setUserEmail(cursor.getString(1));
+                setUserName(cursor.getString(2));
+                setUserSurname(cursor.getString(3));
+                setUserPassword(cursor.getString(4));
+
+                return true;
+
+            }else{
+                return false;
+            }
+
+
+            }
     }
 
     public void setEstadoLogin(boolean estadoLogin){
@@ -433,7 +475,7 @@ public class Configuraciones {
          String passworDesencriptada;
         //ENCRIPTAR DATOS
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            Encriptador encriptador = new Encriptador(mContext, getUserEmail()); //utilizo el email como palabra clave
+            Encriptador encriptador = new Encriptador(mContext, getEmailAdministrator()); //utilizo el email del administrador como palabra clave
             passworDesencriptada = encriptador.decryptString(password);
         }else {
             passworDesencriptada=password;
@@ -446,7 +488,7 @@ public class Configuraciones {
         String passwordEncriptada;
         //ENCRIPTAR DATOS
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            Encriptador encriptador = new Encriptador(mContext, getUserEmail()); //utilizo el email como palabra clave
+            Encriptador encriptador = new Encriptador(mContext, getEmailAdministrator()); //utilizo el email como palabra clave
             passwordEncriptada = encriptador.encryptString(password);
         }else {
             passwordEncriptada=password;
