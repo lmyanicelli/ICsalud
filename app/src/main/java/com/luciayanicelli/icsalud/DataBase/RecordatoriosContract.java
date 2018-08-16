@@ -31,6 +31,7 @@ public class RecordatoriosContract {
         public static final String TIPO_ACCION = "RECUERDE MONITOREARSE";
         public static final String TIPO_MEDICAMENTOS= "MEDICAMENTOS";
         public static final String TIPO_ENCUESTAS= "ENCUESTAS";
+        public static final String TIPO_SERVICIO_TECNICO= "AYUDA TÉCNICA";
 
     }
 }

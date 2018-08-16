@@ -127,6 +127,15 @@ public class FragmentList extends ListFragment {
                             imagen_entrada.setImageResource(R.drawable.ic_encuestas);
                         }
 
+                    }else if(((Lista_entrada) entrada).get_tipo().equalsIgnoreCase(RecordatoriosContract.RecordatoriosEntry.TIPO_SERVICIO_TECNICO)){
+
+                        if (texto_superior_entrada != null)
+                            texto_superior_entrada.setText(RecordatoriosContract.RecordatoriosEntry.TIPO_SERVICIO_TECNICO);
+
+                        if (imagen_entrada != null) {
+                            imagen_entrada.setImageResource(R.drawable.ic_servicio_tecnico);
+                        }
+
                     }else{
                         //NO HAY RECORDATORIOS
                         if (texto_superior_entrada != null)

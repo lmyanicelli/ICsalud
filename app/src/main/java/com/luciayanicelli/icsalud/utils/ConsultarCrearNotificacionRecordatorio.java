@@ -45,7 +45,7 @@ import static android.app.Notification.PRIORITY_MAX;
 
 public class ConsultarCrearNotificacionRecordatorio extends AsyncTask<Void, Void, Void> {
 
-    private static int mId = 1;
+    private static int mId = 3;
     private static String descripcionRecordatorio;
     private String horarioPAFC, horarioPESO, horarioSINTOMAS, horarioCONSEJO_SALUDABLE, horarioMEDICAMENTOS, horarioENCUESTAS;
 

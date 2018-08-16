@@ -20,10 +20,12 @@ import com.luciayanicelli.icsalud.Api_Json.JSON_CONSTANTS;
 import com.luciayanicelli.icsalud.Api_Json.JSON_functions;
 import com.luciayanicelli.icsalud.Api_Json.Json_Request_Access_Token_Password;
 import com.luciayanicelli.icsalud.Api_Json.Patients;
+import com.luciayanicelli.icsalud.DataBase.RecordatoriosContract;
 import com.luciayanicelli.icsalud.MainActivity;
 import com.luciayanicelli.icsalud.R;
 import com.luciayanicelli.icsalud.Services.ConexionInternet;
 import com.luciayanicelli.icsalud.Services.Constants;
+import com.luciayanicelli.icsalud.utils.Recordatorio;
 import com.luciayanicelli.icsalud.utils.SetearAlarma;
 
 import org.json.JSONException;
@@ -278,7 +280,15 @@ public class LoginActivity extends AppCompatActivity {
             PreferenceManager.setDefaultValues(this, R.xml.advanced_preferences, false);
 
 
-            configurarAlarmas();
+        String descripcionRecordatorio = "Por favor conteste las siguientes encuestas que forman parte del estudio clínico del cual Ud forma parte";
+        crearRecordatorio(context, Constants.PARAMETRO_ENCUESTAS, descripcionRecordatorio, Constants.PARAMETRO_ENCUESTAS, 1);
+
+
+        descripcionRecordatorio = "¿Tiene dudas sobre el uso de la App? Contacte al servicio técnico";
+        crearRecordatorio(context, RecordatoriosContract.RecordatoriosEntry.TIPO_SERVICIO_TECNICO, descripcionRecordatorio, RecordatoriosContract.RecordatoriosEntry.TIPO_SERVICIO_TECNICO, 1);
+
+
+        configurarAlarmas();
 
             //Llamo a la actividad principal de la app
             Intent mainActivityIntent = new Intent(LoginActivity.this, MainActivity.class);
@@ -288,6 +298,19 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private static void crearRecordatorio(Context context, String parametro, String descripcionRecordatorio, String tipo_recordatorio, int mId) {
+
+        String idNotificacion = String.valueOf(mId);
+
+        Recordatorio mRecordatorio = new Recordatorio();
+        mRecordatorio.setTitulo(tipo_recordatorio);
+        mRecordatorio.setParametro(parametro);
+        mRecordatorio.setDescripcion(descripcionRecordatorio);
+        mRecordatorio.setIdNotificacion(idNotificacion);
+
+        mRecordatorio.crearRecordatorioBD(context);
     }
 
     private void recuperarDatosMediciones() throws ExecutionException, InterruptedException, JSONException {

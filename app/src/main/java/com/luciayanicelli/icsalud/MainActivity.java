@@ -304,7 +304,15 @@ public class MainActivity extends AppCompatActivity
                   intentEncuestas.setClass(getApplicationContext(), Activity_Encuestas.class);
                   startActivity(intentEncuestas);
 
+              }else if (tipo.equalsIgnoreCase(RecordatoriosContract.RecordatoriosEntry.TIPO_SERVICIO_TECNICO)) {
+                  //15/08/18 agregar activity contactar servicio técnico
+                  Intent intentEncuestas = new Intent();
+                  intentEncuestas.setClass(getApplicationContext(), Activity_Servicio_Tecnico.class);
+                  startActivity(intentEncuestas);
+
               }
+
+
           }else{
               db.close();
           }
