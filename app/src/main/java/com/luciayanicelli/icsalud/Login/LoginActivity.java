@@ -20,7 +20,6 @@ import com.luciayanicelli.icsalud.Api_Json.JSON_CONSTANTS;
 import com.luciayanicelli.icsalud.Api_Json.JSON_functions;
 import com.luciayanicelli.icsalud.Api_Json.Json_Request_Access_Token_Password;
 import com.luciayanicelli.icsalud.Api_Json.Patients;
-import com.luciayanicelli.icsalud.DataBase.RecordatoriosContract;
 import com.luciayanicelli.icsalud.MainActivity;
 import com.luciayanicelli.icsalud.R;
 import com.luciayanicelli.icsalud.Services.ConexionInternet;
@@ -280,13 +279,13 @@ public class LoginActivity extends AppCompatActivity {
             PreferenceManager.setDefaultValues(this, R.xml.advanced_preferences, false);
 
 
-        String descripcionRecordatorio = "Por favor conteste las siguientes encuestas que forman parte del estudio clínico del cual Ud forma parte";
+    /*    String descripcionRecordatorio = "Por favor conteste las siguientes encuestas que forman parte del estudio clínico del cual Ud forma parte";
         crearRecordatorio(context, Constants.PARAMETRO_ENCUESTAS, descripcionRecordatorio, Constants.PARAMETRO_ENCUESTAS, 1);
 
 
         descripcionRecordatorio = "¿Tiene dudas sobre el uso de la App? Contacte al servicio técnico";
         crearRecordatorio(context, RecordatoriosContract.RecordatoriosEntry.TIPO_SERVICIO_TECNICO, descripcionRecordatorio, RecordatoriosContract.RecordatoriosEntry.TIPO_SERVICIO_TECNICO, 1);
-
+*/
 
         configurarAlarmas();
 

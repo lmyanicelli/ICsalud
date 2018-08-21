@@ -279,17 +279,17 @@ public class Autodiagnostico_PAFC extends Fragment implements View.OnClickListen
                     //Control de que cada valor sea válido
                     if (PS_ingresada < minPS | PS_ingresada > maxPS){
                         Toast.makeText(getContext(), "Por Favor revise el valor de PS", Toast.LENGTH_SHORT).show();
-                        editText_PS.setError("Por Favor revise el valor de PS");
+                        editText_PS.setError("Por Favor revise el valor de PS. Ej: 120");
                         editText_PS.requestFocus();
                         return;
 
                     } else if (PD_ingresada < minPD | PD_ingresada > maxPD){
-                        Toast.makeText(getContext(), "Por Favor revise el valor de PD", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Por Favor revise el valor de PD. Ej: 80", Toast.LENGTH_SHORT).show();
                         editText_PD.requestFocus();
                         return;
 
                     } else if (FC_ingresada < minFC | FC_ingresada > maxFC){
-                        Toast.makeText(getContext(), "Por Favor revise el valor de la FC", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Por Favor revise el valor de la FC. Ej: 70", Toast.LENGTH_SHORT).show();
                         editText_FC.requestFocus();
                         return;
 

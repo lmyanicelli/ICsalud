@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.luciayanicelli.icsalud.DataBase.LoginContract;
 import com.luciayanicelli.icsalud.DataBase.Login_DBHelper;
@@ -178,40 +179,44 @@ public class Configuraciones {
         if(getID()!=null & getUserEmail()!=null & getUserPassword()!=null & getUserName()!=null & getUserSurname()!=null){
             return true;
         }else{
-            Login_DBHelper loginDbHelper = new Login_DBHelper(mContext);
-            SQLiteDatabase sqLiteDatabase = loginDbHelper.getReadableDatabase();
 
-            //Buscar datos
-            String[] columnas = new String[]{LoginContract.LoginEntry.ID_USER_WEB_SERVICE,
-                    LoginContract.LoginEntry.EMAIL,
-                    LoginContract.LoginEntry.FIRST_NAME,
-                    LoginContract.LoginEntry.LAST_NAME,
-                    LoginContract.LoginEntry.PASSWORD};
-
-       //     selectionPreguntas = JuegoContract.JuegoEntry.PREGUNTA_ID + "= ?" + " and " + JuegoContract.JuegoEntry.PREGUNTA_ID_NIVEL + "= ?"
-            // selectionArgsPreguntas = new String[]{String.valueOf(i_pregunta), String.valueOf(i_nivel)};
-
-            Cursor cursor = sqLiteDatabase.query(LoginContract.LoginEntry.TABLE_NAME_LOGIN,
-                    columnas, null, null,
-                    null, null, null);
-
-            if(cursor!= null & cursor.moveToFirst()) {
-
-                setID(cursor.getString(0));
-                setUserEmail(cursor.getString(1));
-                setUserName(cursor.getString(2));
-                setUserSurname(cursor.getString(3));
-                setUserPassword(cursor.getString(4));
-
-                return true;
-
-            }else{
-                return false;
-            }
+            return consultarDBLogin();
 
 
             }
     }
+
+    private boolean consultarDBLogin() {
+
+        Login_DBHelper loginDbHelper = new Login_DBHelper(mContext);
+        SQLiteDatabase sqLiteDatabase = loginDbHelper.getReadableDatabase();
+
+        //Buscar datos
+        String[] columnas = new String[]{LoginContract.LoginEntry.ID_USER_WEB_SERVICE,
+                LoginContract.LoginEntry.EMAIL,
+                LoginContract.LoginEntry.FIRST_NAME,
+                LoginContract.LoginEntry.LAST_NAME,
+                LoginContract.LoginEntry.PASSWORD};
+
+        Cursor cursor = sqLiteDatabase.query(LoginContract.LoginEntry.TABLE_NAME_LOGIN,
+                columnas, null, null,
+                null, null, null);
+
+        if(cursor!= null & cursor.moveToFirst()) {
+
+            setID(cursor.getString(0));
+            setUserEmail(cursor.getString(1));
+            setUserName(cursor.getString(2));
+            setUserSurname(cursor.getString(3));
+            setUserPassword(cursor.getString(4));
+
+            return true;
+
+        }else{
+            return false;
+        }
+    }
+
 
     public void setEstadoLogin(boolean estadoLogin){
         SharedPreferences.Editor editor = getSettings().edit();
@@ -221,7 +226,15 @@ public class Configuraciones {
 
     //LOGIN PATIENT ID
     public String getID(){
-        return getSettings().getString(KEY_PATIENT_ID,  null);
+
+        String id = getSettings().getString(KEY_PATIENT_ID, null);
+        if(id == null){
+            Log.d("configuraciones", "getId null");
+            if(consultarDBLogin()){
+                id = getSettings().getString(KEY_PATIENT_ID, null);
+            }
+        }
+        return id;
     }
 
     public void setID(String patient_id){
@@ -344,7 +357,15 @@ public class Configuraciones {
 
     //DATOS PERSONALES
     public String getUserEmail(){
-        return getSettings().getString(KEY_PREF_MAIL_USUARIO, null);
+
+        String email = getSettings().getString(KEY_PREF_MAIL_USUARIO, null);
+        if(email == null){
+            Log.d("configuraciones", "getUserEmail null");
+            if(consultarDBLogin()){
+                email = getSettings().getString(KEY_PREF_MAIL_USUARIO, null);
+            }
+        }
+        return email;
     }
 
     public void setUserEmail(String email){

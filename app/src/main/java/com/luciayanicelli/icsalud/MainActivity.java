@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +13,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.luciayanicelli.icsalud.Activity_Autodiagnostico.Activity_Menu_Autodiagnostico;
 import com.luciayanicelli.icsalud.Activity_Configuracion.Activity_configuracion;
@@ -34,7 +36,8 @@ import com.luciayanicelli.icsalud.utils.FragmentList;
 
 //version 2 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AlertDialogs.NoticeDialogListener, FragmentList.onRecordatorioSelectedListener {
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, FragmentList.onRecordatorioSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, FragmentList.onRecordatorioSelectedListener
+        , View.OnClickListener{
 
     private static final int REQUEST_SEND_MAIL = 1 ;
 
@@ -63,10 +66,10 @@ public class MainActivity extends AppCompatActivity
 
         //Botones flotantes
     //version2
-       /* FloatingActionButton fab_mail = findViewById(R.id.fab);
+        FloatingActionButton fab_mail = findViewById(R.id.fab);
         fab_mail.setOnClickListener(this);
 
-        FloatingActionButton fab_sos =  findViewById(R.id.fab_sos);
+      /*  FloatingActionButton fab_sos =  findViewById(R.id.fab_sos);
         fab_sos.setOnClickListener(this);
         */
 
@@ -306,9 +309,9 @@ public class MainActivity extends AppCompatActivity
 
               }else if (tipo.equalsIgnoreCase(RecordatoriosContract.RecordatoriosEntry.TIPO_SERVICIO_TECNICO)) {
                   //15/08/18 agregar activity contactar servicio técnico
-                  Intent intentEncuestas = new Intent();
-                  intentEncuestas.setClass(getApplicationContext(), Activity_Servicio_Tecnico.class);
-                  startActivity(intentEncuestas);
+                  Intent intentServicioTecnico = new Intent();
+                  intentServicioTecnico.setClass(getApplicationContext(), Activity_Servicio_Tecnico.class);
+                  startActivity(intentServicioTecnico);
 
               }
 
@@ -321,4 +324,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    @Override
+    public void onClick(View v) {
+
+        Intent intentServicioTecnico = new Intent();
+        intentServicioTecnico.setClass(getApplicationContext(), Activity_Servicio_Tecnico.class);
+        startActivity(intentServicioTecnico);
+
+    }
 }
