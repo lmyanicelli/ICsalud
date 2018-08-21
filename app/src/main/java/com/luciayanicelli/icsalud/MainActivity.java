@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity
     }
     */
 
-    @Override
+ /*   @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+    */
 
 
     @SuppressWarnings("StatementWithEmptyBody")

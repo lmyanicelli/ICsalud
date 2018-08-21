@@ -124,12 +124,12 @@ public class Activity_ViewConsejoSaludable extends AppCompatActivity implements 
 
     }
 
-    @Override
+/*    @Override
     public void onBackPressed() {
         this.finish();
         super.onBackPressed();
 
     }
-
+*/
 
 }

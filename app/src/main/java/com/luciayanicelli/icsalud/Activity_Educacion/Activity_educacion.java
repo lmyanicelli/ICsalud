@@ -183,12 +183,13 @@ public class Activity_educacion extends AppCompatActivity
     }
 */
 
-    @Override
+  /*  @Override
     public void onBackPressed() {
         this.finish();
         super.onBackPressed();
 
     }
+    */
 
     @Override
     protected void onStop() {

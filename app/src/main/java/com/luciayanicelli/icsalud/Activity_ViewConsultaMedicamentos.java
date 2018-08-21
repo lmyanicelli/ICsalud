@@ -118,11 +118,12 @@ public class Activity_ViewConsultaMedicamentos extends AppCompatActivity impleme
 
     }
 
-    @Override
+ /*   @Override
     public void onBackPressed() {
         this.finish();
         super.onBackPressed();
 
     }
+    */
 
 }

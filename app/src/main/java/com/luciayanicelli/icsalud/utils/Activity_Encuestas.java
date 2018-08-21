@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -124,7 +122,7 @@ public class Activity_Encuestas extends AppCompatActivity implements
         this.finish();
     }
 
-    @Override
+ /*   @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -133,7 +131,7 @@ public class Activity_Encuestas extends AppCompatActivity implements
             super.onBackPressed();
         }
     }
-
+*/
 
     private String getUrl(String name) {
 

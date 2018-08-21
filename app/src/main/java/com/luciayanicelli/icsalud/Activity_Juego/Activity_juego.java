@@ -161,12 +161,13 @@ public class Activity_juego extends AppCompatActivity implements
 
     }
 */
-    @Override
+ /*   @Override
     public void onBackPressed() {
         this.finish();
         super.onBackPressed();
 
     }
+    */
 
     @Override
     protected void onStop() {

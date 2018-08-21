@@ -122,11 +122,12 @@ public class Activity_Servicio_Tecnico extends AppCompatActivity
     }
 
 
-    @Override
+ /*   @Override
     public void onBackPressed() {
         this.finish();
         super.onBackPressed();
 
     }
+    */
 
 }

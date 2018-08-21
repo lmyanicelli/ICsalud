@@ -40,11 +40,12 @@ public class Activity_configuracion extends AppCompatActivity {
 
     }
 
-    @Override
+  /*  @Override
     public void onBackPressed() {
         this.finish();
         super.onBackPressed();
 
     }
+    */
 
 }
