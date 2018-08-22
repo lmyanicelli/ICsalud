@@ -328,9 +328,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
 
-        Intent intentServicioTecnico = new Intent();
-        intentServicioTecnico.setClass(getApplicationContext(), Activity_Servicio_Tecnico.class);
-        startActivity(intentServicioTecnico);
+    Intent intentServicioTecnico = new Intent();
+    intentServicioTecnico.setClass(getApplicationContext(), Activity_Servicio_Tecnico.class);
+    startActivity(intentServicioTecnico);
 
     }
 }

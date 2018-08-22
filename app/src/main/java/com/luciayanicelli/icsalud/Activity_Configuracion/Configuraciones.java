@@ -150,6 +150,7 @@ public class Configuraciones {
     public static final String KEY_CONTADOR_CONSEJOS_SALUDABLES_LEIDOS = "key_contador_consejos_saludables_leidos";
     public static final String KEY_CONTADOR_PREGUNTAS_FRECUENTES_LEIDOS = "key_contador_preguntas_frecuentes_leidas";
     private String KEY_ENCUESTAS_CONTESTADAS = "key_encuestas_contestadas";
+    private String KEY_CANTIDAD_DIAS_ALERTA_AMARILLA = "key_cantidad_dias_alerta_amarilla";
 
 
     public Configuraciones(Context context){
@@ -241,6 +242,11 @@ public class Configuraciones {
         SharedPreferences.Editor editor = getSettings().edit();
         editor.putString(KEY_PATIENT_ID, patient_id );
         editor.commit();
+    }
+
+
+    public int getCantidadDiasAlertaAmarilla(){
+        return getSettings().getInt(KEY_CANTIDAD_DIAS_ALERTA_AMARILLA, 3);
     }
 
     //CONTADORES
@@ -493,16 +499,23 @@ public class Configuraciones {
 
     public String getUserPassword(){
          String password = getSettings().getString(KEY_PASSWORD, null);
-         String passworDesencriptada;
-        //ENCRIPTAR DATOS
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            Encriptador encriptador = new Encriptador(mContext, getEmailAdministrator()); //utilizo el email del administrador como palabra clave
-            passworDesencriptada = encriptador.decryptString(password);
-        }else {
-            passworDesencriptada=password;
-        }
+         String passwordDesencriptada;
 
-        return passworDesencriptada;
+        if(password!=null){
+             //ENCRIPTAR DATOS
+             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+
+                 Encriptador encriptador = new Encriptador(mContext, getEmailAdministrator()); //utilizo el email del administrador como palabra clave
+                 passwordDesencriptada = encriptador.decryptString(password);
+             }else {
+                 passwordDesencriptada=password;
+             }
+
+        }else {
+                 passwordDesencriptada=password;
+             }
+
+        return passwordDesencriptada;
     }
 
     public void setUserPassword(String password){

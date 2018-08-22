@@ -47,7 +47,6 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
     private String descripcion;
     private String fecha;
 
-
     /*
     @param fecha : String fecha en la que se desea analizar si existen datos cargados
     @param nombreTabla : String Nombre de la tabla donde se quieren analizar si están cargados los datos

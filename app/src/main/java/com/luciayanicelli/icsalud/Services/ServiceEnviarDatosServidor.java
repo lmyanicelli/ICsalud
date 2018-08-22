@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
+import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
 import com.luciayanicelli.icsalud.Api_Json.JSON_CONSTANTS;
 import com.luciayanicelli.icsalud.Api_Json.JSON_functions;
 import com.luciayanicelli.icsalud.Api_Json.Post_Alert;
@@ -22,7 +23,10 @@ import com.luciayanicelli.icsalud.DataBase.Autodiagnostico_DBHelper;
 import com.luciayanicelli.icsalud.Notifications.MyReceiverEnviarDatosServidor;
 import com.luciayanicelli.icsalud.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -377,6 +381,63 @@ Query the given URL, returning a Cursor over the result set.*/
 
                 } while (cursorAlertas.moveToNext());
             }
+
+        cursorAlertas.close();
+
+        //Eliminar registros anteriores a lastDate que ya fueron subidos al servidor
+        String[] camposALERTAS = new String[]{BaseColumns._ID,
+                AlertasContract.AlertasEntry.FECHA
+        };
+
+        String selectionALERTAS = AlertasContract.AlertasEntry.FECHA + "< ?";
+
+        //   String argsALERTAS[] = new String[]{lastDate}; //debereìa ser lastDate - cantidadDiasAlertaAmarilla
+
+        String fechaEliminar = lastDate;
+
+        String dtStart = lastDate;
+        SimpleDateFormat format = new SimpleDateFormat(JSON_CONSTANTS.DATE_TIME_FORMAT);
+        try {
+            Date date = format.parse(dtStart);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+
+            Configuraciones configuraciones = new Configuraciones(getApplicationContext());
+            int cantidadDias = configuraciones.getCantidadDiasAlertaAmarilla();
+            //le resto los dìas
+            cal.add(Calendar.DAY_OF_YEAR, -cantidadDias);
+
+
+            fechaEliminar = format.format(cal.getTime());
+
+
+
+            // System.out.println(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String argsALERTAS[] = new String[]{fechaEliminar}; //debereìa ser lastDate - cantidadDiasAlertaAmarilla
+
+        Cursor cursorAlertasEliminar = dbAlertas.query(true, AlertasContract.AlertasEntry.TABLE_NAME, camposALERTAS,
+                selectionALERTAS, argsALERTAS, null, null, null, null);
+
+        if (cursorAlertasEliminar != null & cursorAlertasEliminar.moveToFirst()) {
+            cursorAlertasEliminar.getCount();
+
+            long result = dbAlertas.delete(AlertasContract.AlertasEntry.TABLE_NAME,
+                    selectionALERTAS,
+                    argsALERTAS);
+
+            if(result!=-1){
+                boolean ok = true;
+            }
+
+        }
+
+
+        cursorAlertasEliminar.close();
+        dbAlertas.close();
 
     }
 

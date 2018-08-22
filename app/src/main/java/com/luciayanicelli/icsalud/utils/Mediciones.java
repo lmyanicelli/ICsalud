@@ -10,6 +10,8 @@ public interface Mediciones {
 
      void alertaVerde(String fecha_sin_hora);
 
+     boolean alertaAmarilla();
+
 
 }
 

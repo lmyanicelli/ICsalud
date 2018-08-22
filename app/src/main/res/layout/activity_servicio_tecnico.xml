@@ -44,7 +44,7 @@
         android:inputType="phone"
         android:padding="5dp"
         android:textAlignment="center"
-        android:textSize="18sp" />
+        android:textSize="22sp" />
 
 
     <LinearLayout

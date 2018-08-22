@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
-import com.luciayanicelli.icsalud.Api_Json.JSON_CONSTANTS;
+import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
 import com.luciayanicelli.icsalud.DataBase.AlertasContract;
 import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
 import com.luciayanicelli.icsalud.DataBase.AutodiagnosticoContract;
@@ -15,8 +15,6 @@ import com.luciayanicelli.icsalud.DataBase.Autodiagnostico_DBHelper;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
-
-import static java.util.Calendar.DAY_OF_YEAR;
 
 /**
  * Created by LuciaYanicelli on 23/7/2018.
@@ -30,10 +28,15 @@ public class Sintomas implements Mediciones {
     private int countDatos = 3;
     private String fechaHsAyer, fechaHsHoy;
     private String fecha_sin_hora_Ayer, fecha_sin_hora_Hoy;
+    private int cantidadDias;
 
     public Sintomas(Context mContext) {
         this.mContext = mContext;
+        Configuraciones configuraciones = new Configuraciones(mContext);
+        this.cantidadDias = configuraciones.getCantidadDiasAlertaAmarilla();
     }
+
+
 
     @Override
     public String getMedicionesCSV() {
@@ -169,15 +172,112 @@ Query the given URL, returning a Cursor over the result set.*/
 
     }
 
+    public boolean alertaAmarilla() {
+
+        this.cantidadDias = cantidadDias;
+
+        boolean alerta = false;
+
+        FechaActual fechaActual = new FechaActual();
+        try {
+            fechaHsHoy = fechaActual.execute().get();
+            fecha_sin_hora_Hoy = fechaHsHoy.split(" ")[0];
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        Calendar calendarXdiasAntes = Calendar.getInstance();
+        calendarXdiasAntes.add(Calendar.DAY_OF_YEAR, -cantidadDias);
+
+        // SimpleDateFormat simpleDateFormat = new SimpleDateFormat(JSON_CONSTANTS.DATE_TIME_FORMAT);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaXdiasAntes = simpleDateFormat.format(calendarXdiasAntes.getTime()).split(" ")[0];
+
+        Calendar calendarAyer = Calendar.getInstance();
+        calendarAyer.add(Calendar.DAY_OF_YEAR, -1);
+
+        String fechaAyer = simpleDateFormat.format(calendarAyer.getTime()).split(" ")[0];
+
+
+        //CORROBORAR QUE NO EXISTAN ALERTAS YA GENERADAS DESDE LA FECHA HACE X DIAS EN ADELANTE
+        Alertas_DBHelper mDBHelper = new Alertas_DBHelper(mContext);
+        SQLiteDatabase dbAlertas = mDBHelper.getWritableDatabase();
+
+        String[] camposDBAV = new String[]{AlertasContract.AlertasEntry.DESCRIPCION};
+        String selectionAV = AlertasContract.AlertasEntry.TIPO + "= ? "
+                //  + "and " + AlertasContract.AlertasEntry.FECHA +"= ? "
+                + "and " + AlertasContract.AlertasEntry.FECHA + ">= ?" //+ " and " +  AlertasContract.AlertasEntry.FECHA + "<= ?"
+                + "and " + AlertasContract.AlertasEntry.PARAMETRO +"= ? ";
+
+        String[] argsAV = new String[] {AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA,
+                //   String.valueOf(fecha),
+                String.valueOf(fechaXdiasAntes + " 00:00:00"), //String.valueOf(fechaXdiasAntes + " 23:59:59"),
+                nameTabla};
+
+        Cursor busquedaAV = dbAlertas.query(true, AlertasContract.AlertasEntry.TABLE_NAME,
+                camposDBAV, selectionAV, argsAV,null,null,null,null);
+
+        //Si existen alertas del tipo verde con ese parámetro y fecha sale, en caso contrario ingresa a buscar alertas
+        if (busquedaAV != null & busquedaAV.moveToFirst()) {
+            //existen alertas amarillas con esa fecha y parámetro
+            busquedaAV.getCount();
+
+        }else {
+
+            //No existen alertas amarillas con esa fecha y parámetro por lo que busca alertas amarillas
+
+            //Conectar con la BD Autodiagnóstico
+            Autodiagnostico_DBHelper dbHelper = new Autodiagnostico_DBHelper(mContext);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+
+            String[] camposDB2 = new String[]{nameDateTabla, BaseColumns._ID};
+            String selection = nameDateTabla + ">= ?"+
+                    " and " +  nameDateTabla + "<= ?";
+
+            String[] args = new String[] {String.valueOf(fechaXdiasAntes + " 00:00:00"), String.valueOf(fechaAyer + " 23:59:59")}; //busco en los dìas completos
+
+            Cursor busqueda = db.query(true, nameTabla,
+                    camposDB2, selection, args, null, null, null, null);
+
+            //Si existen datos guardados con la fecha indicada devuelve true
+            if (busqueda != null & busqueda.moveToFirst()) {
+
+                //Analiza si existe la cantidad de registros establecida en cantidadDatos x la cantidad de dìas
+              /*  if (busqueda.getCount() < countDatos*cantidadDias) {
+                    //No existe la cantidad de datos indicados guardados con la fecha
+
+                    ///ESTE QUIZÀS ELIMINAR
+                    crearAlertaAmarilla(nameTabla);
+                    alerta = true;
+                } //en caso contrario si estarían guardados los datos y no se debería generar ninguna alerta
+*/
+
+            } else {
+                //No existen datos guardados entre las fechas indicadas
+                crearAlertaAmarilla(nameTabla);
+                alerta = true;
+            }
+            busqueda.close();
+
+
+        }
+
+        busquedaAV.close();
+        return alerta;
+
+    }
+
 
     private void crearAlertaVerde(String nameTabla) {
 
-        boolean amarilla = comprobarAlertaAmarilla(nameTabla);
+        //  boolean amarilla = comprobarAlertaAmarilla(nameTabla);
 
-        if(amarilla){
-            //SE DEBE GENERAR UNA ALERTA AMARILLA PORQUE YA PASARON MÁS DE 3 DÍAS SIN CARGAR DATOS
-            crearAlertaAmarilla(nameTabla);
-        }else{
+        boolean amarilla = alertaAmarilla();
+
+        if(!amarilla){
             //CREAR ALERTA VERDE
             String descripcion = "El día " + fecha_sin_hora_Ayer + " no cargó todos los datos correspondientes del parámetro: " + nameTabla;
             //Guardar el registro de alerta en la BD Alertas
@@ -198,26 +298,33 @@ Query the given URL, returning a Cursor over the result set.*/
 
     }
 
-    private boolean comprobarAlertaAmarilla(String nameTabla) {
+  /*  private boolean comprobarAlertaAmarilla(String nameTabla) {
 
         Alertas_DBHelper mDBHelper = new Alertas_DBHelper(mContext);
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
 
         //consultar si existen alertas verdes similares en los últimos 3 días consecutivos
         String[] campos = new String[]{AlertasContract.AlertasEntry.FECHA};
-        String selection = AlertasContract.AlertasEntry.PARAMETRO + "= ?" + " and "+
-                AlertasContract.AlertasEntry.FECHA + "= ?";
+      //  String selection = AlertasContract.AlertasEntry.PARAMETRO + "= ?" + " and "+ AlertasContract.AlertasEntry.FECHA + "= ?";
 
         //fecha corresponde al día anterior a la fecha actual porque controla que el día de ayer no se hayan cargado los parámetros
         String fecha2diasAntes;
         Calendar calendar3dias = Calendar.getInstance();
         calendar3dias.add(Calendar.DAY_OF_YEAR, -2);
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(JSON_CONSTANTS.DATE_TIME_FORMAT);
+       // SimpleDateFormat simpleDateFormat = new SimpleDateFormat(JSON_CONSTANTS.DATE_TIME_FORMAT);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         fecha2diasAntes = simpleDateFormat.format(calendar3dias.getTime()).split(" ")[0];
 
 
-        String[] args = new String[]{nameTabla, fecha2diasAntes};
+        String selection = AlertasContract.AlertasEntry.PARAMETRO + "= ?" + " and "+
+                AlertasContract.AlertasEntry.FECHA + ">= ?"+
+                " and " +  AlertasContract.AlertasEntry.FECHA  + "<= ?";
+
+        String[] args = new String[] {nameTabla, fecha2diasAntes + " 00:00:00", fecha2diasAntes + " 23:59:59"}; //busco en el dia completo
+
+    //    String[] args = new String[]{nameTabla, fecha2diasAntes};
+
         Cursor cursorBusqueda = db.query(true,  AlertasContract.AlertasEntry.TABLE_NAME,
                 campos, selection, args, null, null, null, null);
 
@@ -231,7 +338,9 @@ Query the given URL, returning a Cursor over the result set.*/
             String fecha3diasAntes = simpleDateFormat.format(calendar2AntesAyer.getTime()).split(" ")[0];
 
 
-            String[] args2 = new String[]{nameTabla, fecha3diasAntes};
+       //     String[] args2 = new String[]{nameTabla, fecha3diasAntes};
+            String[] args2 = new String[] {nameTabla, fecha3diasAntes + " 00:00:00", fecha3diasAntes + " 23:59:59"}; //busco en el dia completo
+
             Cursor cursorBusqueda2 = db.query(true,  AlertasContract.AlertasEntry.TABLE_NAME,
                     campos, selection, args2, null, null, null, null);
 
@@ -248,10 +357,10 @@ Query the given URL, returning a Cursor over the result set.*/
         return false;
 
     }
-
+*/
 
     private void crearAlertaAmarilla(String nameTabla) {
-        String descripcion = "No se han cargado todos los datos correspondientes del parámetro: " + nameTabla + " en al menos los últimos 3 días. Quizás podría averiguar que sucede con su paciente.";
+        String descripcion = "No se han cargado todos los datos correspondientes del parámetro: " + nameTabla + " en al menos los últimos " +  cantidadDias  + " días. Quizás podría averiguar que sucede con su paciente.";
         //Guardar el registro de alerta en la BD Alertas
         Alertas_DBHelper mDBHelper = new Alertas_DBHelper(mContext);
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
@@ -271,6 +380,7 @@ Query the given URL, returning a Cursor over the result set.*/
         }
 
     }
+
 
 
 }

@@ -466,10 +466,6 @@ public class LoginActivity extends AppCompatActivity {
         SetearAlarma setearAlarmaSERVIDOR = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_ENVIAR_DATOS_SERVIDOR);
         setearAlarmaSERVIDOR.execute();
 
-        //14/08/18 --> cargar en BD ALERTAS como alerta roja para poder subir al servidor los datos: level_red=10, type_sos=90
-        SetearAlarma setearAlarmaMEDICAMENTOS = new SetearAlarma(getApplicationContext(), Constants.MEDICAMENTOS);
-        setearAlarmaMEDICAMENTOS.execute();
-
         SetearAlarma setearAlarmaCONSEJO_SALUDABLE = new SetearAlarma(getApplicationContext(), Constants.CONSEJO_SALUDABLE);
         setearAlarmaCONSEJO_SALUDABLE.execute();
 
@@ -487,6 +483,10 @@ public class LoginActivity extends AppCompatActivity {
 
         SetearAlarma setearAlarmaAlertaVerde = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_ALERTA_VERDE);
         setearAlarmaAlertaVerde.execute();
+
+        //14/08/18 --> cargar en BD ALERTAS como alerta roja para poder subir al servidor los datos: level_red=10, type_sos=90
+        SetearAlarma setearAlarmaMEDICAMENTOS = new SetearAlarma(getApplicationContext(), Constants.MEDICAMENTOS);
+        setearAlarmaMEDICAMENTOS.execute();
 
 // 14/08/18        SetearAlarma setearAlarmaGetContacts = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GET_CONTACTS);        setearAlarmaGetContacts.execute();
 

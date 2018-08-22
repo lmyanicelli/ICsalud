@@ -32,9 +32,7 @@ import com.luciayanicelli.icsalud.Api_Json.Post_Patient;
 import com.luciayanicelli.icsalud.Api_Json.Post_Practitioner;
 import com.luciayanicelli.icsalud.R;
 import com.luciayanicelli.icsalud.Services.ConexionInternet;
-import com.luciayanicelli.icsalud.Services.Constants;
 import com.luciayanicelli.icsalud.utils.AlertDialogs;
-import com.luciayanicelli.icsalud.utils.SetearAlarma;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -477,8 +475,8 @@ public class SignupActivity extends AppCompatActivity implements AlertDialogs.No
     public void onSignupSuccess() {
 
         //VER DE PONER ACCESO SIEMPRE
-        SetearAlarma setearAlarmaEncuestas = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_ENCUESTAS);
-        setearAlarmaEncuestas.execute();
+     //   SetearAlarma setearAlarmaEncuestas = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_ENCUESTAS);
+     //   setearAlarmaEncuestas.execute();
 
        //14/08/18 enviarFormularioMail();
         _signupButton.setEnabled(true);

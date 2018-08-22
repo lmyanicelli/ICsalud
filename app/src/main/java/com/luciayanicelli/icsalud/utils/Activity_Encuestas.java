@@ -98,6 +98,8 @@ public class Activity_Encuestas extends AppCompatActivity implements
                 try{
                     long controlInsert = dbAlerta.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values);
 
+                    dbAlerta.close();
+
                 }catch(Exception e){
                     e.printStackTrace();
                 }
