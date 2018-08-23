@@ -44,13 +44,16 @@ public class AlertaVerdeJobService extends JobService {
                 fecha = simpleDateFormat.format(calendarAyer.getTime());
 
                 Peso mPeso = new Peso(getApplicationContext());
-                mPeso.alertaVerde(fecha);
+                //mPeso.alertaVerde(fecha);
+                mPeso.alertaAmarilla();
 
                 PAFC mPAFC = new PAFC(getApplicationContext());
-                mPAFC.alertaVerde(fecha);
+                //mPAFC.alertaVerde(fecha);
+                mPAFC.alertaAmarilla();
 
                 Sintomas mSintomas = new Sintomas(getApplicationContext());
-                mSintomas.alertaVerde(fecha);
+                //mSintomas.alertaVerde(fecha);
+                mSintomas.alertaAmarilla();
 
 
 

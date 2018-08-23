@@ -205,7 +205,7 @@ Query the given URL, returning a Cursor over the result set.*/
                 + "and " + AlertasContract.AlertasEntry.FECHA + ">= ?" //+ " and " +  AlertasContract.AlertasEntry.FECHA + "<= ?"
                 + "and " + AlertasContract.AlertasEntry.PARAMETRO +"= ? ";
 
-        String[] argsAV = new String[] {AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA,
+        String[] argsAV = new String[] {AlertasContract.AlertasEntry.ALERTA_TIPO_VERDE,
                 //   String.valueOf(fecha),
                 String.valueOf(fechaXdiasAntes + " 00:00:00"), //String.valueOf(fechaXdiasAntes + " 23:59:59"),
                 nameTabla};
@@ -362,7 +362,7 @@ Query the given URL, returning a Cursor over the result set.*/
         ContentValues values = new ContentValues();
 
         values.put(AlertasContract.AlertasEntry.FECHA, fechaHsHoy);
-        values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA);
+        values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_VERDE);
         values.put(AlertasContract.AlertasEntry.PARAMETRO, nameTabla);
         values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
         values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);

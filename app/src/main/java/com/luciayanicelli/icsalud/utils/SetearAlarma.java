@@ -450,7 +450,7 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
                 // Check we aren't setting it in the past which would trigger it to fire instantly
                 if(calendarAlertaVerde.getTimeInMillis() < System.currentTimeMillis()) {
-                    calendarAlertaVerde.add(Calendar.DAY_OF_YEAR, 2);
+                    calendarAlertaVerde.add(Calendar.DAY_OF_YEAR, 3);
                 }
 
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {

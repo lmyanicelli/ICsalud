@@ -81,14 +81,19 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
         //30/05/18
         fecha = simpleDateFormat.format(calendarAyer.getTime());
 
+
+        //ESTAS ALERTAS AMARILLA EN REALIDAD GENERAN ALERTA VERDE SOBRE CARGAS O NO DE DATOS
         Peso mPeso = new Peso(context);
-        mPeso.alertaVerde(fecha);
+      //  mPeso.alertaVerde(fecha);
+        mPeso.alertaAmarilla();
 
         PAFC mPAFC = new PAFC(context);
-        mPAFC.alertaVerde(fecha);
+        //mPAFC.alertaVerde(fecha);
+        mPAFC.alertaAmarilla();
 
         Sintomas mSintomas = new Sintomas(context);
-        mSintomas.alertaVerde(fecha);
+        //mSintomas.alertaVerde(fecha);
+        mSintomas.alertaAmarilla();
 
         //PRUEBA CON FOR
    /*     boolean isFinish = false;
