@@ -291,6 +291,7 @@ Query the given URL, returning a Cursor over the result set.*/
             values.put(AlertasContract.AlertasEntry.PARAMETRO, nameTabla);
             values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
             values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
+            values.put(AlertasContract.AlertasEntry.VISIBILIDAD, AlertasContract.AlertasEntry.ALERTA_VISIBILIDAD_PUBLICA);
 
             db.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values);
 
@@ -372,6 +373,7 @@ Query the given URL, returning a Cursor over the result set.*/
         values.put(AlertasContract.AlertasEntry.PARAMETRO, nameTabla);
         values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
         values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
+        values.put(AlertasContract.AlertasEntry.VISIBILIDAD, AlertasContract.AlertasEntry.ALERTA_VISIBILIDAD_PUBLICA);
 
         try {
             db.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values);

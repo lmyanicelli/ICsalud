@@ -6,8 +6,8 @@ public class JSON_CONSTANTS {
      * Constantes para {@link Patients}
      */
 
-  //  public static final String BASE_URL = "http://api.dev.icsalud.com.ar/";
-    public static final String BASE_URL = "http://api.icsalud.com.ar/";
+    public static final String BASE_URL = "http://api.dev.icsalud.com.ar/";
+ //   public static final String BASE_URL = "http://api.icsalud.com.ar/";
 
     public static final String OAUTH = "oauth/";
 
@@ -240,7 +240,13 @@ public class JSON_CONSTANTS {
     public static final int ALERTA_TYPE_BLOOD_PRESSURE     = 20;
     public static final int ALERTA_TYPE_HEART_RATE     = 30;
     public static final int ALERTA_TYPE_SYMPTOMS     = 40;
+    public static final int ALERTA_TYPE_MEDICINE     = 50;
     public static final int ALERTA_TYPE_SOS     = 90;
+
+    public static final String ALERTS_VISIBILITY     = "visibility";
+    public static final int ALERTS_VISIBILITY_PUBLIC     = 10;
+    public static final int ALERTS_VISIBILITY_PRIVATE    = 20;
+
 
     public static final String ALERTS_DESCRIPTION     = "description";
 

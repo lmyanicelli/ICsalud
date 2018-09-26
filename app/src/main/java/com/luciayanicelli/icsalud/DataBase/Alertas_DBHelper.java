@@ -21,6 +21,7 @@ public class Alertas_DBHelper extends SQLiteOpenHelper {
             + AlertasContract.AlertasEntry.TIPO + " TEXT NOT NULL,"
             + AlertasContract.AlertasEntry.PARAMETRO + " TEXT NOT NULL,"
             + AlertasContract.AlertasEntry.DESCRIPCION + " TEXT NOT NULL,"
+            + AlertasContract.AlertasEntry.VISIBILIDAD + " INTEGER,"
             + AlertasContract.AlertasEntry.ESTADO + " TEXT NOT NULL"
             + ")";
 

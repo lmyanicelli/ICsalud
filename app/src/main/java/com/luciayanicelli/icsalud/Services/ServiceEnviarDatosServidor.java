@@ -349,6 +349,7 @@ Query the given URL, returning a Cursor over the result set.*/
                     AlertasContract.AlertasEntry.DESCRIPCION,
                     AlertasContract.AlertasEntry.TIPO, //level
                     AlertasContract.AlertasEntry.PARAMETRO, //type
+                    AlertasContract.AlertasEntry.VISIBILIDAD, //visibility
             };
 
             String selection = AlertasContract.AlertasEntry.FECHA + "> ?";
@@ -369,6 +370,7 @@ Query the given URL, returning a Cursor over the result set.*/
                 count = cursorAlertas.getCount();
 
                 String date_time, description, level, type;
+                int visibility;
 
                 do {
 
@@ -376,8 +378,9 @@ Query the given URL, returning a Cursor over the result set.*/
                     description = cursorAlertas.getString(2);
                     level = cursorAlertas.getString(3); //tipo verde amarilla roja
                     type = cursorAlertas.getString(4); //parametro peso, pa, sintomas, sos
+                    visibility = cursorAlertas.getInt(5); //visibilidad pública o privada
 
-                    postAlert(date_time, description, level,type);
+                    postAlert(date_time, description, level,type, visibility);
 
                 } while (cursorAlertas.moveToNext());
             }
@@ -515,12 +518,12 @@ Query the given URL, returning a Cursor over the result set.*/
 
     }
 
-    private void postAlert(String date_time, String description, String level, String type) throws ExecutionException, InterruptedException {
+    private void postAlert(String date_time, String description, String level, String type, int visibility) throws ExecutionException, InterruptedException {
 
         int intLevel = convertirLevel(level);
         int intType = convertirType(type);
 
-        Post_Alert post_alert = new Post_Alert(getApplicationContext(), date_time, description, intLevel, intType);
+        Post_Alert post_alert = new Post_Alert(getApplicationContext(), date_time, description, intLevel, intType, visibility);
 
         boolean response = post_alert.execute().get();
     }
@@ -548,6 +551,10 @@ Query the given URL, returning a Cursor over the result set.*/
                 //14/08/18
             case JSON_CONSTANTS.HEART_RATES:
                 intType= JSON_CONSTANTS.ALERTA_TYPE_HEART_RATE;
+                break;
+
+            case AlertasContract.AlertasEntry.ALERTA_PARAMETRO_MEDICINE:
+                intType= JSON_CONSTANTS.ALERTA_TYPE_MEDICINE;
                 break;
 
             default:

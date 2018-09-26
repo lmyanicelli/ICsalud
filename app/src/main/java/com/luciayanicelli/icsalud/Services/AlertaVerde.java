@@ -273,6 +273,7 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
             values.put(AlertasContract.AlertasEntry.PARAMETRO, nameTabla);
             values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
             values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
+            values.put(AlertasContract.AlertasEntry.VISIBILIDAD, AlertasContract.AlertasEntry.ALERTA_VISIBILIDAD_PUBLICA);
 
             db.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values);
 
@@ -347,6 +348,7 @@ public class AlertaVerde extends AsyncTask<Void, Void, Void> {
         values.put(AlertasContract.AlertasEntry.PARAMETRO, nameTabla);
         values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
         values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
+        values.put(AlertasContract.AlertasEntry.VISIBILIDAD, AlertasContract.AlertasEntry.ALERTA_VISIBILIDAD_PUBLICA);
 
         try {
             db.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values);

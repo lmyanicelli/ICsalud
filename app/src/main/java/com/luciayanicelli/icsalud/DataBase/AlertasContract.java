@@ -23,6 +23,7 @@ public class AlertasContract {
         public static final String PARAMETRO = "parametro";
         public static final String DESCRIPCION = "descripcion";
         public static final String ESTADO = "estado";
+        public static final String VISIBILIDAD = "visibilidad";
 
 
         //TIPO
@@ -32,10 +33,15 @@ public class AlertasContract {
 
         //PARAMETRO
         public static final String ALERTA_PARAMETRO_SOS = "sos";
+        public static final String ALERTA_PARAMETRO_MEDICINE = "medicine";
 
         //ESTADO PARA VER SI LA ALERTA FUE ENVIADA POR MAIL O NO
         public static final String ALERTA_ESTADO_PENDIENTE = "PENDIENTE";
         public static final String ALERTA_ESTADO_ENVIADA = "ENVIADA";
+
+        //VISIBILDIAD
+        public static final int ALERTA_VISIBILIDAD_PUBLICA = 10;
+        public static final int ALERTA_VISIBILIDAD_PRIVADA = 20;
 
 
     }

@@ -38,12 +38,12 @@ public class Post_Alert extends AsyncTask<Integer, ArrayList, Boolean> {
     private final String BASE_URL;
 
     private final String DATE_TIME, DESCRIPTION;
-    private final int LEVEL, TYPE;
+    private final int LEVEL, TYPE, VISIBILITY;
 
 
 
 
-    public Post_Alert(Context context, String date_time, String description, int level, int type) throws ExecutionException, InterruptedException {
+    public Post_Alert(Context context, String date_time, String description, int level, int type, int visibility) throws ExecutionException, InterruptedException {
         this.context = context;
         this.configuraciones = new Configuraciones(context);
         this._PATIENT_ID = configuraciones.getID();
@@ -59,6 +59,7 @@ public class Post_Alert extends AsyncTask<Integer, ArrayList, Boolean> {
         this.DESCRIPTION = description;
         this.LEVEL = level;
         this.TYPE = type;
+        this.VISIBILITY = visibility;
     }
 
 
@@ -92,6 +93,7 @@ public class Post_Alert extends AsyncTask<Integer, ArrayList, Boolean> {
             jsonObject.put(JSON_CONSTANTS.ALERTS_DESCRIPTION, DESCRIPTION);
             jsonObject.put(JSON_CONSTANTS.ALERTS_LEVEL, LEVEL);
             jsonObject.put(JSON_CONSTANTS.ALERTS_TYPE, TYPE);
+            jsonObject.put(JSON_CONSTANTS.ALERTS_VISIBILITY, VISIBILITY);
             // 4. convert JSONObject to JSON to String
             String jsonString = jsonObject.toString();
 
