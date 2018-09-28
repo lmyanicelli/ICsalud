@@ -230,4 +230,49 @@ public class Recordatorio implements Parcelable {
 
     }
 
+    public void eliminarRecordatorioBD_CS(Context context, String parametro) {
+
+        RecordatoriosDBHelper dbHelper = new RecordatoriosDBHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        String whereClause = RecordatoriosContract.RecordatoriosEntry.PARAMETRO + "= ?";
+        //con esta segunda opcion elimino todos los recordatorios sobre el peso
+
+        String[] args = {parametro};
+
+        //ELIMINAR NOTIFICACION SI AUN ESTA ACTIVA
+
+        String[] columns = {RecordatoriosContract.RecordatoriosEntry.FECHA,
+                RecordatoriosContract.RecordatoriosEntry.ID_NOTIFICACION};
+
+        Cursor mCursor = db.query(true, RecordatoriosContract.RecordatoriosEntry.TABLE_NAME, columns, whereClause, args, null, null, null, null);
+
+        if(mCursor != null & mCursor.moveToFirst()){
+
+            NotificationManager nm = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+
+            for(int i=0; i<mCursor.getCount(); i++){
+
+                String text_idnotificacion= mCursor.getString(1);
+
+                if(text_idnotificacion != null){
+
+                    int idNotificacion = Integer.parseInt(text_idnotificacion);
+
+                    // Cancelamos la Notificacion que hemos comenzado
+                    nm.cancel(idNotificacion);
+
+                    mCursor.moveToNext();
+                }
+            }
+
+        }
+
+        db.delete(RecordatoriosContract.RecordatoriosEntry.TABLE_NAME, whereClause, args);
+        mCursor.close();
+        db.close();
+        dbHelper.close();
+
+    }
+
 }

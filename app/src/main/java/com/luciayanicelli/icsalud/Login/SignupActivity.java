@@ -526,7 +526,7 @@ public class SignupActivity extends AppCompatActivity implements AlertDialogs.No
      //   pb.putLong("periodo", periodo);
         pb.putInt("jobId", jobId);
 
-        ComponentName serviceComponentGE = new ComponentName(context, GenerarEmailJobService.class);
+        ComponentName serviceComponentGE = new ComponentName(context, GenerarAlertasAdministrador_JobService.class);
         JobInfo.Builder builderGE = new JobInfo.Builder(jobId, serviceComponentGE);
       //  builderGE.setPeriodic(periodo); //UN DÍA ? 86400000
         //   builder.setMinimumLatency(1000); //1segundo

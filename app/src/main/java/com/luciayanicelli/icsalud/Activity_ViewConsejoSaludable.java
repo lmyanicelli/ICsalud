@@ -1,7 +1,9 @@
 package com.luciayanicelli.icsalud;
 
+import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -77,9 +79,53 @@ public class Activity_ViewConsejoSaludable extends AppCompatActivity implements 
         int contador = configuraciones.getContadorConsejosSaludablesLeidos();
         configuraciones.setContadorConsejosSaludablesLeidos(contador + 1);
 
+        eliminarNotificacion(fecha);
+
         eliminarRecordatorioSaludable(fecha);
 
         volverMainActivity();
+    }
+
+    private void eliminarNotificacion(String fecha) {
+        RecordatoriosDBHelper dbHelper = new RecordatoriosDBHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        String whereClause = RecordatoriosContract.RecordatoriosEntry.FECHA + "= ?"
+                + " and " + RecordatoriosContract.RecordatoriosEntry.TIPO + "= ?";
+
+        String[] args = {fecha, RecordatoriosContract.RecordatoriosEntry.TIPO_RECORDATORIO};
+
+
+        //ELIMINAR NOTIFICACION SI AUN ESTA ACTIVA
+
+        String[] columns = {RecordatoriosContract.RecordatoriosEntry.FECHA,
+                RecordatoriosContract.RecordatoriosEntry.ID_NOTIFICACION};
+
+        Cursor mCursor = db.query(true, RecordatoriosContract.RecordatoriosEntry.TABLE_NAME, columns, whereClause, args, null, null, null, null);
+
+        if(mCursor != null & mCursor.moveToFirst()){
+
+            NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+
+            for(int i=0; i<mCursor.getCount(); i++){
+
+                String text_idnotificacion= mCursor.getString(1);
+
+                if(text_idnotificacion != null){
+
+                    int idNotificacion = Integer.parseInt(text_idnotificacion);
+
+                    // Cancelamos la Notificacion que hemos comenzado
+                    nm.cancel(idNotificacion);
+
+                    mCursor.moveToNext();
+                }
+            }
+
+        }
+        mCursor.close();
+        db.close();
+        dbHelper.close();
     }
 
     @Override

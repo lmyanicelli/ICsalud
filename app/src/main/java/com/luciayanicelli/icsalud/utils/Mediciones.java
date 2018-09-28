@@ -6,11 +6,13 @@ package com.luciayanicelli.icsalud.utils;
 
 public interface Mediciones {
 
-     String getMedicionesCSV();
+   //  String getMedicionesCSV();
 
-     void alertaVerde(String fecha_sin_hora);
+   //  void alertaVerde(String fecha_sin_hora);
 
-     boolean alertaAmarilla();
+     boolean alertaVerde();
+
+     void guardarAlerta(String descripcion, String tipo);
 
 
 }

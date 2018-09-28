@@ -24,12 +24,10 @@ import com.luciayanicelli.icsalud.Notifications.MyReceiverPA;
 import com.luciayanicelli.icsalud.Notifications.MyReceiverSINTOMAS;
 import com.luciayanicelli.icsalud.Services.AlertaVerdeJobService;
 import com.luciayanicelli.icsalud.Services.Constants;
-import com.luciayanicelli.icsalud.Services.EnviarDatosServidorJobService;
-import com.luciayanicelli.icsalud.Services.GenerarEmailJobService;
-import com.luciayanicelli.icsalud.Services.GetContactsJobService;
-import com.luciayanicelli.icsalud.Services.ServiceEnviarDatosServidor;
-import com.luciayanicelli.icsalud.Services.ServiceGenerarEmail;
-import com.luciayanicelli.icsalud.Services.ServiceGetContacts;
+import com.luciayanicelli.icsalud.Services.EnviarDatosServidor_JobService;
+import com.luciayanicelli.icsalud.Services.GenerarAlertasAdministrador_Service;
+import com.luciayanicelli.icsalud.Services.GenerarAlertasAdministrador_JobService;
+import com.luciayanicelli.icsalud.Services.EnviarDatosServidor_Service;
 
 import java.util.Calendar;
 
@@ -45,7 +43,7 @@ import static android.content.Context.ALARM_SERVICE;
 public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
     private String horarioPAFC, horarioPESO, horarioSINTOMAS, horarioCONSEJO_SALUDABLE, horarioMEDICAMENTOS;
-    private String horarioEnviarMailAlertas, horarioEnviarMailMediciones, horarioEnviarDatosServidor, horarioEnviarMailJugadas;
+    private String horarioEnviarMailAlertas, horarioEnviarMailMediciones, horarioEnviarDatosServidor, horarioGenerarAlertasAdministrador;
     private String horarioAlertaVerde, horariogetContacts, horarioEncuestas;
 
     private Configuraciones configuraciones;
@@ -95,7 +93,7 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
         horarioEnviarMailAlertas = configuraciones.getHorarioEnviarEmailAlertas();
         horarioEnviarMailMediciones = configuraciones.getHorarioEnviarEmailMediciones();
-        horarioEnviarMailJugadas = configuraciones.getHorarioEnviarEmailJugadas();
+        horarioGenerarAlertasAdministrador = configuraciones.getHorarioGenerarAlertasAdministrador();
 
         horarioAlertaVerde = configuraciones.getHorarioAlertaVerde();
 
@@ -311,8 +309,8 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     //Crea el Intent para las alarmas del PESO
-                    //   Intent myIntentEAlertas = new Intent(context, MyReceiverGenerarEmail.class);
-                    Intent myIntentEAlertas = new Intent(context, ServiceGenerarEmail.class);
+                    //   Intent myIntentEAlertas = new Intent(context, MyReceiverGenerarAlertasAdministrador.class);
+                    Intent myIntentEAlertas = new Intent(context, GenerarAlertasAdministrador_Service.class);
                     myIntentEAlertas.setAction(Constants.SERVICE_GENERAR_EMAIL_ACTION_RUN_SERVICE);
                     //   myIntent.putExtra("parametro", "peso");
                     //  PendingIntent pendingIntentEAlertas = PendingIntent.getBroadcast(context, 0, myIntentEAlertas,0);
@@ -320,17 +318,6 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
                     AlarmManager alarmManagerEAlertas = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
-        /*
-        void setRepeating (int type,
-                long triggerAtMillis,
-                long intervalMillis,
-                PendingIntent operation)
-        Parameters
-        type	int: type of alarm. Value is RTC_WAKEUP, RTC, ELAPSED_REALTIME_WAKEUP or ELAPSED_REALTIME.
-        triggerAtMillis	long: time in milliseconds that the alarm should first go off, using the appropriate clock (depending on the alarm type).
-        intervalMillis	long: interval in milliseconds between subsequent repeats of the alarm.
-        operation	PendingIntent: Action to perform when the alarm goes off; typically comes from IntentSender.getBroadcast().
-         */
                     alarmManagerEAlertas.setRepeating(AlarmManager.RTC_WAKEUP, calendarEAlertas.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentEAlertas);
 
                 }else{
@@ -363,8 +350,8 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     //Crea el Intent para las alarmas del PESO
-                    //    Intent myIntentEMediciones = new Intent(context, MyReceiverGenerarEmail.class);
-                    Intent myIntentEMediciones = new Intent(context, ServiceGenerarEmail.class);
+                    //    Intent myIntentEMediciones = new Intent(context, MyReceiverGenerarAlertasAdministrador.class);
+                    Intent myIntentEMediciones = new Intent(context, GenerarAlertasAdministrador_Service.class);
                     myIntentEMediciones.setAction(Constants.SERVICE_GENERAR_EMAIL_ACTION_RUN_SERVICE_MEDICIONES);
                     PendingIntent pendingIntentEMediciones = PendingIntent.getService(context, 0, myIntentEMediciones, 0);
                     //        PendingIntent pendingIntentEMediciones = PendingIntent.getBroadcast(context, 0, myIntentEMediciones,0);
@@ -391,15 +378,15 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
                     break;
 
-                case Constants.PARAMETRO_GENERAR_EMAIL_JUGADAS:
+                case Constants.PARAMETRO_GENERAR_ALERTAS_ADMINISTRADOR:
 
                     //NOTIFICACIONES
                     ///http://karanbalkar.com/2013/07/tutorial-41-using-alarmmanager-and-broadcastreceiver-in-android/
                     Calendar calendarEJugadas = Calendar.getInstance();
 
                     //Obtengo la hora y minutos del recordatorio para el peso
-                    int horaEJugadas = getHour(horarioEnviarMailJugadas);
-                    int minEJugadas = getMinute(horarioEnviarMailJugadas);
+                    int horaEJugadas = getHour(horarioGenerarAlertasAdministrador);
+                    int minEJugadas = getMinute(horarioGenerarAlertasAdministrador);
 
                     //   Toast.makeText(context, "Time: " + String.valueOf(horaPeso) + ":" + String.valueOf(minPeso),Toast.LENGTH_LONG).show();
 
@@ -414,9 +401,9 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                         //Crea el Intent para las alarmas del PESO
-                        //    Intent myIntentEMediciones = new Intent(context, MyReceiverGenerarEmail.class);
-                        Intent myIntentEJugadas = new Intent(context, ServiceGenerarEmail.class);
-                        myIntentEJugadas.setAction(Constants.SERVICE_GENERAR_EMAIL_ACTION_RUN_SERVICE_JUGADAS);
+                        //    Intent myIntentEMediciones = new Intent(context, MyReceiverGenerarAlertasAdministrador.class);
+                        Intent myIntentEJugadas = new Intent(context, GenerarAlertasAdministrador_Service.class);
+                        myIntentEJugadas.setAction(Constants.SERVICE_GENERAR_ALERTAS_ADMINISTRADOR);
                         PendingIntent pendingIntentEJugadas = PendingIntent.getService(context, 0, myIntentEJugadas, 0);
                         //        PendingIntent pendingIntentEMediciones = PendingIntent.getBroadcast(context, 0, myIntentEMediciones,0);
 
@@ -426,7 +413,7 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
                     }else{
 
-                        scheduleJobGenerarEmail(context, Constants.SERVICE_GENERAR_EMAIL_ACTION_RUN_SERVICE_JUGADAS, 30 * AlarmManager.INTERVAL_DAY, JOB_ID_GENERAR_EMAIL_JUGADAS);
+                        scheduleJobGenerarEmail(context, Constants.SERVICE_GENERAR_ALERTAS_ADMINISTRADOR, 30 * AlarmManager.INTERVAL_DAY, JOB_ID_GENERAR_EMAIL_JUGADAS);
                     }
 
                     break;
@@ -530,7 +517,7 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
 
                 break;
-
+/*
                 case Constants.PARAMETRO_GET_CONTACTS:
 
                     //NOTIFICACIONES
@@ -573,6 +560,7 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
 
                     break;
+                    */
 
                 case Constants.PARAMETRO_ENVIAR_DATOS_SERVIDOR:
 
@@ -600,8 +588,8 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 
                         //Crea el Intent para las alarmas del PESO
-                        //    Intent myIntentEMediciones = new Intent(context, MyReceiverGenerarEmail.class);
-                        Intent myIntentServidor = new Intent(context, ServiceEnviarDatosServidor.class);
+                        //    Intent myIntentEMediciones = new Intent(context, MyReceiverGenerarAlertasAdministrador.class);
+                        Intent myIntentServidor = new Intent(context, EnviarDatosServidor_Service.class);
                         //  myIntentServidor.setAction(Constants.SERVICE_GENERAR_EMAIL_ACTION_RUN_SERVICE_MEDICIONES);
                         PendingIntent pendingIntentServidor = PendingIntent.getService(context, 0, myIntentServidor, 0);
                         //        PendingIntent pendingIntentEMediciones = PendingIntent.getBroadcast(context, 0, myIntentEMediciones,0);
@@ -683,7 +671,7 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public static void scheduleJobEnviarDatosServidor(Context context) {
-            ComponentName serviceComponent = new ComponentName(context, EnviarDatosServidorJobService.class);
+            ComponentName serviceComponent = new ComponentName(context, EnviarDatosServidor_JobService.class);
             JobInfo.Builder builder = new JobInfo.Builder(JOB_ID_SERVIDOR, serviceComponent);
             builder.setPeriodic(AlarmManager.INTERVAL_DAY); //UN DÍA ? 86400000
          //   builder.setMinimumLatency(1000); //1segundo
@@ -712,7 +700,7 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
         pb.putLong("periodo", periodo);
         pb.putInt("jobId", jobId);
 
-        ComponentName serviceComponentGE = new ComponentName(context, GenerarEmailJobService.class);
+        ComponentName serviceComponentGE = new ComponentName(context, GenerarAlertasAdministrador_JobService.class);
         JobInfo.Builder builderGE = new JobInfo.Builder(jobId, serviceComponentGE);
         builderGE.setPeriodic(periodo); //UN DÍA ? 86400000
         //   builder.setMinimumLatency(1000); //1segundo
@@ -735,7 +723,7 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+  /*  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static void scheduleJobContacts(Context context) {
         ComponentName serviceComponentC = new ComponentName(context, GetContactsJobService.class);
         JobInfo.Builder builderC = new JobInfo.Builder(JOB_ID_CONTACTS, serviceComponentC);
@@ -754,6 +742,7 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
         jobSchedulerC.schedule(builderC.build());
 
     }
+    */
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static void scheduleJobAlertaVerde(Context context) {

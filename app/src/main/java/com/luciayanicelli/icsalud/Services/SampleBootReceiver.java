@@ -56,7 +56,7 @@ public class SampleBootReceiver extends BroadcastReceiver {
         //    saGetContacts = new SetearAlarma(context, Constants.PARAMETRO_GET_CONTACTS);
         //    saGetContacts.execute();
 
-            setearAlarmaEnviarMailJugada = new SetearAlarma(context, Constants.PARAMETRO_GENERAR_EMAIL_JUGADAS);
+            setearAlarmaEnviarMailJugada = new SetearAlarma(context, Constants.PARAMETRO_GENERAR_ALERTAS_ADMINISTRADOR);
             setearAlarmaEnviarMailJugada.execute();
 
        //14/08/18     setearAlarmaEnviarTablaDatos = new SetearAlarma(context, Constants.PARAMETRO_GENERAR_EMAIL_TABLA_DATOS);            setearAlarmaEnviarTablaDatos.execute();

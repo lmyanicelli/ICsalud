@@ -319,61 +319,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-/*    private void guardarDatosPatient(final String email) {
-
-        Configuraciones configuraciones = new Configuraciones(getApplicationContext());
-        final String access_token = configuraciones.getAccessTokenPassword();
-        boolean b = false;
-
-        //poner delay de 1 segundo
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Do something after 1s = 1000ms
-                Buscar_Patient buscar_patient = new Buscar_Patient(access_token, email);
-                try {
-                    HashMap<String, String> data = buscar_patient.execute().get();
-
-                    if(data.get(JSON_CONSTANTS.HEADER_AUTHORIZATION).equalsIgnoreCase(String.valueOf(Boolean.FALSE))){
-
-                        //     b = false;
-                        //Hubo algún error
-                        onLoginFailed();
-
-                    }else{
-                        String jsonString = data.get(JSON_CONSTANTS.PATIENTS);
-
-                        Patients patients = new Patients();
-                        patients.cargarPatient(getApplicationContext(), jsonString);
-
-
-                        //    b = true;
-                    }
-
-
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    //  b = false;
-                    //Hubo algún error
-                    onLoginFailed();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                    //  b = false;
-                    //Hubo algún error
-                    onLoginFailed();
-                }
-            }
-        }, 1000);
-
-
-
-
-      //  return b;
-    }
-
-*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -382,7 +327,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 // TODO: Implement successful signup logic here
                 // By default we just finish the Activity and log them in automatically
-               // Toast.makeText(getApplicationContext(), "onActivityResult: RESULT_OK", Toast.LENGTH_LONG).show();
 
                 completarLogin();
 
@@ -488,13 +432,10 @@ public class LoginActivity extends AppCompatActivity {
         SetearAlarma setearAlarmaMEDICAMENTOS = new SetearAlarma(getApplicationContext(), Constants.MEDICAMENTOS);
         setearAlarmaMEDICAMENTOS.execute();
 
-// 14/08/18        SetearAlarma setearAlarmaGetContacts = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GET_CONTACTS);        setearAlarmaGetContacts.execute();
-
         //14/08/18 --> cargar en BD ALERTAS como alerta roja para poder subir al servidor los datos: level_red=10, type_heartRate=30
-        SetearAlarma setearAlarmaEnviarMailJugada = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_EMAIL_JUGADAS);
+        SetearAlarma setearAlarmaEnviarMailJugada = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_ALERTAS_ADMINISTRADOR);
         setearAlarmaEnviarMailJugada.execute();
 
-        // 14/08/18         SetearAlarma setearAlarmaEnviarMailTablaDatos = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_EMAIL_TABLA_DATOS);        setearAlarmaEnviarMailTablaDatos.execute();
 
     }
 

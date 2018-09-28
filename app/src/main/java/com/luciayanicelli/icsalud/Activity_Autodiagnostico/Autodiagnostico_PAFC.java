@@ -16,12 +16,12 @@ import android.widget.Toast;
 
 import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
 import com.luciayanicelli.icsalud.DataBase.AlertasContract;
-import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
 import com.luciayanicelli.icsalud.DataBase.AutodiagnosticoContract;
 import com.luciayanicelli.icsalud.DataBase.Autodiagnostico_DBHelper;
 import com.luciayanicelli.icsalud.R;
 import com.luciayanicelli.icsalud.Services.Constants;
 import com.luciayanicelli.icsalud.utils.FechaActual;
+import com.luciayanicelli.icsalud.utils.PAFC;
 import com.luciayanicelli.icsalud.utils.Recordatorio;
 
 import java.util.Calendar;
@@ -184,23 +184,6 @@ public class Autodiagnostico_PAFC extends Fragment implements View.OnClickListen
 
         }
 
-  /*  private void eliminarRecordatorioBD(String fecha) {
-
-        RecordatoriosDBHelper dbHelper = new RecordatoriosDBHelper(getContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        String whereClause = RecordatoriosContract.RecordatoriosEntry.PARAMETRO + "= ?" + " and " + RecordatoriosContract.RecordatoriosEntry.FECHA + "= ?";
-
-        String[] args = {Constants.PARAMETRO_PAFC, fecha};
-
-        db.delete(RecordatoriosContract.RecordatoriosEntry.TABLE_NAME, whereClause, args);
-
-        Toast.makeText(getContext(), "eliminarRecordatorioBD" + fecha, Toast.LENGTH_LONG).show();
-
-    }
-    */
-
-
     //EN LUGAR DE HACER ESTO, CONVENDRÍA TENER UN FRAGMENT XA CARGAR LOS DATOS Y OTRO  QUE SÓLO CONTENGA EL TEXT VIEW INDICANDO QUE YA CARGÓ LOS DATOS
     //eL FRAGMENT CON EL TEXTVIEW SERVIRÍA XA TODOS LOS TABS
     private void refreshView() {
@@ -295,27 +278,30 @@ public class Autodiagnostico_PAFC extends Fragment implements View.OnClickListen
 
                     } else {
                         //Todos los datos ingresados són válidos
+                        PAFC mPAFC = new PAFC(getContext());
 
                         //CONTROL ALERTA AMARILLA
                         if(PS_ingresada > ps_max | PS_ingresada < ps_min){
 
                             String descripcion = "El paciente tiene su PS fuera de los valores normales: " + String.valueOf(PS_ingresada) +"mmHg.";
                             //guardar Alarma en BD
-                            guardarAlerta(descripcion);
+                            mPAFC.guardarAlerta(descripcion, AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA);
+
                         }
 
                         if(PD_ingresada < pd_min){
 
                             String descripcion = "El paciente tiene su PD fuera de los valores normales: " + String.valueOf(PD_ingresada) +"mmHg.";
                             //guardar Alarma en BD
-                            guardarAlerta(descripcion);
+                            mPAFC.guardarAlerta(descripcion, AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA);
                         }
 
                         if(FC_ingresada > fc_max | FC_ingresada < fc_min){
 
                             String descripcion = "El paciente tiene su FC fuera de los valores normales: " + String.valueOf(FC_ingresada) +"lat/min.";
                             //guardar Alarma en BD
-                            guardarAlerta(descripcion);
+                            mPAFC.guardarAlerta(descripcion, AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA);
+
                         }
 
                         //Guardar los datos
@@ -368,29 +354,6 @@ public class Autodiagnostico_PAFC extends Fragment implements View.OnClickListen
         datosCargados = buscarDatosHoy();
 
         refreshView();
-
-    }
-
-    private void guardarAlerta(String descripcion) {
-        Alertas_DBHelper mDBHelper = new Alertas_DBHelper(getContext());
-        SQLiteDatabase dbAlerta = mDBHelper.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put(AlertasContract.AlertasEntry.FECHA, fechaHora);
-        values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA);
-        values.put(AlertasContract.AlertasEntry.PARAMETRO, AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PA);
-        values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
-        values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
-        values.put(AlertasContract.AlertasEntry.VISIBILIDAD, AlertasContract.AlertasEntry.ALERTA_VISIBILIDAD_PUBLICA);
-
-        try{
-            long controlInsert = dbAlerta.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values);
-            dbAlerta.close();
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
 
     }
 

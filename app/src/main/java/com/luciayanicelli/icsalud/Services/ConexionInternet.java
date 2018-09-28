@@ -17,17 +17,9 @@ public class ConexionInternet extends AsyncTask<Void, Void, Boolean> {
     //ANALIZA QUE EXISTA UNA CONEXIÓN A INTERNET
     private boolean conectadointernet() {
         if(conectadoWifi()){
-            //   Toast.makeText(getApplicationContext(), "Tu Dispositivo tiene Conexion Wifi.", Toast.LENGTH_LONG).show();
             return true;
         }else{
             return conectadoRedMovil();
-          /*  if(conectadoRedMovil()){
-
-                return true;
-            }else{
-
-                return false;
-            }*/
         }
     }
 

@@ -1,12 +1,14 @@
 package com.luciayanicelli.icsalud.Services;
 
-import android.app.AlarmManager;
-import android.app.IntentService;
-import android.app.PendingIntent;
-import android.content.Intent;
+import android.app.job.JobParameters;
+import android.app.job.JobService;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
+import android.os.Handler;
 import android.provider.BaseColumns;
+import android.support.annotation.RequiresApi;
+import android.util.Log;
 
 import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
 import com.luciayanicelli.icsalud.Api_Json.JSON_CONSTANTS;
@@ -20,7 +22,6 @@ import com.luciayanicelli.icsalud.DataBase.AlertasContract;
 import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
 import com.luciayanicelli.icsalud.DataBase.AutodiagnosticoContract;
 import com.luciayanicelli.icsalud.DataBase.Autodiagnostico_DBHelper;
-import com.luciayanicelli.icsalud.Notifications.MyReceiverEnviarDatosServidor;
 import com.luciayanicelli.icsalud.R;
 
 import java.text.ParseException;
@@ -29,102 +30,50 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
-/**
- * An {@link IntentService} subclass for handling asynchronous task requests in
- * a service on a separate handler thread.
- * <p>
- * TODO: Customize class - update intent actions, extra parameters and static
- * helper methods.
- */
-
-/*
-PARA UTILIZAR EL SERVICE QUE ENVIA LAS MEDICIONES AL SERVIDOR - CORROBORA CONEXIÓN A INTERNET Y ENVIA LOS DATOS CORRESPONDIENTES
-
-//Sevice Enviar Datos Servidor - PESO
-        Intent intentPESO = new Intent(getApplicationContext(), ServiceEnviarDatosServidor.class);
-        intentPESO.setAction(JSON_CONSTANTS.WEIGHTS);
-        startService(intentPESO);
-
-//Sevice Generar Email - ENVIAR MEDICIONES
-        Intent intentMEDICIONES = new Intent(getApplicationContext(), ServiceGenerarEmail2.class);
-        intentMEDICIONES.setAction(Constants.SERVICE_GENERAR_EMAIL_ACTION_RUN_SERVICE_MEDICIONES);
-        startService(intentMEDICIONES);
-
- */
-public class ServiceEnviarDatosServidor extends IntentService {
-       ///VARIABLES
-    private AlarmManager alarmManagerSinConexion, alarmManagerSinConexion30;
-    private PendingIntent pendingIntentSinConexion, pendingIntentSinConexion30;
-
-    private int contador = 0;
-
-    public ServiceEnviarDatosServidor() {
-
-        super("ServiceEnviarDatosServidor");
-    }
+import static com.luciayanicelli.icsalud.R.string.sintomas_respuesta_muchisimo;
+import static com.luciayanicelli.icsalud.R.string.sintomas_respuesta_mucho;
+import static com.luciayanicelli.icsalud.R.string.sintomas_respuesta_poco;
+import static com.luciayanicelli.icsalud.R.string.sintomas_respuesta_si;
 
 
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+public class EnviarDatosServidor_JobService extends JobService {
+
+    private boolean isWorking = false;
+    private JobParameters jobParameters;
 
     @Override
-    protected void onHandleIntent(Intent intent) {
-              if (intent != null) {
+    public boolean onStartJob(final JobParameters params) {
+        Log.d(this.getClass().getSimpleName(),"onStartJobServidor");
+        Handler mHandler = new Handler(getMainLooper());
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
 
-                     //29/05/18
-                  ConexionInternet conexionInternet = new ConexionInternet(getApplicationContext());
-              //29/05  if(conectadointernet()){
-                  try {
-                      if(conexionInternet.execute().get()){
+                jobParameters = params;
+                isWorking = true;
+                try {
+                    enviarDatosServidor();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-                          try {
-                            handleActionMediciones();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+            }
+        });
 
-                    }else{
-
-                        contador = contador ++;
-                        if(contador <= 1){
-                            //Volver a intentar la conexión a los 30 segundos
-                            Intent myIntent30 = new Intent(getApplicationContext(), ServiceEnviarDatosServidor.class);
-
-                            pendingIntentSinConexion30 = PendingIntent.getService(getApplicationContext(), 0, myIntent30,0);
-
-                            alarmManagerSinConexion30 = (AlarmManager)getApplicationContext().getSystemService(ALARM_SERVICE);
-
-                          //alarma en 30 segundos
-                            alarmManagerSinConexion30.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 30 * 1000, pendingIntentSinConexion30);
-
-                        } else {
-                            contador = 0;
-                        }
-
-
-                        //VER DE PONER UN BUCLE PARA QUE VUELVA A INTENTAR CADA UNA HORA
-
-                        Intent myIntentEAlertas = new Intent(getApplicationContext(), MyReceiverEnviarDatosServidor.class);
-                     //   myIntentEAlertas.setAction(action);
-
-                        pendingIntentSinConexion = PendingIntent.getBroadcast(getApplicationContext(), 0, myIntentEAlertas,0);
-
-                        alarmManagerSinConexion = (AlarmManager)getApplicationContext().getSystemService(ALARM_SERVICE);
-
-                        Calendar calendar = Calendar.getInstance();
-
-                        alarmManagerSinConexion.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HOUR, pendingIntentSinConexion);
-
-                    }
-                  } catch (InterruptedException e) {
-                      e.printStackTrace();
-                  } catch (ExecutionException e) {
-                      e.printStackTrace();
-                  }
-
-        }
+        return isWorking;
     }
 
+    private void enviarDatosServidor() throws ExecutionException, InterruptedException {
+        ConexionInternet conexionInternet = new ConexionInternet(getApplicationContext());
+
+            if(conexionInternet.execute().get()) {
+                handleActionMediciones();
+            }
+
+    }
 
     //ENVIA LAS MEDICIONES PENDIENTES AL SERVIDOR
     private void handleActionMediciones() throws ExecutionException, InterruptedException {
@@ -159,8 +108,7 @@ Query the given URL, returning a Cursor over the result set.*/
 
         //Existen MEDICIONES DE LA TABLA PESO CON FECHA POSTERIOR A LASTDATE
         if (cursorPESO != null & cursorPESO.moveToFirst()) {
-            int countPESO;
-            countPESO = cursorPESO.getCount();
+            cursorPESO.getCount();
 
             String kg, date_time;
 
@@ -173,6 +121,7 @@ Query the given URL, returning a Cursor over the result set.*/
             } while (cursorPESO.moveToNext());
         }
 
+        cursorPESO.close();
         buscarDatosServidorPA();
     }
 
@@ -204,8 +153,7 @@ Query the given URL, returning a Cursor over the result set.*/
 
         //Existen MEDICIONES DE LA TABLA PA CON FECHA POSTERIOR A LASTDATE
         if (cursorPESO != null & cursorPESO.moveToFirst()) {
-            int countPESO;
-            countPESO = cursorPESO.getCount();
+            cursorPESO.getCount();
 
             String date_time, mmHg, type, shift;
                 /*
@@ -237,6 +185,7 @@ Query the given URL, returning a Cursor over the result set.*/
 
             } while (cursorPESO.moveToNext());
         }
+        cursorPESO.close();
 
         buscarDatosServidorHR();
     }
@@ -269,8 +218,7 @@ Query the given URL, returning a Cursor over the result set.*/
 
         //Existen MEDICIONES DE LA TABLA PA CON FECHA POSTERIOR A LASTDATE
         if (cursorPESO != null & cursorPESO.moveToFirst()) {
-            int countPESO;
-            countPESO = cursorPESO.getCount();
+           cursorPESO.getCount();
 
             String date_time, ppm;
 
@@ -283,6 +231,7 @@ Query the given URL, returning a Cursor over the result set.*/
 
             } while (cursorPESO.moveToNext());
         }
+        cursorPESO.close();
 
         buscarDatosServidorSINTOMAS();
     }
@@ -315,8 +264,7 @@ Query the given URL, returning a Cursor over the result set.*/
 
         //Existen MEDICIONES DE LA TABLA ANSWERS CON FECHA POSTERIOR A LASTDATE
         if (cursorPESO != null & cursorPESO.moveToFirst()) {
-            int countPESO;
-            countPESO = cursorPESO.getCount();
+            cursorPESO.getCount();
 
             String date_time, questionId, rate;
 
@@ -334,57 +282,56 @@ Query the given URL, returning a Cursor over the result set.*/
             } while (cursorPESO.moveToNext());
         }
 
+        cursorPESO.close();
         buscarDatosServidorAlertas();
 
     }
 
     private void buscarDatosServidorAlertas() throws ExecutionException, InterruptedException {
-            //Buscar fecha de último registro ingresado
-            JSON_functions jsonFunctions = new JSON_functions(getApplicationContext());
-            String lastDate = jsonFunctions.getAlertsLastDate();
+        //Buscar fecha de último registro ingresado
+        JSON_functions jsonFunctions = new JSON_functions(getApplicationContext());
+        String lastDate = jsonFunctions.getAlertsLastDate();
 
-            //BUSCA SI HAY REGISTROS CON FECHA POSTERIOR A LASTDATE EN LA TABLA ALERTAS
-            String[] camposDBALERTAS = new String[]{BaseColumns._ID,
-                    AlertasContract.AlertasEntry.FECHA,
-                    AlertasContract.AlertasEntry.DESCRIPCION,
-                    AlertasContract.AlertasEntry.TIPO, //level
-                    AlertasContract.AlertasEntry.PARAMETRO, //type
-                    AlertasContract.AlertasEntry.VISIBILIDAD, //visibility
-            };
+        //BUSCA SI HAY REGISTROS CON FECHA POSTERIOR A LASTDATE EN LA TABLA ALERTAS
+        String[] camposDBALERTAS = new String[]{BaseColumns._ID,
+                AlertasContract.AlertasEntry.FECHA,
+                AlertasContract.AlertasEntry.DESCRIPCION,
+                AlertasContract.AlertasEntry.TIPO, //level
+                AlertasContract.AlertasEntry.PARAMETRO, //type
+                AlertasContract.AlertasEntry.VISIBILIDAD, //visibility
+        };
 
-            String selection = AlertasContract.AlertasEntry.FECHA + "> ?";
+        String selection = AlertasContract.AlertasEntry.FECHA + "> ?";
 
-            String args[] = new String[]{lastDate};
+        String args[] = new String[]{lastDate};
 
-            Alertas_DBHelper alertasDbHelper = new Alertas_DBHelper(getApplicationContext());
-            SQLiteDatabase dbAlertas = alertasDbHelper.getWritableDatabase();
+        Alertas_DBHelper alertasDbHelper = new Alertas_DBHelper(getApplicationContext());
+        SQLiteDatabase dbAlertas = alertasDbHelper.getWritableDatabase();
 
                 /*query(boolean distinct, String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit)
 Query the given URL, returning a Cursor over the result set.*/
-            Cursor cursorAlertas = dbAlertas.query(true, AlertasContract.AlertasEntry.TABLE_NAME, camposDBALERTAS,
-                    selection, args, null, null, null, null);
+        Cursor cursorAlertas = dbAlertas.query(true, AlertasContract.AlertasEntry.TABLE_NAME, camposDBALERTAS,
+                selection, args, null, null, null, null);
 
-            //Existen ALERTAS DE LA TABLA ALERTAS CON FECHA POSTERIOR A LASTDATE
-            if (cursorAlertas != null & cursorAlertas.moveToFirst()) {
-                int count;
-                count = cursorAlertas.getCount();
+        //Existen ALERTAS DE LA TABLA ALERTAS CON FECHA POSTERIOR A LASTDATE
+        if (cursorAlertas != null & cursorAlertas.moveToFirst()) {
+           cursorAlertas.getCount();
 
-                String date_time, description, level, type;
-                int visibility;
+            String date_time, description, level, type;
+            int visibility;
 
-                do {
+            do {
 
-                    date_time = cursorAlertas.getString(1);
-                    description = cursorAlertas.getString(2);
-                    level = cursorAlertas.getString(3); //tipo verde amarilla roja
-                    type = cursorAlertas.getString(4); //parametro peso, pa, sintomas, sos
-                    visibility = cursorAlertas.getInt(5); //visibilidad pública o privada
+                date_time = cursorAlertas.getString(1);
+                description = cursorAlertas.getString(2);
+                level = cursorAlertas.getString(3); //tipo verde amarilla roja
+                type = cursorAlertas.getString(4); //parametro peso, pa, sintomas, sos
+                visibility = cursorAlertas.getInt(5); //visibilidad pública o privada
 
-                    postAlert(date_time, description, level,type, visibility);
+                postAlert(date_time, description, level,type, visibility);
 
-                } while (cursorAlertas.moveToNext());
-            }
-
+            } while (cursorAlertas.moveToNext());
+        }
         cursorAlertas.close();
 
         //Eliminar registros anteriores a lastDate que ya fueron subidos al servidor
@@ -394,7 +341,7 @@ Query the given URL, returning a Cursor over the result set.*/
 
         String selectionALERTAS = AlertasContract.AlertasEntry.FECHA + "< ?";
 
-        //   String argsALERTAS[] = new String[]{lastDate}; //debereìa ser lastDate - cantidadDiasAlertaAmarilla
+     //   String argsALERTAS[] = new String[]{lastDate}; //debereìa ser lastDate - cantidadDiasAlertaAmarilla
 
         String fechaEliminar = lastDate;
 
@@ -422,25 +369,25 @@ Query the given URL, returning a Cursor over the result set.*/
 
         String argsALERTAS[] = new String[]{fechaEliminar}; //debereìa ser lastDate - cantidadDiasAlertaAmarilla
 
-        Cursor cursorAlertasEliminar = dbAlertas.query(true, AlertasContract.AlertasEntry.TABLE_NAME, camposALERTAS,
+
+        Cursor cursorAlertasEliminar = dbAlertas.query(true, AlertasContract.AlertasEntry.TABLE_NAME, camposDBALERTAS,
                 selectionALERTAS, argsALERTAS, null, null, null, null);
 
         if (cursorAlertasEliminar != null & cursorAlertasEliminar.moveToFirst()) {
             cursorAlertasEliminar.getCount();
 
             long result = dbAlertas.delete(AlertasContract.AlertasEntry.TABLE_NAME,
-                    selectionALERTAS,
-                    argsALERTAS);
-
-            if(result!=-1){
-                boolean ok = true;
-            }
+                       selectionALERTAS,
+                       argsALERTAS);
 
         }
 
 
         cursorAlertasEliminar.close();
         dbAlertas.close();
+
+        isWorking = false;
+        jobFinished(jobParameters, false);
 
     }
 
@@ -452,13 +399,13 @@ Query the given URL, returning a Cursor over the result set.*/
             return "0";
         }else if(respuesta.equalsIgnoreCase(getApplicationContext().getResources().getString(R.string.sintomas_respuesta_muy_poco))){
             return "1";
-        }else if(respuesta.equalsIgnoreCase(getApplicationContext().getResources().getString(R.string.sintomas_respuesta_poco))){
+        }else if(respuesta.equalsIgnoreCase(getApplicationContext().getResources().getString(sintomas_respuesta_poco))){
             return "2";
-        }else if(respuesta.equalsIgnoreCase(getApplicationContext().getResources().getString(R.string.sintomas_respuesta_si))){
+        }else if(respuesta.equalsIgnoreCase(getApplicationContext().getResources().getString(sintomas_respuesta_si))){
             return "3";
-        }else if(respuesta.equalsIgnoreCase(getApplicationContext().getResources().getString(R.string.sintomas_respuesta_mucho))){
+        }else if(respuesta.equalsIgnoreCase(getApplicationContext().getResources().getString(sintomas_respuesta_mucho))){
             return "4";
-        }else if(respuesta.equalsIgnoreCase(getApplicationContext().getResources().getString(R.string.sintomas_respuesta_muchisimo))) {
+        }else if(respuesta.equalsIgnoreCase(getApplicationContext().getResources().getString(sintomas_respuesta_muchisimo))) {
             return "5";
         }else {
             return null;
@@ -571,25 +518,31 @@ Query the given URL, returning a Cursor over the result set.*/
         switch (level){
             case AlertasContract.AlertasEntry.ALERTA_TIPO_VERDE:
                 intLevel= JSON_CONSTANTS.ALERTA_LEVEL_GREEN;
-            break;
+                break;
 
             case AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA:
                 intLevel= JSON_CONSTANTS.ALERTA_LEVEL_YELLOW;
-            break;
+                break;
 
             case AlertasContract.AlertasEntry.ALERTA_TIPO_ROJA:
                 intLevel= JSON_CONSTANTS.ALERTA_LEVEL_RED;
-            break;
+                break;
 
             default:
                 intLevel= 0;
                 break;
         }
-            return intLevel;
+        return intLevel;
     }
 
+
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-      }
+    public boolean onStopJob(JobParameters jobParameters) {
+
+    //    return true;
+        boolean needsReschedule = isWorking;
+        jobFinished(jobParameters, needsReschedule);
+        return needsReschedule;
+    }
+
 }

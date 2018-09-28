@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
 import com.luciayanicelli.icsalud.DataBase.AlertasContract;
-import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
 import com.luciayanicelli.icsalud.DataBase.AutodiagnosticoContract;
 import com.luciayanicelli.icsalud.DataBase.Autodiagnostico_DBHelper;
 import com.luciayanicelli.icsalud.DataBase.Autodiagnostico_SintomasContract;
@@ -31,6 +30,7 @@ import com.luciayanicelli.icsalud.R;
 import com.luciayanicelli.icsalud.Services.Constants;
 import com.luciayanicelli.icsalud.utils.FechaActual;
 import com.luciayanicelli.icsalud.utils.Recordatorio;
+import com.luciayanicelli.icsalud.utils.Sintomas;
 
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
@@ -332,25 +332,9 @@ Query the given URL, returning a Cursor over the result set.*/
                                 pregunta + ": " + respuesta;
 
                         //guardar Alarma en BD
-                        guardarAlerta(descripcion);
-                    /*    Alertas_DBHelper mDBHelper = new Alertas_DBHelper(getContext());
-                        SQLiteDatabase db = mDBHelper.getWritableDatabase();
+                        Sintomas mSintomas = new Sintomas(getContext());
+                        mSintomas.guardarAlerta(descripcion, AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA);
 
-                        ContentValues values = new ContentValues();
-
-                        values.put(AlertasContract.AlertasEntry.FECHA, fechaHora);
-                        values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA);
-                        values.put(AlertasContract.AlertasEntry.PARAMETRO, AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_SINTOMAS);
-                        values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
-                        values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
-
-                        try{
-                            long controlInsert = db.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values);
-
-                        }catch(Exception e){
-                            e.printStackTrace();
-                        }
-*/
                     }
 
                     boolean datosGuardados;
@@ -408,29 +392,6 @@ Query the given URL, returning a Cursor over the result set.*/
 
 
 
-
-    }
-
-    private void guardarAlerta(String descripcion) {
-        Alertas_DBHelper mDBHelper = new Alertas_DBHelper(getContext());
-        SQLiteDatabase dbAlerta = mDBHelper.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put(AlertasContract.AlertasEntry.FECHA, fechaHora);
-        values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA);
-        values.put(AlertasContract.AlertasEntry.PARAMETRO, AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_SINTOMAS);
-        values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
-        values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
-        values.put(AlertasContract.AlertasEntry.VISIBILIDAD, AlertasContract.AlertasEntry.ALERTA_VISIBILIDAD_PUBLICA);
-
-        try{
-            long controlInsert = dbAlerta.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values);
-            dbAlerta.close();
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
 
     }
 

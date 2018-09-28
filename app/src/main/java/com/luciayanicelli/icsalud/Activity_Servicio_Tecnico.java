@@ -1,7 +1,5 @@
 package com.luciayanicelli.icsalud;
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +8,8 @@ import android.widget.Toast;
 
 import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
 import com.luciayanicelli.icsalud.DataBase.AlertasContract;
-import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
 import com.luciayanicelli.icsalud.DataBase.AutodiagnosticoContract;
-import com.luciayanicelli.icsalud.utils.FechaActual;
-
-import java.util.concurrent.ExecutionException;
+import com.luciayanicelli.icsalud.utils.Alertas;
 
 /**
  * Created by LuciaYanicelli on 15/8/2018.
@@ -57,34 +52,12 @@ public class Activity_Servicio_Tecnico extends AppCompatActivity
     private void crearAlertaRoja(String descripcion) {
 
         //guardar Alarma en BD
-        Alertas_DBHelper mDBHelper = new Alertas_DBHelper(getApplicationContext());
-        SQLiteDatabase dbAlerta = mDBHelper.getWritableDatabase();
+        Alertas mAlertas = new Alertas(getApplicationContext());
+        mAlertas.guardar(AlertasContract.AlertasEntry.ALERTA_TIPO_ROJA,
+                AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PESO,
+                descripcion,
+                AlertasContract.AlertasEntry.ALERTA_VISIBILIDAD_PRIVADA);
 
-        FechaActual fechaActual = new FechaActual();
-        String fecha = null;
-        try {
-            fecha = fechaActual.execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        ContentValues values = new ContentValues();
-
-        values.put(AlertasContract.AlertasEntry.FECHA, fecha);
-        values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_ROJA);
-        values.put(AlertasContract.AlertasEntry.PARAMETRO, AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PESO);
-        values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
-        values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
-        values.put(AlertasContract.AlertasEntry.VISIBILIDAD, AlertasContract.AlertasEntry.ALERTA_VISIBILIDAD_PRIVADA);
-
-        try{
-            long controlInsert = dbAlerta.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values);
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
     }
 
 

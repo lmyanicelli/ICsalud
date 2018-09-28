@@ -173,22 +173,19 @@
         <!-- Puedes garantizar que tu servicio esté disponible solo para tu app incluyendo el atributo android:exported y fijándolo en "false". Esto impide que otras aplicaciones inicien tu servicio, incluso cuando se utiliza una intent explícita.! -->
 
         <service
-            android:name=".Services.ServiceGenerarEmail"
+            android:name=".Services.GenerarAlertasAdministrador_Service"
             android:exported="false" />
         <service
-            android:name=".Services.ServiceEnviarDatosServidor"
+            android:name=".Services.EnviarDatosServidor_Service"
             android:exported="false" />
         <service
-            android:name=".Services.EnviarDatosServidorJobService"
+            android:name=".Services.EnviarDatosServidor_JobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name=".Services.AlertaVerdeJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".Services.GetContactsJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service
-            android:name=".Services.GenerarEmailJobService"
+            android:name=".Services.GenerarAlertasAdministrador_JobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <!-- Add the receiver to your app's manifest file with an intent filter that filters on the ACTION_BOOT_COMPLETED action: -->

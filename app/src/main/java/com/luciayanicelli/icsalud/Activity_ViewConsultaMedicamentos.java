@@ -1,7 +1,8 @@
 package com.luciayanicelli.icsalud;
 
-import android.content.ContentValues;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -9,9 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.luciayanicelli.icsalud.DataBase.AlertasContract;
-import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
 import com.luciayanicelli.icsalud.DataBase.RecordatoriosContract;
 import com.luciayanicelli.icsalud.DataBase.RecordatoriosDBHelper;
+import com.luciayanicelli.icsalud.utils.Alertas;
 
 
 
@@ -73,6 +74,8 @@ public class Activity_ViewConsultaMedicamentos extends AppCompatActivity impleme
 
     private void eliminarRecordatorioBD() {
 
+        eliminarNotificacion();
+
         //Elimina el recordatorio de la BD recordatorios
 
             RecordatoriosDBHelper dbHelper = new RecordatoriosDBHelper(getApplicationContext());
@@ -87,31 +90,56 @@ public class Activity_ViewConsultaMedicamentos extends AppCompatActivity impleme
 
     }
 
+    private void eliminarNotificacion() {
+            RecordatoriosDBHelper dbHelper = new RecordatoriosDBHelper(getApplicationContext());
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            String whereClause = RecordatoriosContract.RecordatoriosEntry.TIPO + "= ?";
+
+            String[] args = {RecordatoriosContract.RecordatoriosEntry.TIPO_MEDICAMENTOS};
+
+            //ELIMINAR NOTIFICACION SI AUN ESTA ACTIVA
+            String[] columns = {RecordatoriosContract.RecordatoriosEntry.FECHA,
+                    RecordatoriosContract.RecordatoriosEntry.ID_NOTIFICACION};
+
+            Cursor mCursor = db.query(true, RecordatoriosContract.RecordatoriosEntry.TABLE_NAME, columns, whereClause, args, null, null, null, null);
+
+            if(mCursor != null & mCursor.moveToFirst()){
+
+                NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+
+                for(int i=0; i<mCursor.getCount(); i++){
+
+                    String text_idnotificacion= mCursor.getString(1);
+
+                    if(text_idnotificacion != null){
+
+                        int idNotificacion = Integer.parseInt(text_idnotificacion);
+
+                        // Cancelamos la Notificacion que hemos comenzado
+                        nm.cancel(idNotificacion);
+
+                        mCursor.moveToNext();
+                    }
+                }
+
+            }
+            mCursor.close();
+            db.close();
+            dbHelper.close();
+    }
+
     @Override
     public void onClickOk(String text_medicamento_abandono, String fecha) {
 
         String descripcion = getResources().getString(R.string.alerta_medicamento) + " " + text_medicamento_abandono;
 
         //guardar Alarma en BD
-        Alertas_DBHelper mDBHelper = new Alertas_DBHelper(getApplicationContext());
-        SQLiteDatabase dbAlerta = mDBHelper.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put(AlertasContract.AlertasEntry.FECHA, fecha);
-        values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_ROJA);
-        values.put(AlertasContract.AlertasEntry.PARAMETRO, AlertasContract.AlertasEntry.ALERTA_PARAMETRO_MEDICINE);
-        values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
-        values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
-        values.put(AlertasContract.AlertasEntry.VISIBILIDAD, AlertasContract.AlertasEntry.ALERTA_VISIBILIDAD_PUBLICA);
-
-
-        try{
-            long controlInsert = dbAlerta.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values);
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        Alertas mAlertas = new Alertas(getApplicationContext());
+        mAlertas.guardar(AlertasContract.AlertasEntry.ALERTA_TIPO_ROJA,
+                AlertasContract.AlertasEntry.ALERTA_PARAMETRO_MEDICINE,
+                descripcion,
+                AlertasContract.AlertasEntry.ALERTA_VISIBILIDAD_PUBLICA);
 
         eliminarRecordatorioBD();
 

@@ -118,56 +118,12 @@ public class Activity_juego extends AppCompatActivity implements
     @Override
     public void onClickSalir() {
 
-        SetearAlarma setearAlarma = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_EMAIL_JUGADAS);
+        SetearAlarma setearAlarma = new SetearAlarma(getApplicationContext(), Constants.PARAMETRO_GENERAR_ALERTAS_ADMINISTRADOR);
         setearAlarma.execute();
 
-       /* Intent mIntent = new Intent();
-        mIntent.setClass(getApplicationContext(), MainActivity.class);
-        startActivity(mIntent);
-        */
-
         this.finish();
 
     }
-
-  /*version 2  private void crearAlertDialogSOS() {
-
-        AlertDialogs alertDialogs = new AlertDialogs();
-        alertDialogs.setMsj(getResources().getString(R.string.sos_msj));
-        alertDialogs.setName(Constants.SOS);
-
-        alertDialogs.setPositiveButton(getResources().getString(R.string.sos_auxilio));
-        alertDialogs.setNegativeButton(getResources().getString(R.string.cancelar));
-
-        DialogFragment alertSOS = alertDialogs;
-        alertSOS.show(getSupportFragmentManager(), "alertSOS");
-    }
-
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog, String name) {
-        if(name.equalsIgnoreCase(Constants.SOS)){
-            //Llama a la actividad sos
-            Intent intent = new Intent();
-            intent.setClass(Activity_juego.this, Activity_SOS.class);
-            startActivity(intent);
-        }
-
-    }
-
-
-    @Override
-    public void onDialogNegativeClick(DialogFragment dialog, String name) {
-
-
-    }
-*/
- /*   @Override
-    public void onBackPressed() {
-        this.finish();
-        super.onBackPressed();
-
-    }
-    */
 
     @Override
     protected void onStop() {

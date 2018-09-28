@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.luciayanicelli.icsalud.Services.ServiceGenerarEmail;
+import com.luciayanicelli.icsalud.Services.GenerarAlertasAdministrador_Service;
 
 
 /**
@@ -22,19 +22,17 @@ import com.luciayanicelli.icsalud.Services.ServiceGenerarEmail;
 
 
 
-public class MyReceiverGenerarEmail extends BroadcastReceiver
+public class MyReceiverGenerarAlertasAdministrador extends BroadcastReceiver
 {
-
-    private static int mId;
 
     @Override
     public void onReceive(Context context, Intent intent)
     {
         Log.i("App", "called receiver method");
         try{
-                Intent intentMAIL = new Intent(context, ServiceGenerarEmail.class);
-                intentMAIL.setAction(intent.getAction());
-                context.startService(intentMAIL);
+                Intent mintent = new Intent(context, GenerarAlertasAdministrador_Service.class);
+                mintent.setAction(intent.getAction());
+                context.startService(mintent);
 
         }catch(Exception e){
             e.printStackTrace();

@@ -1,8 +1,6 @@
 package com.luciayanicelli.icsalud.utils;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -14,10 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.luciayanicelli.icsalud.DataBase.AlertasContract;
-import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
 import com.luciayanicelli.icsalud.R;
 import com.luciayanicelli.icsalud.Services.ConexionInternet;
-import com.luciayanicelli.icsalud.Services.Constants;
 
 import java.util.concurrent.ExecutionException;
 
@@ -58,21 +54,17 @@ public class Activity_Encuestas extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
-                /*14/08/18 Configuraciones configuraciones = new Configuraciones(getApplicationContext());
-                String contactos = configuraciones.getEmailAdministrator();
-                EnviarMailSegundoPlano enviarMailSegundoPlano = new EnviarMailSegundoPlano(
-                        getApplicationContext(),
-                        "Encuestas contestadas",
-                        "El paciente indicó que contestó todas las encuestas",
-                        contactos);
-                enviarMailSegundoPlano.execute();
-                borrarRecordatorio();
-                */
-
-                //Guardar alerta roja level_roja - type_heartRate
+                //Guardar alerta amarilla - medicine
                 String descripcion = "Encuestas contestadas";
 
                 //guardar Alarma en BD
+                Alertas mAlertas = new Alertas(getApplicationContext());
+                mAlertas.guardar(AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA,
+                        AlertasContract.AlertasEntry.ALERTA_PARAMETRO_MEDICINE,
+                        descripcion,
+                        AlertasContract.AlertasEntry.ALERTA_VISIBILIDAD_PRIVADA);
+
+                /*
                 Alertas_DBHelper mDBHelper = new Alertas_DBHelper(getApplicationContext());
                 SQLiteDatabase dbAlerta = mDBHelper.getWritableDatabase();
 
@@ -103,6 +95,7 @@ public class Activity_Encuestas extends AppCompatActivity implements
                 }catch(Exception e){
                     e.printStackTrace();
                 }
+                */
 
                 finalizar();
             }
@@ -115,11 +108,11 @@ public class Activity_Encuestas extends AppCompatActivity implements
 
     }
 
-    private void borrarRecordatorio() {
+  /*  private void borrarRecordatorio() {
         Recordatorio mRecordatorio = new Recordatorio();
         mRecordatorio.eliminarRecordatorioBD(getApplicationContext(), Constants.PARAMETRO_ENCUESTAS);
     }
-
+*/
     private void finalizar() {
         this.finish();
     }

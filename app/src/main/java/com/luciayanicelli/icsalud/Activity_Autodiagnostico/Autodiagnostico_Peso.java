@@ -19,12 +19,12 @@ import android.widget.Toast;
 import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
 import com.luciayanicelli.icsalud.Api_Json.JSON_CONSTANTS;
 import com.luciayanicelli.icsalud.DataBase.AlertasContract;
-import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
 import com.luciayanicelli.icsalud.DataBase.AutodiagnosticoContract;
 import com.luciayanicelli.icsalud.DataBase.Autodiagnostico_DBHelper;
 import com.luciayanicelli.icsalud.R;
 import com.luciayanicelli.icsalud.Services.Constants;
 import com.luciayanicelli.icsalud.utils.FechaActual;
+import com.luciayanicelli.icsalud.utils.Peso;
 import com.luciayanicelli.icsalud.utils.Recordatorio;
 
 import java.text.SimpleDateFormat;
@@ -242,7 +242,8 @@ public class Autodiagnostico_Peso extends Fragment implements View.OnClickListen
 
                                String descripcion = "El paciente aumentó " + String.valueOf(pesoHoy - peso3diasAntes) +"Kg en los últimos 3 días";
                                //guardar Alarma en BD
-                               guardarAlerta(descripcion);
+                               Peso mPeso  = new Peso(getContext());
+                               mPeso.guardarAlerta(descripcion, AlertasContract.AlertasEntry.ALERTA_TIPO_ROJA);
 
                            }
                            busqueda3dias.close();
@@ -335,7 +336,9 @@ public class Autodiagnostico_Peso extends Fragment implements View.OnClickListen
                         + String.format("%.2f", pesoHoy - peso3diasAntes) //restringe los decimales a 2
                         + " Kgs en los últimos " + String.valueOf(-cantidadDias) +" días";
                 //guardar Alarma en BD
-                guardarAlerta(descripcion);
+                Peso mPeso = new Peso(getContext());
+                mPeso.guardarAlerta(descripcion, AlertasContract.AlertasEntry.ALERTA_TIPO_ROJA);
+
 
             }else{
                 b =  false;
@@ -348,27 +351,6 @@ public class Autodiagnostico_Peso extends Fragment implements View.OnClickListen
         return b;
     }
 
-    private void guardarAlerta(String descripcion) {
-        Alertas_DBHelper mDBHelper = new Alertas_DBHelper(getContext());
-        SQLiteDatabase dbAlerta = mDBHelper.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put(AlertasContract.AlertasEntry.FECHA, fechaHora);
-        values.put(AlertasContract.AlertasEntry.TIPO, AlertasContract.AlertasEntry.ALERTA_TIPO_ROJA);
-        values.put(AlertasContract.AlertasEntry.PARAMETRO, AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PESO);
-        values.put(AlertasContract.AlertasEntry.DESCRIPCION, descripcion);
-        values.put(AlertasContract.AlertasEntry.ESTADO, AlertasContract.AlertasEntry.ALERTA_ESTADO_PENDIENTE);
-        values.put(AlertasContract.AlertasEntry.VISIBILIDAD, AlertasContract.AlertasEntry.ALERTA_VISIBILIDAD_PUBLICA);
-
-        try{
-            long controlInsert = dbAlerta.insert(AlertasContract.AlertasEntry.TABLE_NAME, null, values);
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-    }
 
     private boolean guardarBD(double peso_ingresado) {
 

@@ -122,7 +122,7 @@ public class Configuraciones {
     //KEYS Horarios Enviar Mail
     public static final String KEY_PREF_HORARIO_GENERAR_EMAIL_MEDICIONES = "horario_generar_email_mediciones";
     public static final String KEY_PREF_HORARIO_GENERAR_EMAIL_ALERTAS = "horario_generar_email_alertas";
-    public static final String KEY_PREF_HORARIO_GENERAR_EMAIL_JUGADAS = "horario_generar_email_jugadas";
+    public static final String KEY_PREF_HORARIO_GENERAR_ALERTAS_ADMINISTRADOR = "horario_generar_email_jugadas";
 
     public static final String KEY_PREF_HORARIO_ALERTA_VERDE = "horario_alerta_verde";
     public static final String KEY_PREF_HORARIO_MEDICAMENTOS = "horario_medicamentos";
@@ -256,7 +256,7 @@ public class Configuraciones {
 
     public void setContadorConsejosSaludablesLeidos(int contadorConsejosSaludablesLeidos){
         SharedPreferences.Editor editor = getSettings().edit();
-        editor.putInt(KEY_CONTADOR_CONSEJOS_SALUDABLES_LEIDOS, contadorConsejosSaludablesLeidos );
+        editor.putInt(KEY_CONTADOR_CONSEJOS_SALUDABLES_LEIDOS, contadorConsejosSaludablesLeidos);
         editor.commit();
     }
 
@@ -293,13 +293,13 @@ public class Configuraciones {
         editor.commit();
     }
 
-    public String getHorarioEnviarEmailJugadas(){
-        return getSettings().getString(KEY_PREF_HORARIO_GENERAR_EMAIL_JUGADAS, Constants.DEFAULT_HOUR_GENERAR_EMAIL_JUGADAS);
+    public String getHorarioGenerarAlertasAdministrador(){
+        return getSettings().getString(KEY_PREF_HORARIO_GENERAR_ALERTAS_ADMINISTRADOR, Constants.DEFAULT_HOUR_GENERAR_ALERTAS_ADMINISTRADOR);
     }
 
-    public void setHorarioEnviarEmailJugadas(String horarioEnviarEmailJugadas){
+    public void setHorarioGenerarAlertasAdministrador(String horario){
         SharedPreferences.Editor editor = getSettings().edit();
-        editor.putString(KEY_PREF_HORARIO_GENERAR_EMAIL_JUGADAS, horarioEnviarEmailJugadas );
+        editor.putString(KEY_PREF_HORARIO_GENERAR_ALERTAS_ADMINISTRADOR, horario );
         editor.commit();
     }
 

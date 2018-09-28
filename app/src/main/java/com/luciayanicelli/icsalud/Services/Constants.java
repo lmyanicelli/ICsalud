@@ -12,7 +12,9 @@ public class Constants {
 
     public static final String SERVICE_GENERAR_EMAIL_ACTION_RUN_SERVICE = "ACTION_RUN_SERVICE_ALERTAS";
     public static final String SERVICE_GENERAR_EMAIL_ACTION_RUN_SERVICE_MEDICIONES = "SERVICE_GENERAR_EMAIL_ACTION_RUN_SERVICE_MEDICIONES";
-    public static final String SERVICE_GENERAR_EMAIL_ACTION_RUN_SERVICE_JUGADAS = "SERVICE_GENERAR_EMAIL_ACTION_RUN_SERVICE_JUGADAS";
+
+    public static final String SERVICE_GENERAR_ALERTAS_ADMINISTRADOR = "SERVICE_GENERAR_ALERTAS_ADMINISTRADOR";
+
     public static final String SERVICE_GENERAR_EMAIL_NEW_USER = "SERVICE_GENERAR_EMAIL_NEW_USER";
 
 
@@ -66,14 +68,16 @@ public class Constants {
 
     public static final String PARAMETRO_GENERAR_EMAIL_MEDICIONES = "parametro_generar_email_mediciones";
     public static final String PARAMETRO_GENERAR_EMAIL_ALERTAS = "parametro_generar_email_alertas";
-    public static final String PARAMETRO_GENERAR_EMAIL_JUGADAS = "parametro_generar_email_jugadas";
+
+    public static final String PARAMETRO_GENERAR_ALERTAS_ADMINISTRADOR = "parametro_generar_alertas_administrador";
+
     public static final String PARAMETRO_ENVIAR_DATOS_SERVIDOR = "parametro_enviar_datos_servidor";
     public static final String PARAMETRO_GENERAR_EMAIL_TABLA_DATOS = "parametro_generar_email_tabla_datos";
 
     public static final String DEFAULT_HOUR_GENERAR_EMAIL_MEDICIONES = "02:15";
     public static final String DEFAULT_HOUR_GENERAR_EMAIL_ALERTAS = "03:30";
     public static final String DEFAULT_HOUR_ENVIAR_DATOS_SERVIDOR = "04:00";
-    public static final String DEFAULT_HOUR_GENERAR_EMAIL_JUGADAS = "4:30";
+    public static final String DEFAULT_HOUR_GENERAR_ALERTAS_ADMINISTRADOR = "4:30";
 
 
     public static final String PARAMETRO_ALERTA_VERDE = "parametro_alerta_verde";

@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.luciayanicelli.icsalud.Services.Constants;
-import com.luciayanicelli.icsalud.Services.ServiceEnviarDatosServidor;
+import com.luciayanicelli.icsalud.Services.EnviarDatosServidor_Service;
 import com.luciayanicelli.icsalud.utils.SetearAlarma;
 
 
@@ -34,10 +34,10 @@ public class MyReceiverEnviarDatosServidor extends BroadcastReceiver
     {
         Log.i("App", "called receiver method");
         try{
-            Intent intentSERVIDOR = new Intent(context, ServiceEnviarDatosServidor.class);
+            Intent intentSERVIDOR = new Intent(context, EnviarDatosServidor_Service.class);
             context.startService(intentSERVIDOR);
 
-            SetearAlarma setearAlarmaAlerta = new SetearAlarma(context, Constants.PARAMETRO_GENERAR_EMAIL_ALERTAS);
+            SetearAlarma setearAlarmaAlerta = new SetearAlarma(context, Constants.PARAMETRO_GENERAR_ALERTAS_ADMINISTRADOR);
             setearAlarmaAlerta.execute();
 
         }catch(Exception e){
