@@ -34,10 +34,42 @@
             android:summary="@string/horario_defecto_consejos_saludables"
             android:title="@string/pref_header_consejo_saludable" />
     </PreferenceCategory>
+
     <PreferenceCategory
         android:title="@string/pref_frecuencia_notificaciones"
         android:key="pref_key_frecuencia_notificaciones">
-        <EditTextPreference
+        <ListPreference
+            android:key="frecuencia_recordatorio_peso"
+            android:title="@string/pref_header_peso"
+            android:entries="@array/frecuencia"
+            android:entryValues="@array/frecuenciaValues"
+            android:defaultValue="1"/>
+        <ListPreference
+            android:key="frecuencia_recordatorio_pafc"
+            android:title="@string/pref_header_fc"
+            android:entries="@array/frecuencia"
+            android:entryValues="@array/frecuenciaValues"
+            android:dialogTitle="@string/pref_header_fc"
+            android:defaultValue="1"/>
+        <ListPreference
+            android:key="frecuencia_recordatorio_sintomas"
+            android:title="@string/pref_header_sintomas"
+            android:persistent="true"
+            android:dialogTitle="@string/pref_header_sintomas"
+            android:defaultValue="1"
+            android:entries="@array/frecuencia"
+            android:entryValues="@array/frecuenciaValues"
+            />
+        <ListPreference
+            android:key="frecuencia_consejo_saludable"
+            android:title="@string/consejo_saludable"
+            android:persistent="true"
+            android:dialogTitle="@string/consejo_saludable"
+            android:defaultValue="3"
+            android:entries="@array/frecuenciaConsejosSaludables"
+            android:entryValues="@array/frecuenciaValuesConsejosSaludables"
+            />
+       <!-- <EditTextPreference
             android:key="frecuencia_consejo_saludable"
             android:title="@string/consejo_saludable"
             android:persistent="true"
@@ -47,6 +79,7 @@
             android:inputType="number"
             android:maxLength="1"
             />
+            -->
     </PreferenceCategory>
 
 </PreferenceScreen>

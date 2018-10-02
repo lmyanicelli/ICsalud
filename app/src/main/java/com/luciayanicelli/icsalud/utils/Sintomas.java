@@ -1,8 +1,10 @@
 package com.luciayanicelli.icsalud.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 
 import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
@@ -10,10 +12,10 @@ import com.luciayanicelli.icsalud.DataBase.AlertasContract;
 import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
 import com.luciayanicelli.icsalud.DataBase.AutodiagnosticoContract;
 import com.luciayanicelli.icsalud.DataBase.Autodiagnostico_DBHelper;
+import com.luciayanicelli.icsalud.Services.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by LuciaYanicelli on 23/7/2018.
@@ -24,15 +26,15 @@ public class Sintomas implements Mediciones {
     private Context mContext;
     private String nameTabla = AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_SINTOMAS;
     private String nameDateTabla = AutodiagnosticoContract.AutodiagnosticoEntry.SINTOMAS_DATE;
-    private int countDatos = 3;
-    private String fechaHsAyer, fechaHsHoy;
-    private String fecha_sin_hora_Ayer, fecha_sin_hora_Hoy;
     private int cantidadDias;
 
     public Sintomas(Context mContext) {
         this.mContext = mContext;
         Configuraciones configuraciones = new Configuraciones(mContext);
-        this.cantidadDias = configuraciones.getCantidadDiasAlertaAmarilla();
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        int frecuenciaRECORDATORIO = Integer.parseInt(sharedPref.getString(Constants.KEY_PREF_FRECUENCIA_RECORDATORIO_SINTOMAS, Constants.DEFAULT_FRECUENCIA_RECORDATORIO_SINTOMAS));
+        this.cantidadDias = configuraciones.getCantidadDiasAlertaAmarilla()*frecuenciaRECORDATORIO;
     }
 
 
@@ -206,16 +208,6 @@ public class Sintomas implements Mediciones {
 
         boolean alerta = false;
 
-        FechaActual fechaActual = new FechaActual();
-        try {
-            fechaHsHoy = fechaActual.execute().get();
-            fecha_sin_hora_Hoy = fechaHsHoy.split(" ")[0];
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
         Calendar calendarXdiasAntes = Calendar.getInstance();
         calendarXdiasAntes.add(Calendar.DAY_OF_YEAR, -cantidadDias);
 

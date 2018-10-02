@@ -72,6 +72,10 @@ public class SettingsFragment extends PreferenceFragment  implements SharedPrefe
 
         bindPreferenceSummaryToValue(findPreference(Constants.KEY_PREF_FRECUENCIA_CONSEJO_SALUDABLE));
 
+        bindPreferenceSummaryToValue(findPreference(Constants.KEY_PREF_FRECUENCIA_RECORDATORIO_PESO));
+        bindPreferenceSummaryToValue(findPreference(Constants.KEY_PREF_FRECUENCIA_RECORDATORIO_PAFC));
+        bindPreferenceSummaryToValue(findPreference(Constants.KEY_PREF_FRECUENCIA_RECORDATORIO_SINTOMAS));
+
         this.context = getActivity().getApplicationContext();
 
     }
@@ -98,6 +102,7 @@ public class SettingsFragment extends PreferenceFragment  implements SharedPrefe
                         index >= 0
                                 ? listPreference2.getEntries()[index]
                                 : null);
+             //   preference.setSummary(stringValue);
 
                 listPreference2.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                     @Override
@@ -198,12 +203,27 @@ public class SettingsFragment extends PreferenceFragment  implements SharedPrefe
             setearAlarma.execute();
 
         }else if(key.equalsIgnoreCase(Constants.KEY_PREF_FRECUENCIA_CONSEJO_SALUDABLE)){
-            Preference pref = findPreference(key);
+          //  Preference pref = findPreference(key);
             // Set summary to be the user-description for the selected value
-            pref.setSummary(sharedPreferences.getString(key, ""));
+            //pref.setSummary("Consejos saludables cada: " + sharedPreferences.getString(key, "") + " día/s");
 
             SetearAlarma setearAlarma = new SetearAlarma(context, Constants.CONSEJO_SALUDABLE);
             setearAlarma.execute();
+
+        }else if(key.equalsIgnoreCase(Constants.KEY_PREF_FRECUENCIA_RECORDATORIO_PAFC)){
+
+            SetearAlarma setearAlarmaPAFC = new SetearAlarma(context, Constants.PARAMETRO_PAFC);
+            setearAlarmaPAFC.execute();
+
+        }else if(key.equalsIgnoreCase(Constants.KEY_PREF_FRECUENCIA_RECORDATORIO_PESO)){
+
+            SetearAlarma setearAlarmaPESO = new SetearAlarma(context, Constants.PARAMETRO_PESO);
+            setearAlarmaPESO.execute();
+
+        }else if(key.equalsIgnoreCase(Constants.KEY_PREF_FRECUENCIA_RECORDATORIO_SINTOMAS)){
+
+            SetearAlarma setearAlarmaSINTOMAS = new SetearAlarma(context, Constants.PARAMETRO_SINTOMAS);
+            setearAlarmaSINTOMAS.execute();
 
         }
     }

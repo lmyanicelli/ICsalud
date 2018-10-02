@@ -51,6 +51,12 @@ public class Constants {
 
     public static final String KEY_PREF_FRECUENCIA_CONSEJO_SALUDABLE = "frecuencia_consejo_saludable";
     public static final String DEFAULT_FRECUENCIA_CONSEJO_SALUDABLE = "3";
+    public static final String KEY_PREF_FRECUENCIA_RECORDATORIO_PESO = "frecuencia_recordatorio_peso";
+    public static final String DEFAULT_FRECUENCIA_RECORDATORIO_PESO = "1";
+    public static final String KEY_PREF_FRECUENCIA_RECORDATORIO_PAFC = "frecuencia_recordatorio_pafc";
+    public static final String DEFAULT_FRECUENCIA_RECORDATORIO_PAFC = "1";
+    public static final String KEY_PREF_FRECUENCIA_RECORDATORIO_SINTOMAS = "frecuencia_recordatorio_sintomas";
+    public static final String DEFAULT_FRECUENCIA_RECORDATORIO_SINTOMAS = "1";
 
 
     public static final String DEFAULT_HOUR_MEDICIONES = "8:00";

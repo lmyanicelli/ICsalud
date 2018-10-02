@@ -59,6 +59,9 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
     private static int JOB_ID_CONTACTS = 98741236;
     private static int JOB_ID_SERVIDOR = 159357;
     private int frecuenciaCONSEJO_SALUDABLE;
+    private int frecuenciaRECORDATORIO_SINTOMAS;
+    private int frecuenciaRECORDATORIO_PAFC;
+    private int frecuenciaRECORDATORIO_PESO;
 
 
     public SetearAlarma(Context context, String parametro){
@@ -88,6 +91,7 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
         horarioPESO = sharedPref.getString(Constants.KEY_PREF_HORARIO_PESO, Constants.DEFAULT_HOUR_MEDICIONES);
         horarioSINTOMAS = sharedPref.getString(Constants.KEY_PREF_HORARIO_SINTOMAS, Constants.DEFAULT_HOUR_MEDICIONES);
         horarioCONSEJO_SALUDABLE = sharedPref.getString(Constants.KEY_PREF_HORARIO_CONSEJO_SALUDABLE, Constants.DEFAULT_HOUR_CONSEJO_SALUDABLE);
+
 
             configuraciones = new Configuraciones(context);
 
@@ -148,7 +152,10 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
         intervalMillis	long: interval in milliseconds between subsequent repeats of the alarm.
         operation	PendingIntent: Action to perform when the alarm goes off; typically comes from IntentSender.getBroadcast().
          */
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendarPESO.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+                frecuenciaRECORDATORIO_PESO = Integer.parseInt(sharedPref.getString(Constants.KEY_PREF_FRECUENCIA_RECORDATORIO_PESO, Constants.DEFAULT_FRECUENCIA_RECORDATORIO_PESO));
+
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendarPESO.getTimeInMillis(), frecuenciaRECORDATORIO_PESO*AlarmManager.INTERVAL_DAY, pendingIntent);
 
 
                 break;
@@ -181,18 +188,10 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
                 AlarmManager alarmManagerPA = (AlarmManager)context.getSystemService(ALARM_SERVICE);
 
-        /*
-        void setRepeating (int type,
-                long triggerAtMillis,
-                long intervalMillis,
-                PendingIntent operation)
-        Parameters
-        type	int: type of alarm. Value is RTC_WAKEUP, RTC, ELAPSED_REALTIME_WAKEUP or ELAPSED_REALTIME.
-        triggerAtMillis	long: time in milliseconds that the alarm should first go off, using the appropriate clock (depending on the alarm type).
-        intervalMillis	long: interval in milliseconds between subsequent repeats of the alarm.
-        operation	PendingIntent: Action to perform when the alarm goes off; typically comes from IntentSender.getBroadcast().
-         */
-                alarmManagerPA.setRepeating(AlarmManager.RTC_WAKEUP, calendarPA.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentPA);
+
+                frecuenciaRECORDATORIO_PAFC = Integer.parseInt(sharedPref.getString(Constants.KEY_PREF_FRECUENCIA_RECORDATORIO_PAFC, Constants.DEFAULT_FRECUENCIA_RECORDATORIO_PAFC));
+
+                alarmManagerPA.setRepeating(AlarmManager.RTC_WAKEUP, calendarPA.getTimeInMillis(), frecuenciaRECORDATORIO_PAFC*AlarmManager.INTERVAL_DAY, pendingIntentPA);
 
 
                 break;
@@ -221,7 +220,9 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
                 PendingIntent pendingIntentSINTOMAS = PendingIntent.getBroadcast(context, 0, myIntentSINTOMAS,0);
                 AlarmManager alarmManagerSINTOMAS = (AlarmManager)context.getSystemService(ALARM_SERVICE);
 
-                alarmManagerSINTOMAS.setRepeating(AlarmManager.RTC_WAKEUP, calendarSINTOMAS.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentSINTOMAS);
+                frecuenciaRECORDATORIO_SINTOMAS = Integer.parseInt(sharedPref.getString(Constants.KEY_PREF_FRECUENCIA_RECORDATORIO_SINTOMAS, Constants.DEFAULT_FRECUENCIA_RECORDATORIO_SINTOMAS));
+
+                alarmManagerSINTOMAS.setRepeating(AlarmManager.RTC_WAKEUP, calendarSINTOMAS.getTimeInMillis(), frecuenciaRECORDATORIO_SINTOMAS*AlarmManager.INTERVAL_DAY, pendingIntentSINTOMAS);
 
                   /*
         void setRepeating (int type,
@@ -273,10 +274,6 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
          */
 
                 frecuenciaCONSEJO_SALUDABLE = Integer.parseInt(sharedPref.getString(Constants.KEY_PREF_FRECUENCIA_CONSEJO_SALUDABLE, Constants.DEFAULT_FRECUENCIA_CONSEJO_SALUDABLE));
-
-                if(frecuenciaCONSEJO_SALUDABLE == 0){
-                   frecuenciaCONSEJO_SALUDABLE = Integer.parseInt(Constants.DEFAULT_FRECUENCIA_CONSEJO_SALUDABLE);
-                }
 
                 alarmManagerCS.setRepeating(AlarmManager.RTC_WAKEUP,
                         calendarCONSEJO_SALUDABLE.getTimeInMillis(),

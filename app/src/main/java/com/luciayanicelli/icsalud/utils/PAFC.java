@@ -1,8 +1,10 @@
 package com.luciayanicelli.icsalud.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 
 import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
@@ -10,10 +12,10 @@ import com.luciayanicelli.icsalud.DataBase.AlertasContract;
 import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
 import com.luciayanicelli.icsalud.DataBase.AutodiagnosticoContract;
 import com.luciayanicelli.icsalud.DataBase.Autodiagnostico_DBHelper;
+import com.luciayanicelli.icsalud.Services.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by LuciaYanicelli on 23/7/2018.
@@ -31,18 +33,11 @@ public class PAFC implements Mediciones {
     public PAFC(Context context) {
         this.mContext = context;
         Configuraciones configuraciones = new Configuraciones(mContext);
-        this.cantidadDias = configuraciones.getCantidadDiasAlertaAmarilla();
 
-        FechaActual fechaActual = new FechaActual();
-        try {
-            this.fechaHsHoy = fechaActual.execute().get();
-            //fecha_sin_hora_Hoy = fechaHsHoy.split(" ")[0];
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        int frecuenciaRECORDATORIO = Integer.parseInt(sharedPref.getString(Constants.KEY_PREF_FRECUENCIA_RECORDATORIO_PAFC, Constants.DEFAULT_FRECUENCIA_RECORDATORIO_PAFC));
+        this.cantidadDias = configuraciones.getCantidadDiasAlertaAmarilla()*frecuenciaRECORDATORIO;
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
     }
 
   /*  @Override

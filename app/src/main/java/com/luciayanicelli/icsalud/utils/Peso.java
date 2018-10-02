@@ -1,8 +1,10 @@
 package com.luciayanicelli.icsalud.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 
 import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
@@ -10,10 +12,10 @@ import com.luciayanicelli.icsalud.DataBase.AlertasContract;
 import com.luciayanicelli.icsalud.DataBase.Alertas_DBHelper;
 import com.luciayanicelli.icsalud.DataBase.AutodiagnosticoContract;
 import com.luciayanicelli.icsalud.DataBase.Autodiagnostico_DBHelper;
+import com.luciayanicelli.icsalud.Services.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by LuciaYanicelli on 23/7/2018.
@@ -24,32 +26,25 @@ public class Peso implements Mediciones {
     private Context mContext;
     private String nameTabla = AutodiagnosticoContract.AutodiagnosticoEntry.TABLE_NAME_PESO;
     private String nameDateTabla = AutodiagnosticoContract.AutodiagnosticoEntry.PESO_DATE;
-    private String fechaHsHoy;
 
     private int cantidadDias;
 
     public Peso(Context context) {
         this.mContext=context;
         Configuraciones configuraciones = new Configuraciones(mContext);
-        this.cantidadDias = configuraciones.getCantidadDiasAlertaAmarilla();
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        int frecuenciaRECORDATORIO = Integer.parseInt(sharedPref.getString(Constants.KEY_PREF_FRECUENCIA_RECORDATORIO_PESO, Constants.DEFAULT_FRECUENCIA_RECORDATORIO_PESO));
+        this.cantidadDias = configuraciones.getCantidadDiasAlertaAmarilla()*frecuenciaRECORDATORIO;
     }
 
 //utilizo esta funcion xa ver si cargó los datos
     public boolean alertaVerde() {
 
-        this.cantidadDias = cantidadDias;
+      //  this.cantidadDias = cantidadDias;
 
         boolean alerta = false;
 
-        FechaActual fechaActual = new FechaActual();
-        try {
-            this.fechaHsHoy = fechaActual.execute().get();
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
         Calendar calendarXdiasAntes = Calendar.getInstance();
         calendarXdiasAntes.add(Calendar.DAY_OF_YEAR, -cantidadDias);
 

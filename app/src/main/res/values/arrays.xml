@@ -2,4 +2,32 @@
 <resources>
     <string-array name="listentries">listentries</string-array>
     <string-array name="listvalues">listvalues</string-array>
+    <string-array name="frecuencia">
+        <item>Recordatorios cada 1 día</item>
+        <item>Recordatorios cada 2 días</item>
+        <item>Recordatorios cada 3 días</item>
+    </string-array>
+    <string-array name="frecuenciaValues">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="frecuenciaConsejosSaludables">
+        <item>Recordatorios cada 1 día</item>
+        <item>Recordatorios cada 2 días</item>
+        <item>Recordatorios cada 3 días</item>
+        <item>Recordatorios cada 4 días</item>
+        <item>Recordatorios cada 5 días</item>
+        <item>Recordatorios cada 6 días</item>
+        <item>Recordatorios cada 7 días</item>
+    </string-array>
+    <string-array name="frecuenciaValuesConsejosSaludables">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
 </resources>
