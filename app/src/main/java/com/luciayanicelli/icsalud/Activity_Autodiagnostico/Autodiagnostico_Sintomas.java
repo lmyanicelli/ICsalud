@@ -328,7 +328,8 @@ Query the given URL, returning a Cursor over the result set.*/
 
                     //Control alerta amarilla
                     if(respuesta.equalsIgnoreCase(getString(R.string.sintomas_respuesta_mucho)) | respuesta.equalsIgnoreCase(getString(R.string.sintomas_respuesta_muchisimo)) ){
-                        String descripcion = "El paciente presenta síntomas acentuados por su IC: \n" +
+                    //    String descripcion = "El paciente presenta SÍNTOMAS acentuados por su IC: \n" + pregunta + ": " + respuesta;
+                        String descripcion = "SÍNTOMAS acentuados por la IC: \n" +
                                 pregunta + ": " + respuesta;
 
                         //guardar Alarma en BD

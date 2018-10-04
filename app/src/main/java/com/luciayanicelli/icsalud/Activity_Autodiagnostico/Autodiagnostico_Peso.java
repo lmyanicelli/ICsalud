@@ -240,7 +240,7 @@ public class Autodiagnostico_Peso extends Fragment implements View.OnClickListen
                            if ((pesoHoy - peso3diasAntes) >= 2.00) {
                                //Se debe generar la alarmaAmarilla
 
-                               String descripcion = "El paciente aumentó " + String.valueOf(pesoHoy - peso3diasAntes) +"Kg en los últimos 3 días";
+                               String descripcion = "PESO: El paciente aumentó " + String.valueOf(pesoHoy - peso3diasAntes) +"Kg en los últimos 3 días";
                                //guardar Alarma en BD
                                Peso mPeso  = new Peso(getContext());
                                mPeso.guardarAlerta(descripcion, AlertasContract.AlertasEntry.ALERTA_TIPO_ROJA);
@@ -332,7 +332,7 @@ public class Autodiagnostico_Peso extends Fragment implements View.OnClickListen
             if ((pesoHoy - peso3diasAntes) >= 2.00) {
                 //Se debe generar la alarmaAmarilla
 
-                String descripcion = "El paciente aumentó "
+                String descripcion = "PESO: El paciente aumentó "
                         + String.format("%.2f", pesoHoy - peso3diasAntes) //restringe los decimales a 2
                         + " Kgs en los últimos " + String.valueOf(-cantidadDias) +" días";
                 //guardar Alarma en BD

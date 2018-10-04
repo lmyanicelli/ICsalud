@@ -132,6 +132,7 @@ public class Activity_ViewConsultaMedicamentos extends AppCompatActivity impleme
     @Override
     public void onClickOk(String text_medicamento_abandono, String fecha) {
 
+        //String descripcion = getResources().getString(R.string.alerta_medicamento) + " " + text_medicamento_abandono;
         String descripcion = getResources().getString(R.string.alerta_medicamento) + " " + text_medicamento_abandono;
 
         //guardar Alarma en BD

@@ -294,7 +294,8 @@ public class PAFC implements Mediciones {
     }
 
     private void crearAlertaVerde(String nameTabla) {
-        String descripcion = "No se han cargado todos los datos correspondientes del parámetro: " + nameTabla + " en al menos los últimos " +  cantidadDias  + " días. Quizás podría averiguar que sucede con su paciente.";
+     //   String descripcion = "No se han cargado todos los datos correspondientes del parámetro: " + nameTabla + " en al menos los últimos " +  cantidadDias  + " días. Quizás podría averiguar que sucede con su paciente.";
+        String descripcion = "PRESIÓN ARTERIAL Y FRECUENCIA CARDÍACA" + ": No hay registros desde hace " +  cantidadDias  + " días o más.";
         //Guardar el registro de alerta en la BD Alertas
         guardarAlerta(descripcion, AlertasContract.AlertasEntry.ALERTA_TIPO_VERDE);
 

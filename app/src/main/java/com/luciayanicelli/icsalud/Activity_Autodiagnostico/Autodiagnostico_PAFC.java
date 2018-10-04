@@ -283,7 +283,7 @@ public class Autodiagnostico_PAFC extends Fragment implements View.OnClickListen
                         //CONTROL ALERTA AMARILLA
                         if(PS_ingresada > ps_max | PS_ingresada < ps_min){
 
-                            String descripcion = "El paciente tiene su PS fuera de los valores normales: " + String.valueOf(PS_ingresada) +"mmHg.";
+                            String descripcion = "PS fuera de los valores normales: " + String.valueOf(PS_ingresada) +"mmHg.";
                             //guardar Alarma en BD
                             mPAFC.guardarAlerta(descripcion, AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA);
 
@@ -291,14 +291,14 @@ public class Autodiagnostico_PAFC extends Fragment implements View.OnClickListen
 
                         if(PD_ingresada < pd_min){
 
-                            String descripcion = "El paciente tiene su PD fuera de los valores normales: " + String.valueOf(PD_ingresada) +"mmHg.";
+                            String descripcion = "PD fuera de los valores normales: " + String.valueOf(PD_ingresada) +"mmHg.";
                             //guardar Alarma en BD
                             mPAFC.guardarAlerta(descripcion, AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA);
                         }
 
                         if(FC_ingresada > fc_max | FC_ingresada < fc_min){
 
-                            String descripcion = "El paciente tiene su FC fuera de los valores normales: " + String.valueOf(FC_ingresada) +"lat/min.";
+                            String descripcion = "FC fuera de los valores normales: " + String.valueOf(FC_ingresada) +"lat/min.";
                             //guardar Alarma en BD
                             mPAFC.guardarAlerta(descripcion, AlertasContract.AlertasEntry.ALERTA_TIPO_AMARILLA);
 

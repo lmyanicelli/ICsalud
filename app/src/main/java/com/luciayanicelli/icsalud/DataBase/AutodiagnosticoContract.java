@@ -15,7 +15,7 @@ public class AutodiagnosticoContract {
     //Creamos esta clase abstracta para guardar el nombre de las columnas y de la tabla
     public static abstract class AutodiagnosticoEntry implements BaseColumns {
 
-        public static final String TABLE_NAME_PESO ="MEDICIONES_PESO";
+        public static final String TABLE_NAME_PESO ="PESO";
 
         public static final String PESO_DATE = "datePeso";
         public static final String PESO_VALOR = "peso";
@@ -23,7 +23,7 @@ public class AutodiagnosticoContract {
 
 
 
-        public static final String TABLE_NAME_PA ="MEDICIONES_PRESION_ARTERIAL_Y_FRECUENCIA_CARDIACA";
+        public static final String TABLE_NAME_PA ="PRESION_ARTERIAL_Y_FRECUENCIA_CARDIACA";
 
         public static final String PA_DATE = "datePA";
         public static final String PA_PS = "presionSistolica";
@@ -31,7 +31,7 @@ public class AutodiagnosticoContract {
         public static final String PA_FC = "frecuenciaCardiaca";
 
 
-        public static final String TABLE_NAME_SINTOMAS ="MEDICIONES_SINTOMAS";
+        public static final String TABLE_NAME_SINTOMAS ="SINTOMAS";
 
         public static final String SINTOMAS_IDPREGUNTA = "idPregunta";
         public static final String SINTOMAS_IDPREGUNTA_SERVIDOR = "idPreguntaServidor";
