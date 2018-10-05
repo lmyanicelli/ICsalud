@@ -69,17 +69,6 @@
             android:entries="@array/frecuenciaConsejosSaludables"
             android:entryValues="@array/frecuenciaValuesConsejosSaludables"
             />
-       <!-- <EditTextPreference
-            android:key="frecuencia_consejo_saludable"
-            android:title="@string/consejo_saludable"
-            android:persistent="true"
-            android:dialogTitle="@string/consejo_saludable"
-            android:dialogMessage="Cada cuántos días recibirá un Consejo Saludable"
-            android:defaultValue="3"
-            android:inputType="number"
-            android:maxLength="1"
-            />
-            -->
     </PreferenceCategory>
 
 </PreferenceScreen>
