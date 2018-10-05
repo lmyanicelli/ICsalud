@@ -406,11 +406,11 @@ public class SetearAlarma extends AsyncTask<Void, Void, Void> {
 
                         AlarmManager alarmManagerEJugadas = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
-                        alarmManagerEJugadas.setRepeating(AlarmManager.RTC_WAKEUP, calendarEJugadas.getTimeInMillis(), 30 * AlarmManager.INTERVAL_DAY, pendingIntentEJugadas);
+                        alarmManagerEJugadas.setRepeating(AlarmManager.RTC_WAKEUP, calendarEJugadas.getTimeInMillis(), 15 * AlarmManager.INTERVAL_DAY, pendingIntentEJugadas);
 
                     }else{
 
-                        scheduleJobGenerarEmail(context, Constants.SERVICE_GENERAR_ALERTAS_ADMINISTRADOR, 30 * AlarmManager.INTERVAL_DAY, JOB_ID_GENERAR_EMAIL_JUGADAS);
+                        scheduleJobGenerarEmail(context, Constants.SERVICE_GENERAR_ALERTAS_ADMINISTRADOR, 15 * AlarmManager.INTERVAL_DAY, JOB_ID_GENERAR_EMAIL_JUGADAS);
                     }
 
                     break;
