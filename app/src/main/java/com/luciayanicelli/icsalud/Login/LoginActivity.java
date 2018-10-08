@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     private Configuraciones config;
     private TextView _signupLinkContrasena;
     private Context context;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -148,7 +149,9 @@ public class LoginActivity extends AppCompatActivity {
 
         _loginButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+      //08/10
+        //  final ProgressDialog progressDialog
+        progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.ThemeOverlay_AppCompat_Dialog); //change R.style.AppTheme_Dark_Dialog por R.style.ThemeOverlay_AppCompat_Dialog
         //final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
@@ -225,11 +228,14 @@ public class LoginActivity extends AppCompatActivity {
                         new Runnable() {
                             public void run() {
                                 // On complete call either onLoginSuccess or onLoginFailed
-                                onLoginSuccess();
+                              //08/10  onLoginSuccess();
                                 //29/05/18
                                 if (this != null && progressDialog != null && progressDialog.isShowing()) {
                                     progressDialog.dismiss();
                                 }
+                                //08/10
+                                // On complete call either onLoginSuccess or onLoginFailed
+                                onLoginSuccess();
 
                                // progressDialog.dismiss();
                             }
@@ -330,7 +336,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 completarLogin();
 
-                this.finish();
+                //08/10 this.finish();
             }
         }
     }
@@ -439,5 +445,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
 
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        super.onPause();
+    }
 }
