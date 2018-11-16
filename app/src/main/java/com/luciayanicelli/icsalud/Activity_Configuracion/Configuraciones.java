@@ -375,9 +375,11 @@ public class Configuraciones {
     }
 
     public void setUserEmail(String email){
-        SharedPreferences.Editor editor = getSettings().edit();
-        editor.putString(KEY_PREF_MAIL_USUARIO, email );
-        editor.commit();
+        if(email!=null) {
+            SharedPreferences.Editor editor = getSettings().edit();
+            editor.putString(KEY_PREF_MAIL_USUARIO, email);
+            editor.commit();
+        }
     }
 
     public int getContadorConsejoSaludable(){

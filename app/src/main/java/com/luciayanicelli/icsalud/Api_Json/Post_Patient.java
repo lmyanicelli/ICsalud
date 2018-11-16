@@ -12,10 +12,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by LuciaYanicelli on 16/11/2017.
@@ -73,11 +74,11 @@ public class Post_Patient extends AsyncTask<Integer, ArrayList, Boolean> {
             e.printStackTrace();
         }
 
-        HttpURLConnection con = null;
+        HttpsURLConnection con = null;
 
         try {
             //Conectando
-            con = (HttpURLConnection) url.openConnection();
+            con = (HttpsURLConnection) url.openConnection();
             //metodo post
             con.setRequestMethod(JSON_CONSTANTS.REQUEST_POST);
             //Añadiendo request headers

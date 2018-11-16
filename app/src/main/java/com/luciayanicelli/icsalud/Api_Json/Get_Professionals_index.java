@@ -10,12 +10,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by LuciaYanicelli on 16/11/2017.
@@ -62,11 +63,11 @@ public class Get_Professionals_index extends AsyncTask<Integer, Void, HashMap<St
             e.printStackTrace();
         }
 
-        HttpURLConnection con = null;
+        HttpsURLConnection con = null;
 
         //Conectando
         try {
-            con = (HttpURLConnection) url.openConnection();
+            con = (HttpsURLConnection) url.openConnection();
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -200,11 +201,11 @@ public class Get_Professionals_index extends AsyncTask<Integer, Void, HashMap<St
             e.printStackTrace();
         }
 
-        HttpURLConnection con = null;
+        HttpsURLConnection con = null;
 
         //Conectando
         try {
-            con = (HttpURLConnection) url_page.openConnection();
+            con = (HttpsURLConnection) url_page.openConnection();
         } catch (IOException e1) {
             e1.printStackTrace();
         }

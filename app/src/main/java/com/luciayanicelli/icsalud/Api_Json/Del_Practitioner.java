@@ -7,12 +7,13 @@ import com.luciayanicelli.icsalud.Activity_Configuracion.Configuraciones;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
   */
@@ -61,11 +62,11 @@ public class Del_Practitioner extends AsyncTask<Integer, Void, HashMap<String, S
             e.printStackTrace();
         }
 
-        HttpURLConnection con = null;
+        HttpsURLConnection con = null;
 
         //Conectando
         try {
-            con = (HttpURLConnection) url.openConnection();
+            con = (HttpsURLConnection) url.openConnection();
         } catch (IOException e1) {
             e1.printStackTrace();
         }

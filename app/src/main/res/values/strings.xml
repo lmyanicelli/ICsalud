@@ -349,4 +349,5 @@
     <string name="ayuda">AYUDA</string>
     <string name="titulo_servicio_tecnico">SOLICITAR AYUDA TECNICA</string>
     <string name="msj_servicio_tecnico">Si necesita ayuda con el manejo de la App, ingrese su número de celular y nos comunicaremos con Ud</string>
+    <string name="SENDGRID_API_KEY">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</string>
 </resources>
