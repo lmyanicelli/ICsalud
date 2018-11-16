@@ -89,73 +89,10 @@ public class Activity_Servicio_Tecnico extends AppCompatActivity
                "Su solicitud de ayuda se envió correctamente. El servicio técnico se contactará con Ud. Muchas gracias",
                Toast.LENGTH_LONG).show();
 
-   /*     try {
-        //    sendEmail();
-        //    Example example = new Example();
-         //   example.main(null);
-           // send();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-*/
-        // volverMainActivity();
         this.finish();
 
     }
 
- /*   private void send() throws IOException {
-            Email from = new Email("test@example.com");
-            String subject = "Sending with SendGrid is Fun";
-            Email to = new Email("test@example.com");
-            Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
-            Mail mail = new Mail(from, subject, to, content);
 
-            SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
-            Request request = new Request();
-            try {
-                request.setMethod(Method.POST);
-                request.setEndpoint("mail/send");
-                request.setBody(mail.build());
-                Response response = sg.api(request);
-                System.out.println(response.getStatusCode());
-                System.out.println(response.getBody());
-                System.out.println(response.getHeaders());
-            } catch (IOException ex) {
-                throw ex;
-            }
-    }
-*/
-   /* private void sendEmail() throws IOException {
-        Email from = new Email("icsalud.adm@gmail.com");
-        String subject = "Sending with SendGrid is Fun";
-        Email to = new Email("luciayanicelli@gmail.com");
-        Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
-        Mail mail = new Mail(from, subject, to, content);
-
-        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
- //           SendGrid sg = new SendGrid(System.getenv("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"));
-        Request request = new Request();
-        try {
-            request.setMethod(Method.POST);
-            request.setEndpoint("mail/send");
-            request.setBody(mail.build());
-            Response response = sg.api(request);
-            System.out.println(response.getStatusCode());
-            System.out.println(response.getBody());
-            System.out.println(response.getHeaders());
-        } catch (IOException ex) {
-            throw ex;
-        }
-    }
-    */
-
-
- /*   @Override
-    public void onBackPressed() {
-        this.finish();
-        super.onBackPressed();
-
-    }
-    */
 
 }
